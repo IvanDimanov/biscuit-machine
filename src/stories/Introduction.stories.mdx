@@ -1,0 +1,56 @@
+import { Meta, Preview, Story } from '@storybook/addon-docs/blocks';
+import { linkTo } from '@storybook/addon-links';
+
+import componentsTreeImage from './components-tree.png';
+import docsTabImage from './docs-tab.png';
+
+<Meta title='Introduction' />
+
+<style>{`
+  b {
+    font-weight: 900;
+  }
+`}</style>
+
+# Introduction
+Hi and Welcome to <b>Biscuit Machine</b> StoryBook!<br />
+Here you can find <b>description of common components</b> and modules used in the creation of the system.
+<br />
+
+
+### Audience
+This document is meant for:
+- <b>Devs</b><br />
+      If you're <b>new to the project</b>, it might be helpful to look around and get familiar with the main building blocks and their behavior.<br />
+      If you're <b>familiar with the project</b>, you may want to verify that your components look and feel as expected.
+      <br />
+      <br />
+
+- <b>QAs</b><br />
+      Testing Application features always comes with the possibility that <b>one component blocks the other</b> or when <b>an error in one place trigger a problem elsewhere</b>.<br />
+      StoryBook provides <b>isolated environment</b> for all component which makes them easier to test and talk about it.<br />
+      Following the <b>simple steps of updating just the right properties</b> makes it easier to <b>reproduce results</b> and shared them between team members.
+      <br />
+      <br />
+
+
+### Getting started
+Feel free to browse the <b>components tree</b> on the left
+<img src={componentsTreeImage} width={150} />
+<br />
+<br />
+
+
+You can always get more info of the component by using the <b>Docs tab</b>
+<img src={docsTabImage} width={150} />
+<br />
+<br />
+
+
+Consider starting with one of the most common and simple components:
+<u><b
+  onClick={linkTo('Components/Button')}
+  style={{ cursor: 'pointer' }}
+>
+  Component/Button
+</b></u>

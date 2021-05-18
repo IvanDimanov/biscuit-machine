@@ -1,0 +1,8 @@
+artifacts
+dist
+build
+node_modules
+test/polyfills
+storybook-static
+.parcel-cache
+react-app-env.d.ts

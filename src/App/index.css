@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Make sure the page spans across the full height of the Browser window */
+html, body, #root {
+  font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: #838386;
+  line-height: 18px;
+  position: relative;
+  height: 100%;
+}
+
+/* Headers heights */
+h1 {
+  font-size: 40px;
+}
+h2 {
+  font-size: 32px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 16px;
+}
+h5 {
+  font-size: 8px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Oswald", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: inherit;
+  letter-spacing: 0.12em;
+}
