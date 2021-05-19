@@ -1,5 +1,14 @@
 import PropTypes from 'prop-types'
 
+import useOvenPart, {
+  selectStatusValue,
+  selectOvenStatus,
+  selectTemperature,
+  selectIsOvenOverheating,
+} from '@src/globalState/useOvenPart'
+
+import useMachine from '@src/globalState/useMachine'
+
 import { Oven, Status, WarningSign, Thermometer, Explosion } from '@src/components'
 
 
@@ -8,7 +17,30 @@ const REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MAX = Number(process.env.REACT_APP_OVEN
 
 const THERMOMETER_PINNED_TEMPERATURES = [REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MIN, REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MAX]
 const THERMOMETER_MIN_TEMPERATURE = REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MIN - 0.1 * REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MIN
-const THERMOMETER_MAX_TEMPERATURE = REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MAX + 0.1 * REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MAX
+const THERMOMETER_MAX_TEMPERATURE = REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MAX + 0.03 * REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MAX
+
+
+/**
+ * Even if system is on `pause` or `off`
+ * biscuits may still be in the oven.
+ * In order to make consistent backing measurements
+ * we`ll make an external interval to track backing
+ */
+;(() => {
+  /* Sync with updates on Oven temperature */
+  let { temperature } = useOvenPart.getState()
+  useOvenPart.subscribe((newTemperature) => {
+    temperature = newTemperature
+  }, selectTemperature)
+
+  /* Function `setBiscuits()` does not change over time */
+  const { bakeBiscuits } = useMachine.getState()
+
+  /* Bake every biscuit in a regular time intervals */
+  setInterval(() => {
+    bakeBiscuits(temperature)
+  }, 500)
+})()
 
 
 type OvenPartProps = {
@@ -20,7 +52,10 @@ const OvenPart = ({
   testIdPrefix,
   className,
 }: OvenPartProps) => {
-  const temperature = 230
+  const statusValue = useOvenPart(selectStatusValue)
+  const ovenStatus = useOvenPart(selectOvenStatus)
+  const temperature = useOvenPart(selectTemperature)
+  const IsOvenOverheating = useOvenPart(selectIsOvenOverheating)
 
   return (
     <div
@@ -31,14 +66,15 @@ const OvenPart = ({
         <Status
           testIdPrefix={`${testIdPrefix}.OvenPart`}
           className="absolute -top-12 -left-12"
+          value={statusValue}
           bar="bottomRight"
         />
       </div>
 
-      {temperature > REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MAX ? (
+      {IsOvenOverheating ? (
         <WarningSign
           testIdPrefix={`${testIdPrefix}.OvenPart`}
-          className="absolute -top-64 left-5"
+          className="absolute -top-64 left-14"
         />
       ) : null}
 
@@ -53,7 +89,7 @@ const OvenPart = ({
 
       <Oven
         testIdPrefix={`${testIdPrefix}.OvenPart`}
-        status="on"
+        status={ovenStatus}
       />
 
       {/* <Explosion

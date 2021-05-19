@@ -14,6 +14,7 @@ const Wrap = styled.div`
 const HeatBackGround = styled.div`
   background-color: #a40606;
   background-image: linear-gradient(#a40606 0%, #d98324 74%);
+  transition-duration: 4s;
 `
 
 
@@ -49,7 +50,7 @@ const Oven = ({
             absolute
             w-64 h-64
             mt-3 mx-2
-            transition-opacity duration-1000 ease-in-out
+            transition-opacity ease-in-out
             ${status === 'on' ? 'opacity-100' : 'opacity-0'}
           `}
         />

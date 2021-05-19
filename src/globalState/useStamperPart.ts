@@ -11,6 +11,7 @@ type StamperPartDataState = {
 
 type StamperPartState = StamperPartDataState & {
   onStampStart: () => void
+  onPause: () => void
   onStampEnd: StamperProps['onStampEnd']
   resetState: () => void
 }
@@ -29,6 +30,10 @@ const useStamperPart = createStore<StamperPartState>((set) => ({
     state.shouldStamp = true
   }),
 
+  onPause: () => set((state) => {
+    state.statusValue = 'pause'
+  }),
+
   onStampEnd: () => set((state) => {
     state.shouldStamp = false
 
@@ -44,6 +49,7 @@ const useStamperPart = createStore<StamperPartState>((set) => ({
 export const selectStatusValue = (state: StamperPartState) => state.statusValue
 export const selectShouldStamp = (state: StamperPartState) => state.shouldStamp
 export const selectOnStampStart = (state: StamperPartState) => state.onStampStart
+export const selectOnPause = (state: StamperPartState) => state.onPause
 export const selectOnStampEnd = (state: StamperPartState) => state.onStampEnd
 export const selectResetState = (state: StamperPartState) => state.resetState
 

@@ -11,6 +11,7 @@ type ExtruderPartDataState = {
 
 type ExtruderPartState = ExtruderPartDataState & {
   onExtrudeStart: () => void
+  onPause: () => void
   onExtrudeEnd: ExtruderProps['onExtrudeEnd']
   resetState: () => void
 }
@@ -29,6 +30,10 @@ const useExtruderPart = createStore<ExtruderPartState>((set) => ({
     state.shouldExtrude = true
   }),
 
+  onPause: () => set((state) => {
+    state.statusValue = 'pause'
+  }),
+
   onExtrudeEnd: () => set((state) => {
     state.shouldExtrude = false
 
@@ -44,6 +49,7 @@ const useExtruderPart = createStore<ExtruderPartState>((set) => ({
 export const selectStatusValue = (state: ExtruderPartState) => state.statusValue
 export const selectShouldExtrude = (state: ExtruderPartState) => state.shouldExtrude
 export const selectOnExtrudeStart = (state: ExtruderPartState) => state.onExtrudeStart
+export const selectOnPause = (state: ExtruderPartState) => state.onPause
 export const selectOnExtrudeEnd = (state: ExtruderPartState) => state.onExtrudeEnd
 export const selectResetState = (state: ExtruderPartState) => state.resetState
 

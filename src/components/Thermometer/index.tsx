@@ -107,14 +107,14 @@ const Thermometer = ({
       data-testid={`${testIdPrefix}.Thermometer`}
       className={className}
     >
-      <div className="ml-16 mr-24">
+      <div className="ml-16 mr-32">
         {shouldShowIndicator ? (
           <Indicator
             data-testid={`${testIdPrefix}.Thermometer.Indicator`}
             className="absolute text-gray-700 text-2xl leading-5 ml-10"
             marginTop={indicatorMarginTop}
           >
-            &#x25C4; {temperature} {labelSuffix}
+            &#x25C4; {Math.round(temperature * 10) / 10} {labelSuffix}
           </Indicator>
         ) : null}
 

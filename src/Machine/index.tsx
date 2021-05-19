@@ -1,12 +1,36 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import useMachine, { selectBiscuits, MachineBiscuit } from '@src/globalState/useMachine'
+import useMachine, {
+  selectBiscuits,
+  selectSetBiscuits,
+  MachineBiscuit,
+} from '@src/globalState/useMachine'
+
 import useSwitchPart, { selectValue } from '@src/globalState/useSwitchPart'
-import useMotorPart, { selectOnChange } from '@src/globalState/useMotorPart'
-import useExtruderPart, { selectShouldExtrude, selectOnExtrudeStart } from '@src/globalState/useExtruderPart'
-import useStamperPart, { selectShouldStamp, selectOnStampStart } from '@src/globalState/useStamperPart'
-import useConveyorBeltPart, { selectShouldMove, selectSetShouldMove } from '@src/globalState/useConveyorBeltPart'
+import useMotorPart, { selectOnChange as selectMotorOnChange } from '@src/globalState/useMotorPart'
+
+import useExtruderPart, {
+  selectShouldExtrude,
+  selectOnExtrudeStart,
+  selectOnPause as selectOnExtrudePause,
+} from '@src/globalState/useExtruderPart'
+
+import useStamperPart, {
+  selectShouldStamp,
+  selectOnStampStart,
+  selectOnPause as selectOnStampPause,
+} from '@src/globalState/useStamperPart'
+
+import useConveyorBeltPart, {
+  selectShouldMove,
+  selectSetShouldMove,
+} from '@src/globalState/useConveyorBeltPart'
+
+import useOvenPart, {
+  selectIsOvenReady,
+  selectOnChange as selectOvenOnChange,
+} from '@src/globalState/useOvenPart'
 
 import MotorPart from './Parts/MotorPart'
 import ConveyorBeltPart from './Parts/ConveyorBeltPart'
@@ -29,21 +53,26 @@ const Machine = ({
   className,
 }: MachineProps) => {
   const biscuits = useMachine(selectBiscuits)
+  const setBiscuits = useMachine(selectSetBiscuits)
 
   const switchValue = useSwitchPart(selectValue)
-  const onChangeMotorPart = useMotorPart(selectOnChange)
+  const onChangeMotorPart = useMotorPart(selectMotorOnChange)
 
   const shouldExtrude = useExtruderPart(selectShouldExtrude)
   const onExtrudeStart = useExtruderPart(selectOnExtrudeStart)
+  const onExtrudePause = useExtruderPart(selectOnExtrudePause)
 
   const shouldStamp = useStamperPart(selectShouldStamp)
   const onStampStart = useStamperPart(selectOnStampStart)
+  const onStampPause = useStamperPart(selectOnStampPause)
 
   const shouldMove = useConveyorBeltPart(selectShouldMove)
   const setShouldMove = useConveyorBeltPart(selectSetShouldMove)
 
+  const isOvenReady = useOvenPart(selectIsOvenReady)
+  const onChangeOvenPart = useOvenPart(selectOvenOnChange)
 
-  const [isOvenReady, setIsOvenReady] = useState(false)
+
   const [isExtruderDone, setIsExtruderDone] = useState(true)
   const [isStamperDone, setIsStamperDone] = useState(true)
 
@@ -75,7 +104,17 @@ const Machine = ({
       setIsStamperDone(false)
       onStampStart()
     }
-  }, [biscuitUnderStamper, onExtrudeStart, onStampStart])
+
+    setBiscuits((biscuits) => biscuits.map((biscuit) => {
+      const isBacking = isOvenReady &&
+                        biscuit.centerUnitIndex >= OVEN_CENTER_UNIT_INDEX &&
+                        biscuit.centerUnitIndex <= OVEN_CENTER_UNIT_INDEX + 1
+      return {
+        ...biscuit,
+        isBacking,
+      }
+    }))
+  }, [biscuitUnderStamper, onExtrudeStart, onStampStart, isOvenReady, setBiscuits])
 
 
   useEffect(() => {
@@ -109,20 +148,28 @@ const Machine = ({
 
 
   useEffect(() => {
+    if (switchValue === 'on') {
+      onChangeMotorPart('pause')
+      onExtrudePause()
+      onStampPause()
+      onChangeOvenPart('on')
+    }
+  }, [switchValue, onChangeMotorPart, onExtrudePause, onChangeOvenPart, onStampPause])
+
+
+  useEffect(() => {
+    if (switchValue === 'pause') {
+      onChangeOvenPart('pause')
+    }
+  }, [switchValue, onChangeOvenPart])
+
+
+  useEffect(() => {
     if (switchValue === 'off') {
       onChangeMotorPart('off')
+      onChangeOvenPart('off')
     }
-  }, [switchValue, onChangeMotorPart])
-
-
-  const timer = useRef<NodeJS.Timeout>()
-  useEffect(() => {
-    if (switchValue === 'on') {
-      onChangeMotorPart('off')
-      timer.current = setTimeout(() => setIsOvenReady(true), 2000)
-    }
-    return () => timer.current && clearTimeout(timer.current)
-  }, [switchValue, onChangeMotorPart, timer])
+  }, [switchValue, onChangeMotorPart, onChangeOvenPart])
 
 
   return (

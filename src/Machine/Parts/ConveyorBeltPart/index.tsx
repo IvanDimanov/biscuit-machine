@@ -2,7 +2,11 @@ import { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { v4 as uuidv4 } from 'uuid'
 
-import useMachine, { selectBiscuits, selectSetBiscuits, selectAddScore } from '@src/globalState/useMachine'
+import useMachine, {
+  selectBiscuits,
+  selectMoveBiscuits,
+  selectAddScore,
+} from '@src/globalState/useMachine'
 import useConveyorBeltPart, { selectShouldMove, selectSetShouldMove } from '@src/globalState/useConveyorBeltPart'
 import useCollectionBoxPart, { selectSetItem } from '@src/globalState/useCollectionBoxPart'
 
@@ -32,10 +36,12 @@ const ConveyorBeltPart = ({
   className,
 }: ConveyorBeltPartProps) => {
   const biscuits = useMachine(selectBiscuits)
-  const setBiscuits = useMachine(selectSetBiscuits)
+  const moveBiscuits = useMachine(selectMoveBiscuits)
   const addScore = useMachine(selectAddScore)
+
   const shouldMove = useConveyorBeltPart(selectShouldMove)
   const setShouldMove = useConveyorBeltPart(selectSetShouldMove)
+
   const setCollectionBoxItem = useCollectionBoxPart(selectSetItem)
 
 
@@ -85,29 +91,26 @@ const ConveyorBeltPart = ({
 
   const onMoveEnd = useCallback(() => {
     setShouldMove(false)
+    const { removedBiscuits, removedBiscuitScores } = moveBiscuits(CONVEYOR_BELT_TOTAL_CENTER_UNITS)
 
-    const incrementedBiscuits = biscuits.map((biscuit) => ({
-      ...biscuit,
-      centerUnitIndex: biscuit.centerUnitIndex + 1,
-    }))
+    removedBiscuits
+      .forEach((biscuit) => {
+        const biscuitScore = removedBiscuitScores.find(({ key }) => key === biscuit.key)
+        if (!biscuitScore) {
+          return
+        }
 
-    incrementedBiscuits
-      .filter(({ centerUnitIndex }) => centerUnitIndex > CONVEYOR_BELT_TOTAL_CENTER_UNITS)
-      .forEach(({ key, score }) => {
-        addScore(score)
+        addScore(biscuitScore.score)
         setCollectionBoxItem({
-          key,
+          key: biscuitScore.key,
           node: (
-            <div className="text-yellow-300 font-bold whitespace-nowrap">
-              +{score} &#x1f36a;
+            <div className="text-red-500 font-bold whitespace-nowrap">
+              +{Math.round(biscuitScore.score * 10) / 10} &#x1f36a;
             </div>
           ),
         })
       })
-
-    setBiscuits(() => incrementedBiscuits
-      .filter(({ centerUnitIndex }) => centerUnitIndex <= CONVEYOR_BELT_TOTAL_CENTER_UNITS))
-  }, [setShouldMove, biscuits, setBiscuits, addScore, setCollectionBoxItem])
+  }, [setShouldMove, moveBiscuits, addScore, setCollectionBoxItem])
 
 
   return (
