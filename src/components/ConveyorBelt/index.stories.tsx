@@ -174,7 +174,7 @@ export const ChangeConveyorBeltLength = ({ totalCenterUnits: defaultValue, ...ar
 ChangeConveyorBeltLength.storyName = 'Change Conveyor Belt length'
 
 
-export const ChangeConveyorBeltSpeed = ({ centerUnitsPerSecond: defaultValue, ...args }) => {
+export const ChangeConveyorBeltSpeed = ({ centerUnitsPerSecond: defaultValue, shouldMove: default2, ...args }) => {
   const [centerUnitsPerSecond, setCenterUnitsPerSecond] = useState<ConveyorBeltProps['centerUnitsPerSecond']>(0)
   const onChangeStop = useCallback(() => setCenterUnitsPerSecond(0), [])
   const onChangeSlow = useCallback(() => setCenterUnitsPerSecond(1), [])
@@ -218,7 +218,11 @@ export const ChangeConveyorBeltSpeed = ({ centerUnitsPerSecond: defaultValue, ..
       </div>
 
       <div>
-        <ConveyorBelt centerUnitsPerSecond={centerUnitsPerSecond} {...args} />
+        <ConveyorBelt
+          shouldMove={Boolean(centerUnitsPerSecond)}
+          centerUnitsPerSecond={centerUnitsPerSecond}
+          {...args}
+        />
       </div>
     </div>
   )
