@@ -1,13 +1,13 @@
 import { useCallback } from 'react'
 import PropTypes from 'prop-types'
-import { v4 as uuidv4 } from 'uuid'
 
-import useMachine, { selectBiscuits, selectSetBiscuits } from '@src/globalState/useMachine'
+import useMachine, { selectSetBiscuits } from '@src/globalState/useMachine'
 import useStamperPart, { selectStatusValue, selectShouldStamp, selectOnStampEnd } from '@src/globalState/useStamperPart'
 import { Stamper, Status } from '@src/components'
 
 import { STAMPER_CENTER_UNIT_INDEX } from '../../index'
 
+const BISCUIT_STAMP_SCORE = 0.2
 
 type StamperPartProps = {
   testIdPrefix?: string
@@ -18,14 +18,14 @@ const StamperPart = ({
   testIdPrefix,
   className,
 }: StamperPartProps) => {
-  const biscuits = useMachine(selectBiscuits)
   const setBiscuits = useMachine(selectSetBiscuits)
   const statusValue = useStamperPart(selectStatusValue)
   const shouldStamp = useStamperPart(selectShouldStamp)
   const onStampEnd = useStamperPart(selectOnStampEnd)
 
+
   const onStamp = useCallback(() => {
-    setBiscuits(biscuits.map((biscuit) => {
+    setBiscuits((biscuits) => biscuits.map((biscuit) => {
       if (biscuit.centerUnitIndex !== STAMPER_CENTER_UNIT_INDEX) {
         return biscuit
       }
@@ -33,9 +33,10 @@ const StamperPart = ({
       return {
         ...biscuit,
         form: 'unbacked',
+        score: Math.round((biscuit.score + BISCUIT_STAMP_SCORE) * 100) / 100,
       }
     }))
-  }, [biscuits, setBiscuits])
+  }, [setBiscuits])
 
 
   return (
@@ -57,7 +58,7 @@ const StamperPart = ({
         testIdPrefix={`${testIdPrefix}.StamperPart`}
         className="relative z-3"
         shouldStamp={shouldStamp}
-        // onStamp={onStamp}
+        onStamp={onStamp}
         onStampEnd={onStampEnd}
       />
     </div>

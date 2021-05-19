@@ -31,7 +31,7 @@ const Template: Story = (args) => (
 export const Default = Template.bind({})
 
 
-export const TriggerWarning = ({ shouldStamp: default1, onStampEnd: default2, ...args }) => {
+export const TriggerWarning = ({ shouldStamp: default1, ...args }) => {
   const [toggle, setToggle] = useState(false)
   const onToggle = useCallback(() => setToggle((state) => !state), [])
 

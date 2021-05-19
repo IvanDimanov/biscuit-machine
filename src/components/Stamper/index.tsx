@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 
@@ -129,16 +129,30 @@ const Stamper = ({
   const timerOnStamp = useRef<NodeJS.Timeout>()
   const timerOnStampEnd = useRef<NodeJS.Timeout>()
 
+  const [isStampDone, setIsStampDone] = useState(false)
+  const [isStampEndDone, setIsStampEndDone] = useState(false)
+
   useEffect(() => {
     if (shouldStamp) {
-      timerOnStamp.current = setTimeout(onStamp, STAMP_DOWN_ANIMATION_TIME_IN_SECONDS * 1000)
-      timerOnStampEnd.current = setTimeout(onStampEnd, ANIMATION_TIME_IN_SECONDS * 1000)
+      setIsStampDone(false)
+      setIsStampEndDone(false)
+
+      timerOnStamp.current = setTimeout(() => setIsStampDone(true), STAMP_DOWN_ANIMATION_TIME_IN_SECONDS * 1000)
+      timerOnStampEnd.current = setTimeout(() => setIsStampEndDone(true), ANIMATION_TIME_IN_SECONDS * 1000)
     }
-    return () => {
-      timerOnStamp.current && clearTimeout(timerOnStamp.current)
-      timerOnStampEnd.current && clearTimeout(timerOnStampEnd.current)
+  }, [shouldStamp])
+
+  useEffect(() => {
+    if (isStampDone) {
+      onStamp()
     }
-  }, [shouldStamp, onStamp, onStampEnd])
+  }, [isStampDone, onStamp])
+
+  useEffect(() => {
+    if (isStampEndDone) {
+      onStampEnd()
+    }
+  }, [isStampEndDone, onStampEnd])
 
 
   return (

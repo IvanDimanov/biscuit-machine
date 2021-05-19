@@ -52,9 +52,13 @@ export default {
                    'Please note that every object can specify over which center segment we need to put it.',
     },
 
-    onItemOutOfBelt: {
-      description: 'When an object is moved out side the Conveyor Belt, we`ll call this function with the object in question.',
-      action: 'onItemOutOfBelt',
+    shouldMove: {
+      description: 'Indicates if the belt should move one unit or stay put',
+    },
+
+    onMoveEnd: {
+      description: 'This event is triggered when the Conveyor Belt moved one unit',
+      action: 'onMoveEnd',
     },
   },
 } as unknown as Meta
@@ -222,24 +226,24 @@ export const ChangeConveyorBeltSpeed = ({ centerUnitsPerSecond: defaultValue, ..
 ChangeConveyorBeltSpeed.storyName = 'Change Conveyor Belt speed'
 
 
-export const ChangeConveyorBeltDirection = ({ direction: defaultValue, centerUnitsPerSecond: defaultValue2, ...args }) => {
-  const [centerUnitsPerSecond, setCenterUnitsPerSecond] = useState<ConveyorBeltProps['centerUnitsPerSecond']>(0)
+export const ChangeConveyorBeltDirection = ({ direction: defaultValue, shouldMove: defaultValue2, ...args }) => {
+  const [shouldMove, setShouldMove] = useState<ConveyorBeltProps['shouldMove']>(false)
 
   const [direction, setDirection] = useState<ConveyorBeltProps['direction']>()
 
   const onChangeStop = useCallback(() => {
     setDirection(undefined)
-    setCenterUnitsPerSecond(0)
+    setShouldMove(false)
   }, [])
 
   const onChangeLeft = useCallback(() => {
     setDirection('left')
-    setCenterUnitsPerSecond(1)
+    setShouldMove(true)
   }, [])
 
   const onChangeRight = useCallback(() => {
     setDirection('right')
-    setCenterUnitsPerSecond(1)
+    setShouldMove(true)
   }, [])
 
   return (
@@ -282,7 +286,7 @@ export const ChangeConveyorBeltDirection = ({ direction: defaultValue, centerUni
       <div>
         <ConveyorBelt
           direction={direction}
-          centerUnitsPerSecond={centerUnitsPerSecond}
+          shouldMove={shouldMove}
           {...args}
         />
       </div>
@@ -293,30 +297,39 @@ ChangeConveyorBeltDirection.storyName = 'Change Conveyor Belt move direction'
 
 
 export const ObjectOnBelt = ({
-  direction: defaultValue,
-  centerUnitsPerSecond: defaultValue2,
+  shouldMove: defaultValue2,
   size: defaultValue3,
   totalCenterUnits: defaultValue4,
   itemsOnBelt: defaultValue5,
+  onMoveEnd: defaultValue6,
   ...args
 }) => {
-  const [centerUnitsPerSecond, setCenterUnitsPerSecond] = useState<ConveyorBeltProps['centerUnitsPerSecond']>(0)
+  const [shouldMove, setShouldMove] = useState<ConveyorBeltProps['shouldMove']>(false)
 
-  const [direction, setDirection] = useState<ConveyorBeltProps['direction']>()
+  const [itemsOnBelt, setItemsOnBelt] = useState<ConveyorBeltProps['itemsOnBelt']>([{
+    key: uuidv4(),
+    centerUnitIndex: 0,
+    node: (
+      <div>
+        &#x1F36A;
+      </div>
+    ),
+  }])
+
+  const onMoveEnd = useCallback(() => {
+    setItemsOnBelt((state) => state.map((item) => ({
+      ...item,
+      centerUnitIndex: item.centerUnitIndex + 1,
+    })))
+  }, [])
 
   const onChangeStop = useCallback(() => {
-    setDirection(undefined)
-    setCenterUnitsPerSecond(0)
-  }, [])
+    setShouldMove(false)
+    onMoveEnd()
+  }, [onMoveEnd])
 
-  const onChangeLeft = useCallback(() => {
-    setDirection('left')
-    setCenterUnitsPerSecond(1)
-  }, [])
-
-  const onChangeRight = useCallback(() => {
-    setDirection('right')
-    setCenterUnitsPerSecond(1)
+  const onChangeMove = useCallback(() => {
+    setShouldMove(true)
   }, [])
 
   return (
@@ -326,7 +339,7 @@ export const ObjectOnBelt = ({
           <input
             type="radio"
             onChange={onChangeStop}
-            checked={!direction}
+            checked={!shouldMove}
           />
           <span>
             Stop
@@ -336,41 +349,22 @@ export const ObjectOnBelt = ({
         <label className="cursor-pointer space-x-2">
           <input
             type="radio"
-            onChange={onChangeLeft}
-            checked={direction === 'left'}
+            onChange={onChangeMove}
+            checked={shouldMove}
           />
           <span>
-            Move left &#8592;
-          </span>
-        </label>
-
-        <label className="cursor-pointer space-x-2">
-          <input
-            type="radio"
-            onChange={onChangeRight}
-            checked={direction === 'right'}
-          />
-          <span>
-            Move right &#8594;
+            Move belt
           </span>
         </label>
       </div>
 
       <div>
         <ConveyorBelt
-          direction={direction}
-          totalCenterUnits={3}
+          totalCenterUnits={7}
           size="small"
-          centerUnitsPerSecond={centerUnitsPerSecond}
-          itemsOnBelt={[{
-            key: uuidv4(),
-            centerUnitIndex: 0,
-            node: (
-              <div>
-                &#x1F36A;
-              </div>
-            ),
-          }]}
+          shouldMove={shouldMove}
+          itemsOnBelt={itemsOnBelt}
+          onMoveEnd={onMoveEnd}
           {...args}
         />
       </div>

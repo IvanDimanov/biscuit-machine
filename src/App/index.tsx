@@ -1,8 +1,6 @@
 import styled from '@emotion/styled'
 
-// import StaticObjectsOnConveyorBelt from './StaticObjectsOnConveyorBelt'
 // import SoundAndConfettiTest from './SoundAndConfettiTest'
-// import AddCookieTest from './AddCookieTest'
 
 import BiscuitMachine from '@src/Machine'
 

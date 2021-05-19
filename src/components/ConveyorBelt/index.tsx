@@ -1,5 +1,6 @@
 import { ReactNode, CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
+import styled from '@emotion/styled'
 
 import ImageLeftEdge1 from './images/animationFrames/leftEdge1.png'
 import ImageLeftEdge2 from './images/animationFrames/leftEdge2.png'
@@ -53,7 +54,6 @@ type BeltItem = {
   key: string
   centerUnitIndex: number
   node: ReactNode
-  style?: CSSProperties
 }
 
 export type ItemOnBelt = BeltItem
@@ -68,8 +68,15 @@ export type ConveyorBeltProps = {
   direction: 'left' | 'right'
   itemsOnBelt: ItemOnBelt[]
   staticItems: StaticItem[]
-  onItemOutOfBelt: (itemOutOfBelt: ItemOnBelt) => void
+  shouldMove: boolean
+  onMoveEnd: () => void
 }
+
+type ImageSize = {
+  width: number
+  height: number
+}
+
 
 const getFrameSrc = (frame, direction: ConveyorBeltProps['direction'], position: 'leftEdge' | 'center' | 'rightEdge'): string => {
   if (direction === 'left') {
@@ -79,50 +86,16 @@ const getFrameSrc = (frame, direction: ConveyorBeltProps['direction'], position:
   return framePerSrc[2 - frame][position]
 }
 
-
-const getItemOnBelt = (
-  leftEdgeImageRect: DOMRect,
-  firstCenterImageRect: DOMRect,
-  rightEdgeImageRect: DOMRect,
-  direction: ConveyorBeltProps['direction'],
-  totalCenterUnits: number,
-  shouldIncrement: boolean = false,
-) => (itemOnBelt: ItemOnBelt): ItemOnBelt => {
-  const initialShift = 1/3 * leftEdgeImageRect.width
-  const centerShift = (itemOnBelt.centerUnitIndex + 0.5) * firstCenterImageRect.width
-  console.log(itemOnBelt.centerUnitIndex, itemOnBelt)
-  // const centerShift = (0 + 0.5) * firstCenterImageRect.width
-
-  let positionValue = initialShift + centerShift
-  if (direction === 'left') {
-    const initialShift = leftEdgeImageRect.width + totalCenterUnits * firstCenterImageRect.width
-    const centerShift = itemOnBelt.centerUnitIndex * firstCenterImageRect.width
-    // const centerShift = 0 * firstCenterImageRect.width
-
-    positionValue = initialShift - centerShift
-  }
-
-
-  const positionKey = 'left'
-  if (shouldIncrement && itemOnBelt.style?.[positionKey]) {
-    const originalValue = Number.parseFloat(itemOnBelt.style[positionKey] as string)
-    const increment = firstCenterImageRect.width / totalLoopFrames
-
-    positionValue = direction === 'left' ? originalValue - increment : originalValue + increment
-  }
-
-  return {
-    ...itemOnBelt,
-    style: {
-      ...itemOnBelt.style,
-
-      width: 'max-content',
-      position: 'absolute',
-      [positionKey]: `${positionValue}px`,
-    },
-  }
+type WrapItemsOnBeltProps = {
+  duration: number
+  value: number
 }
 
+const WrapItemsOnBelt = styled.div<WrapItemsOnBeltProps>`
+  position: absolute;
+  transition: left ${({ duration }) => duration}s linear;
+  left: ${({ value }) => value}px;
+`
 
 const ConveyorBelt = ({
   testIdPrefix,
@@ -131,9 +104,10 @@ const ConveyorBelt = ({
   centerUnitsPerSecond,
   size,
   direction,
-  itemsOnBelt: initialItemsOnBelt,
+  itemsOnBelt,
   staticItems,
-  onItemOutOfBelt,
+  shouldMove,
+  onMoveEnd,
 }: ConveyorBeltProps) => {
   const frameRate = useMemo(() => Math.max(0, centerUnitsPerSecond) * totalLoopFrames, [centerUnitsPerSecond])
 
@@ -160,108 +134,125 @@ const ConveyorBelt = ({
     return 'absolute top-2'
   }, [size])
 
-
-  const [leftEdgeImageRect, setLeftEdgeImageRect] = useState<DOMRect>()
-  const trackLeftEdgeImageRectRef = useCallback((node: HTMLImageElement | null) => {
-    if (!node) {
-      return
+  const leftEdgeImageSize = useMemo<ImageSize>(() => {
+    if (size === 'small') {
+      return {
+        width: 65.95,
+        height: 70,
+      }
     }
-    node.addEventListener('load', () => setLeftEdgeImageRect(node.getBoundingClientRect()), { once: true })
-  }, [])
-
-
-  const [firstCenterImageRect, setFirstCenterImageRect] = useState<DOMRect>()
-  const trackFirstCenterImageRectRef = useCallback((node: HTMLImageElement | null) => {
-    if (!node) {
-      return
+    if (size === 'medium') {
+      return {
+        width: 105.52,
+        height: 112,
+      }
     }
-    node.addEventListener('load', () => setFirstCenterImageRect(node.getBoundingClientRect()), { once: true })
-  }, [])
-
-
-  const [rightEdgeImageRect, setRightEdgeImageRect] = useState<DOMRect>()
-  const trackRightEdgeImageRectRef = useCallback((node: HTMLImageElement | null) => {
-    if (!node) {
-      return
+    return {
+      width: 131.9,
+      height: 140,
     }
-    node.addEventListener('load', () => setRightEdgeImageRect(node.getBoundingClientRect()), { once: true })
-  }, [])
+  }, [size])
+
+  const centerImageSize = useMemo<ImageSize>(() => {
+    if (size === 'small') {
+      return {
+        width: 61.17,
+        height: 70,
+      }
+    }
+    if (size === 'medium') {
+      return {
+        width: 97.88,
+        height: 112,
+      }
+    }
+    return {
+      width: 122.35,
+      height: 140,
+    }
+  }, [size])
+
+  const rightEdgeImageSize = useMemo<ImageSize>(() => {
+    if (size === 'small') {
+      return {
+        width: 65.95,
+        height: 70,
+      }
+    }
+    if (size === 'medium') {
+      return {
+        width: 105.52,
+        height: 112,
+      }
+    }
+    return {
+      width: 131.9,
+      height: 140,
+    }
+  }, [size])
 
 
-  const [itemsOnBelt, setItemsOnBelt] = useState<ItemOnBelt[]>([])
-  const initialItemsOnBeltRef = useRef<ItemOnBelt[]>(initialItemsOnBelt)
-
+  const moveTimer = useRef<NodeJS.Timeout>()
   useEffect(() => {
-    if (!leftEdgeImageRect || !firstCenterImageRect || !rightEdgeImageRect) {
-      return
+    if (shouldMove) {
+      moveTimer.current = setInterval(onMoveEnd, 1000 / centerUnitsPerSecond)
     }
-
-    const getItemOnBeltStyle = getItemOnBelt(
-      leftEdgeImageRect, firstCenterImageRect, rightEdgeImageRect, direction, totalCenterUnits,
-    )
-    setItemsOnBelt((state) => initialItemsOnBelt.map((itemOnBelt) => {
-      const existingItemOnBelt = state.find(({ key }) => key === itemOnBelt.key)
-      return existingItemOnBelt || getItemOnBeltStyle(itemOnBelt)
-    }))
-
-    initialItemsOnBeltRef.current = initialItemsOnBelt
-  }, [initialItemsOnBelt, leftEdgeImageRect, firstCenterImageRect, rightEdgeImageRect, direction, totalCenterUnits])
+    return () => moveTimer.current && clearInterval(moveTimer.current)
+  }, [shouldMove, onMoveEnd, centerUnitsPerSecond])
 
 
-  const moveItemsOnBelt = useCallback(() => {
-    if (!leftEdgeImageRect || !firstCenterImageRect || !rightEdgeImageRect) {
-      return
-    }
-
-    const getItemOnBeltStyle = getItemOnBelt(
-      leftEdgeImageRect, firstCenterImageRect, rightEdgeImageRect, direction, totalCenterUnits, true,
-    )
-    setItemsOnBelt((state) => state.map(getItemOnBeltStyle))
-  }, [leftEdgeImageRect, firstCenterImageRect, rightEdgeImageRect, direction, totalCenterUnits])
+  const shouldAnimateRef = useRef(false)
+  const shouldMoveRef = useRef(shouldMove)
+  useEffect(() => {
+    shouldMoveRef.current = shouldMove
+  }, [shouldMove])
 
 
-  const beltRef = useRef<HTMLDivElement>(null)
-  const itemsWrapRef = useRef<HTMLDivElement>(null)
-
-  const checkItemsOutOfBelt = useCallback(() => {
-    if (!beltRef.current || !itemsWrapRef.current) {
-      return
-    }
-
-    const beltRect = beltRef.current.getBoundingClientRect()
-
-    Array.from(itemsWrapRef.current.children).forEach((itemDom, index) => {
-      if (!initialItemsOnBeltRef.current[index]) {
-        return
-      }
-
-      const rect = itemDom.getBoundingClientRect()
-      const itemCenterLine = rect.left + rect.width / 2
-
-      if (itemCenterLine < beltRect.left || itemCenterLine > beltRect.right) {
-        onItemOutOfBelt(initialItemsOnBeltRef.current[index])
-        setItemsOnBelt((state) => state.filter((_, stateIndex) => stateIndex !== index))
-      }
-    })
-  }, [onItemOutOfBelt])
-
-
-  const timer = useRef<NodeJS.Timeout>()
+  const animateTimer = useRef<NodeJS.Timeout>()
   const animate = useCallback(() => {
     increaseFrame()
-    moveItemsOnBelt()
-    checkItemsOutOfBelt()
+    if (shouldAnimateRef.current) {
+      animateTimer.current = setTimeout(animate, 1000 / frameRate)
+    }
+  }, [increaseFrame, animateTimer, frameRate])
 
-    timer.current = setTimeout(animate, 1000 / frameRate)
-  }, [increaseFrame, moveItemsOnBelt, checkItemsOutOfBelt, timer, frameRate])
+
+  const checkShouldAnimate = useCallback(() => {
+    shouldAnimateRef.current = shouldMoveRef.current
+    if (shouldMoveRef.current) {
+      setTimeout(checkShouldAnimate, 1000 / centerUnitsPerSecond)
+    }
+  }, [centerUnitsPerSecond])
 
 
   useEffect(() => {
-    if (frameRate) {
+    if (shouldMove) {
+      checkShouldAnimate()
       animate()
     }
-    return () => timer.current && clearTimeout(timer.current)
-  }, [frameRate, animate])
+  }, [shouldMove, animate, checkShouldAnimate])
+
+
+  const itemsWrapStyle = useMemo<CSSProperties>(() => {
+    if (direction === 'left') {
+      return {
+        marginRight: rightEdgeImageSize.width,
+      }
+    }
+
+    return {
+      marginLeft: leftEdgeImageSize.width,
+    }
+  }, [direction, leftEdgeImageSize.width, rightEdgeImageSize.width])
+
+
+  const getItemsOnBeltLeft = useCallback((centerUnitIndex: number) => {
+    if (direction === 'left') {
+      return (totalCenterUnits - centerUnitIndex + Number(shouldMove)) * centerImageSize.width
+    }
+
+    return (centerUnitIndex + Number(shouldMove)) * centerImageSize.width
+  }, [direction, totalCenterUnits, shouldMove, centerImageSize.width])
 
 
   return (
@@ -272,13 +263,11 @@ const ConveyorBelt = ({
       <div className="relative">
 
         <div
-          ref={beltRef}
           data-testid={`${testIdPrefix}.ConveyorBelt.Belt`}
           className="flex"
         >
           <div>
             <img
-              ref={trackLeftEdgeImageRectRef}
               className={imageClassName}
               src={getFrameSrc(frame, direction, 'leftEdge')}
               alt="Left edge"
@@ -299,7 +288,6 @@ const ConveyorBelt = ({
                 ))}
 
               <img
-                ref={key ? null : trackFirstCenterImageRectRef}
                 className={imageClassName}
                 src={getFrameSrc(frame, direction, 'center')}
                 alt="Center"
@@ -309,7 +297,6 @@ const ConveyorBelt = ({
 
           <div>
             <img
-              ref={trackRightEdgeImageRectRef}
               className={imageClassName}
               src={getFrameSrc(frame, direction, 'rightEdge')}
               alt="Right edge"
@@ -322,25 +309,27 @@ const ConveyorBelt = ({
           className={itemsWrapClassName}
         >
           <div
-            ref={itemsWrapRef}
             className="relative z-10"
+            style={itemsWrapStyle}
           >
-            {itemsOnBelt.map(({ key, node, style }) => (
-              <div
+            {itemsOnBelt.map(({ key, centerUnitIndex, node }) => (
+              <WrapItemsOnBelt
                 key={key}
                 data-testid={`${testIdPrefix}.ConveyorBelt.ItemsOnBelt.${key}`}
-                style={style}
+                duration={1 / centerUnitsPerSecond}
+                value={getItemsOnBeltLeft(centerUnitIndex)}
               >
                 {node}
-              </div>
+              </WrapItemsOnBelt>
             ))}
           </div>
         </div>
 
       </div>
 
-
-      <BeltSound centerUnitsPerSecond={centerUnitsPerSecond} />
+      {shouldAnimateRef.current ? (
+        <BeltSound centerUnitsPerSecond={centerUnitsPerSecond} />
+      ) : null}
     </div>
   )
 }
@@ -393,19 +382,21 @@ ConveyorBelt.propTypes = {
     node: PropTypes.node.isRequired,
   })),
 
-  onItemOutOfBelt: PropTypes.func,
+  shouldMove: PropTypes.bool,
+  onMoveEnd: PropTypes.func,
 }
 
 ConveyorBelt.defaultProps = {
   testIdPrefix: 'Test',
   className: undefined,
   totalCenterUnits: 1,
-  centerUnitsPerSecond: 0,
+  centerUnitsPerSecond: 1,
   size: 'medium',
   direction: 'right',
   itemsOnBelt: [],
   staticItems: [],
-  onItemOutOfBelt: () => {},
+  shouldMove: false,
+  onMoveEnd: () => {},
 }
 
 ConveyorBelt.displayName = 'ConveyorBelt'

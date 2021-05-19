@@ -22,7 +22,12 @@ const ExtruderPart = ({
 
   const extruderOnExtrudeEnd = useCallback(() => {
     addBiscuit()
-    onExtrudeEnd()
+
+    /**
+     * We announce the extruder completion with a delay
+     * just to make the new biscuit visually clear when added
+     */
+    setTimeout(onExtrudeEnd, 100)
   }, [addBiscuit, onExtrudeEnd])
 
 

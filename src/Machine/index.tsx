@@ -1,18 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import useMachine, {
-  selectBiscuits,
-  selectSetBiscuits,
-  selectStage,
-  selectSetStage,
-  MachineBiscuit,
-} from '@src/globalState/useMachine'
+import useMachine, { selectBiscuits, MachineBiscuit } from '@src/globalState/useMachine'
 import useSwitchPart, { selectValue } from '@src/globalState/useSwitchPart'
 import useMotorPart, { selectOnChange } from '@src/globalState/useMotorPart'
 import useExtruderPart, { selectShouldExtrude, selectOnExtrudeStart } from '@src/globalState/useExtruderPart'
 import useStamperPart, { selectShouldStamp, selectOnStampStart } from '@src/globalState/useStamperPart'
-import useConveyorBeltPart, { selectSetCenterUnitsPerSecond } from '@src/globalState/useConveyorBeltPart'
+import useConveyorBeltPart, { selectShouldMove, selectSetShouldMove } from '@src/globalState/useConveyorBeltPart'
 
 import MotorPart from './Parts/MotorPart'
 import ConveyorBeltPart from './Parts/ConveyorBeltPart'
@@ -23,8 +17,6 @@ import SwitchPart from './Parts/SwitchPart'
 export const EXTRUDER_CENTER_UNIT_INDEX = 0
 export const STAMPER_CENTER_UNIT_INDEX = 3
 export const OVEN_CENTER_UNIT_INDEX = 6
-
-const STAGE_MOVE_TIME_IN_SECONDS = 1
 
 
 type MachineProps = {
@@ -37,9 +29,6 @@ const Machine = ({
   className,
 }: MachineProps) => {
   const biscuits = useMachine(selectBiscuits)
-  const setBiscuits = useMachine(selectSetBiscuits)
-  const stage = useMachine(selectStage)
-  const setStage = useMachine(selectSetStage)
 
   const switchValue = useSwitchPart(selectValue)
   const onChangeMotorPart = useMotorPart(selectOnChange)
@@ -50,45 +39,43 @@ const Machine = ({
   const shouldStamp = useStamperPart(selectShouldStamp)
   const onStampStart = useStamperPart(selectOnStampStart)
 
-  const setCenterUnitsPerSecond = useConveyorBeltPart(selectSetCenterUnitsPerSecond)
+  const shouldMove = useConveyorBeltPart(selectShouldMove)
+  const setShouldMove = useConveyorBeltPart(selectSetShouldMove)
 
 
   const [isOvenReady, setIsOvenReady] = useState(false)
-  const [isExtruderDone, setIsExtruderDone] = useState(false)
-  const [isStamperDone, setIsStamperDone] = useState(false)
+  const [isExtruderDone, setIsExtruderDone] = useState(true)
+  const [isStamperDone, setIsStamperDone] = useState(true)
 
-  const biscuitOnUnitZero = useMemo<MachineBiscuit | undefined>(() => biscuits
-    .find(({ centerUnitIndex }) => centerUnitIndex === 0), [biscuits])
+  const biscuitUnderExtruder = useMemo<MachineBiscuit | undefined>(() => biscuits
+    .find(({ centerUnitIndex }) => centerUnitIndex === EXTRUDER_CENTER_UNIT_INDEX), [biscuits])
+
+  const biscuitUnderStamper = useMemo<MachineBiscuit | undefined>(() => biscuits
+    .find(({ centerUnitIndex }) => centerUnitIndex === STAMPER_CENTER_UNIT_INDEX), [biscuits])
 
 
-  const stageMove = useCallback(() => {
-    setCenterUnitsPerSecond(STAGE_MOVE_TIME_IN_SECONDS)
+  const machineMove = useCallback(() => {
+    setShouldMove(true)
     onChangeMotorPart('on')
-
-    setTimeout(() => {
-      setCenterUnitsPerSecond(0)
-      onChangeMotorPart('off')
-      setBiscuits(biscuits.map((biscuit) => ({
-        ...biscuit,
-        centerUnitIndex: biscuit.centerUnitIndex + 1,
-      })))
-    }, STAGE_MOVE_TIME_IN_SECONDS * 1000)
-  }, [setCenterUnitsPerSecond, onChangeMotorPart, biscuits, setBiscuits])
+  }, [setShouldMove, onChangeMotorPart])
 
 
-  const stageCraft = useCallback(() => {
+  useEffect(() => {
+    if (!shouldMove) {
+      onChangeMotorPart('pause')
+    }
+  }, [shouldMove, onChangeMotorPart])
+
+
+  const machineCraft = useCallback(() => {
     setIsExtruderDone(false)
-    setIsStamperDone(false)
-
-    setCenterUnitsPerSecond(0)
     onExtrudeStart()
 
-    if (biscuits.find(({ centerUnitIndex }) => centerUnitIndex === STAMPER_CENTER_UNIT_INDEX)) {
+    if (biscuitUnderStamper) {
+      setIsStamperDone(false)
       onStampStart()
-    } else {
-      setIsStamperDone(true)
     }
-  }, [biscuits, setCenterUnitsPerSecond, onExtrudeStart, onStampStart])
+  }, [biscuitUnderStamper, onExtrudeStart, onStampStart])
 
 
   useEffect(() => {
@@ -103,6 +90,7 @@ const Machine = ({
     }
   }, [shouldStamp])
 
+
   useEffect(() => {
     if (switchValue !== 'on') {
       return
@@ -112,30 +100,29 @@ const Machine = ({
       return
     }
 
-    if (biscuitOnUnitZero) {
-      stageMove()
+    if (biscuitUnderExtruder) {
+      machineMove()
     } else {
-      stageCraft()
+      machineCraft()
     }
-  }, [switchValue, isExtruderDone, isStamperDone, isOvenReady, biscuitOnUnitZero, stageMove, stageCraft])
+  }, [switchValue, isExtruderDone, isStamperDone, isOvenReady, biscuitUnderExtruder, machineMove, machineCraft])
+
+
+  useEffect(() => {
+    if (switchValue === 'off') {
+      onChangeMotorPart('off')
+    }
+  }, [switchValue, onChangeMotorPart])
 
 
   const timer = useRef<NodeJS.Timeout>()
   useEffect(() => {
     if (switchValue === 'on') {
-      timer.current = setTimeout(() => setIsOvenReady(true), 3 * 1000)
-
-      // if (stage === 'craft' && !timer.current) {
-      //   timer.current = setTimeout(() => setIsOvenReady(true), 3 * 1000)
-      // }
-      // if (stage === 'move') {
-      //   stageMove()
-      // }
+      onChangeMotorPart('off')
+      timer.current = setTimeout(() => setIsOvenReady(true), 2000)
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => timer.current && clearTimeout(timer.current)
-  }, [switchValue, timer, stageMove])
+  }, [switchValue, onChangeMotorPart, timer])
 
 
   return (

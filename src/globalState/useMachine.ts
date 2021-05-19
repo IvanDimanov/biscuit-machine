@@ -3,6 +3,8 @@ import { BiscuitProps } from '@src/components/Biscuit'
 
 import createStore from './createStore'
 
+const BISCUIT_INITIAL_SCORE = 0.1
+
 export type MachineBiscuit = {
   key: string
   centerUnitIndex: number
@@ -13,15 +15,12 @@ export type MachineBiscuit = {
 
 type MachineDataState = {
    biscuits: MachineBiscuit[]
-   stage: 'move' | 'craft'
    totalScore: number
 }
 
 type MachineState = MachineDataState & {
   addBiscuit: () => void
-  setBiscuits: (newBiscuits: MachineBiscuit[]) => void
-  removeBiscuit: (key: string) => void
-  setStage: (stage: MachineDataState['stage']) => void
+  setBiscuits: (update: (biscuits: MachineBiscuit[]) => MachineBiscuit[]) => void
   addScore: (score: number) => void
   resetState: () => void
 }
@@ -29,7 +28,6 @@ type MachineState = MachineDataState & {
 
 const initialState: MachineDataState = {
   biscuits: [],
-  stage: 'craft',
   totalScore: 0,
 }
 
@@ -44,21 +42,13 @@ const useMachine = createStore<MachineState>((set) => ({
         centerUnitIndex: 0,
         form: 'blob',
         isBacking: false,
-        score: 0.1,
+        score: BISCUIT_INITIAL_SCORE,
       },
     ]
   }),
 
-  setBiscuits: (newBiscuits) => set((state) => {
-    state.biscuits = newBiscuits
-  }),
-
-  removeBiscuit: (key) => set((state) => {
-    state.biscuits = state.biscuits.filter((biscuit) => biscuit.key !== key)
-  }),
-
-  setStage: (newStage) => set((state) => {
-    state.stage = newStage
+  setBiscuits: (update) => set((state) => {
+    state.biscuits = update(state.biscuits)
   }),
 
   addScore: (score) => set((state) => {
@@ -72,9 +62,6 @@ const useMachine = createStore<MachineState>((set) => ({
 export const selectBiscuits = (state: MachineState) => state.biscuits
 export const selectAddBiscuits = (state: MachineState) => state.addBiscuit
 export const selectSetBiscuits = (state: MachineState) => state.setBiscuits
-export const selectRemoveBiscuit = (state: MachineState) => state.removeBiscuit
-export const selectStage = (state: MachineState) => state.stage
-export const selectSetStage = (state: MachineState) => state.setStage
 export const selectAddScore = (state: MachineState) => state.addScore
 export const selectResetState = (state: MachineState) => state.resetState
 

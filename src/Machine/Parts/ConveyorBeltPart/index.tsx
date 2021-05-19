@@ -2,12 +2,12 @@ import { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { v4 as uuidv4 } from 'uuid'
 
-import useMachine, { selectBiscuits, selectRemoveBiscuit, selectAddScore } from '@src/globalState/useMachine'
-import useConveyorBeltPart, { selectCenterUnitsPerSecond } from '@src/globalState/useConveyorBeltPart'
+import useMachine, { selectBiscuits, selectSetBiscuits, selectAddScore } from '@src/globalState/useMachine'
+import useConveyorBeltPart, { selectShouldMove, selectSetShouldMove } from '@src/globalState/useConveyorBeltPart'
 import useCollectionBoxPart, { selectSetItem } from '@src/globalState/useCollectionBoxPart'
 
 import { ConveyorBelt, Biscuit } from '@src/components'
-import { ConveyorBeltProps, ItemOnBelt } from '@src/components/ConveyorBelt'
+import { ConveyorBeltProps } from '@src/components/ConveyorBelt'
 
 import {
   EXTRUDER_CENTER_UNIT_INDEX,
@@ -32,10 +32,11 @@ const ConveyorBeltPart = ({
   className,
 }: ConveyorBeltPartProps) => {
   const biscuits = useMachine(selectBiscuits)
-  const removeBiscuit = useMachine(selectRemoveBiscuit)
+  const setBiscuits = useMachine(selectSetBiscuits)
   const addScore = useMachine(selectAddScore)
-  const centerUnitsPerSecond = useConveyorBeltPart(selectCenterUnitsPerSecond)
-  const setItem = useCollectionBoxPart(selectSetItem)
+  const shouldMove = useConveyorBeltPart(selectShouldMove)
+  const setShouldMove = useConveyorBeltPart(selectSetShouldMove)
+  const setCollectionBoxItem = useCollectionBoxPart(selectSetItem)
 
 
   const staticItems: ConveyorBeltProps['staticItems'] = useMemo(() => [
@@ -45,7 +46,7 @@ const ConveyorBeltPart = ({
       node: (
         <ExtruderPart
           testIdPrefix={`${testIdPrefix}.ConveyorBeltPart`}
-          className="relative z-20 -mt-44 -ml-10"
+          className="relative z-20 -mt-44 -ml-4"
         />
       ),
     }, {
@@ -54,7 +55,7 @@ const ConveyorBeltPart = ({
       node: (
         <StamperPart
           testIdPrefix={`${testIdPrefix}.ConveyorBeltPart`}
-          className="relative z-20 -mt-40 -ml-14"
+          className="relative z-20 -mt-40 -ml-1"
         />
       ),
     }, {
@@ -63,7 +64,7 @@ const ConveyorBeltPart = ({
       node: (
         <OvenPart
           testIdPrefix={`${testIdPrefix}.ConveyorBeltPart`}
-          className="-mt-52 -ml-36"
+          className="-mt-52 -ml-14"
         />
       ),
     },
@@ -71,11 +72,10 @@ const ConveyorBeltPart = ({
 
 
   const itemsOnBelt = useMemo<ConveyorBeltProps['itemsOnBelt']>(() => biscuits.map((biscuit) => ({
-    key: `${biscuit.key}-${biscuit.form}-${String(biscuit.isBacking)}`,
-    centerUnitIndex: 0,
+    key: biscuit.key,
+    centerUnitIndex: biscuit.centerUnitIndex,
     node: (
       <Biscuit
-        // key={`${biscuit.key}-${biscuit.form}-${String(biscuit.isBacking)}`}
         form={biscuit.form}
         isBacking={biscuit.isBacking}
       />
@@ -83,22 +83,31 @@ const ConveyorBeltPart = ({
   })), [biscuits])
 
 
-  const onItemOutOfBelt = useCallback((itemOutOfBelt: ItemOnBelt) => {
-    removeBiscuit(itemOutOfBelt.key)
+  const onMoveEnd = useCallback(() => {
+    setShouldMove(false)
 
-    const removedBiscuit = biscuits.find(({ key }) => key === itemOutOfBelt.key)
-    if (removedBiscuit) {
-      addScore(removedBiscuit.score)
-      setItem({
-        key: removedBiscuit.key,
-        node: (
-          <div className="text-yellow-300 font-bold whitespace-nowrap">
-            +{removedBiscuit.score} &#x1f36a;
-          </div>
-        ),
+    const incrementedBiscuits = biscuits.map((biscuit) => ({
+      ...biscuit,
+      centerUnitIndex: biscuit.centerUnitIndex + 1,
+    }))
+
+    incrementedBiscuits
+      .filter(({ centerUnitIndex }) => centerUnitIndex > CONVEYOR_BELT_TOTAL_CENTER_UNITS)
+      .forEach(({ key, score }) => {
+        addScore(score)
+        setCollectionBoxItem({
+          key,
+          node: (
+            <div className="text-yellow-300 font-bold whitespace-nowrap">
+              +{score} &#x1f36a;
+            </div>
+          ),
+        })
       })
-    }
-  }, [removeBiscuit, biscuits, setItem, addScore])
+
+    setBiscuits(() => incrementedBiscuits
+      .filter(({ centerUnitIndex }) => centerUnitIndex <= CONVEYOR_BELT_TOTAL_CENTER_UNITS))
+  }, [setShouldMove, biscuits, setBiscuits, addScore, setCollectionBoxItem])
 
 
   return (
@@ -109,10 +118,10 @@ const ConveyorBeltPart = ({
       <ConveyorBelt
         testIdPrefix={`${testIdPrefix}.ConveyorBeltPart`}
         totalCenterUnits={CONVEYOR_BELT_TOTAL_CENTER_UNITS}
-        centerUnitsPerSecond={centerUnitsPerSecond}
+        shouldMove={shouldMove}
         staticItems={staticItems}
         itemsOnBelt={itemsOnBelt}
-        onItemOutOfBelt={onItemOutOfBelt}
+        onMoveEnd={onMoveEnd}
       />
     </div>
   )
