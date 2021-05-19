@@ -5,6 +5,7 @@ import useOvenPart, {
   selectOvenStatus,
   selectTemperature,
   selectIsOvenOverheating,
+  selectIsOvenALive,
 } from '@src/globalState/useOvenPart'
 
 import useMachine from '@src/globalState/useMachine'
@@ -56,6 +57,7 @@ const OvenPart = ({
   const ovenStatus = useOvenPart(selectOvenStatus)
   const temperature = useOvenPart(selectTemperature)
   const IsOvenOverheating = useOvenPart(selectIsOvenOverheating)
+  const isOvenALive = useOvenPart(selectIsOvenALive)
 
   return (
     <div
@@ -92,14 +94,16 @@ const OvenPart = ({
         status={ovenStatus}
       />
 
-      {/* <Explosion
-        testIdPrefix={`${testIdPrefix}.OvenPart`}
-        className="absolute -top-36 -left-8 z-10"
-        shouldExplode
-        width={150}
-        height={20}
-        density={80}
-      /> */}
+      {isOvenALive ? null : (
+        <Explosion
+          testIdPrefix={`${testIdPrefix}.OvenPart`}
+          className="absolute -top-36 -left-8 z-10"
+          shouldExplode
+          width={150}
+          height={20}
+          density={80}
+        />
+      )}
     </div>
   )
 }

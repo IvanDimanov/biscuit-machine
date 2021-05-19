@@ -135,7 +135,7 @@ const useMachine = createStore<MachineState>((set, get) => ({
 
       biscuitScore.backingScore += temperature
 
-      if (biscuitScore.backingScore > 1800 && biscuit.form === 'unbacked') {
+      if (biscuitScore.backingScore > 2000 && biscuit.form === 'unbacked') {
         biscuit.form = 'backed'
         biscuitScore.score += BISCUIT_BACKED_SCORE
       }
