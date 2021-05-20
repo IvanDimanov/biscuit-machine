@@ -29,7 +29,7 @@ const Wrap = styled.div`
     100% {
       opacity: 0;
       filter: blur(30px);
-      transform: translateX(100px) translateY(-300px) rotate(360deg) scale(4);
+      transform: translateX(100px) translateY(-200px) rotate(360deg) scale(4);
     }
   }
 

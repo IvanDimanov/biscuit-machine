@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 
 // import SoundAndConfettiTest from './SoundAndConfettiTest'
 
-import BiscuitMachine from '@src/Machine'
+import Machine from '@src/Machine'
 
 import Title from './Title'
 import Footer from './Footer'
@@ -15,19 +15,12 @@ const StyledApp = styled.div`
   background-image: linear-gradient(#EFE2B2, #84563C);
 `
 
-const Machine = styled(BiscuitMachine)`
-  margin-top: 350px;
-  margin-left: 150px;
-`
-
 const App = () => {
   return (
     <StyledApp className="bg-yellow-200 h-screen">
       <Title />
 
-      <Machine
-        testIdPrefix="BiscuitMachine"
-      />
+      <Machine testIdPrefix="BiscuitMachine" />
 
       <Footer />
     </StyledApp>

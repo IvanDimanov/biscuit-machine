@@ -1,3 +1,4 @@
+import { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import useOvenPart, {
@@ -59,6 +60,10 @@ const OvenPart = ({
   const IsOvenOverheating = useOvenPart(selectIsOvenOverheating)
   const isOvenALive = useOvenPart(selectIsOvenALive)
 
+  const [isExplosionEnd, setIsExplosionEnd] = useState(false)
+  const onExplosionEnd = useCallback(() => setIsExplosionEnd(true), [])
+
+
   return (
     <div
       data-testid={`${testIdPrefix}.OvenPart`}
@@ -73,7 +78,7 @@ const OvenPart = ({
         />
       </div>
 
-      {IsOvenOverheating ? (
+      {IsOvenOverheating && isOvenALive ? (
         <WarningSign
           testIdPrefix={`${testIdPrefix}.OvenPart`}
           className="absolute -top-64 left-14"
@@ -94,16 +99,15 @@ const OvenPart = ({
         status={ovenStatus}
       />
 
-      {isOvenALive ? null : (
-        <Explosion
-          testIdPrefix={`${testIdPrefix}.OvenPart`}
-          className="absolute -top-36 -left-8 z-10"
-          shouldExplode
-          width={150}
-          height={20}
-          density={80}
-        />
-      )}
+      <Explosion
+        testIdPrefix={`${testIdPrefix}.OvenPart`}
+        className="absolute -top-20 -left-5 z-30"
+        shouldExplode={!isOvenALive && !isExplosionEnd}
+        onExplosionEnd={onExplosionEnd}
+        width={150}
+        height={40}
+        density={100}
+      />
     </div>
   )
 }

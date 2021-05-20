@@ -1,13 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
+import styled from '@emotion/styled'
 
 import useMachine, {
   selectBiscuits,
   selectSetBiscuits,
   MachineBiscuit,
 } from '@src/globalState/useMachine'
-
-import useSwitchPart, { selectValue } from '@src/globalState/useSwitchPart'
+import useSwitchPart, {
+  selectValue as selectSwitchValue,
+  selectOnChangeValue as selectSwitchOnChangeValue,
+  selectOnChangeDisabled as selectSwitchOnChangeDisabled,
+} from '@src/globalState/useSwitchPart'
 import useMotorPart, { selectOnChange as selectMotorOnChange } from '@src/globalState/useMotorPart'
 
 import useExtruderPart, {
@@ -29,6 +33,7 @@ import useConveyorBeltPart, {
 
 import useOvenPart, {
   selectIsOvenReady,
+  selectIsOvenALive,
   selectOnChange as selectOvenOnChange,
 } from '@src/globalState/useOvenPart'
 
@@ -39,9 +44,13 @@ import SwitchPart from './Parts/SwitchPart'
 
 
 export const EXTRUDER_CENTER_UNIT_INDEX = 0
-export const STAMPER_CENTER_UNIT_INDEX = 3
-export const OVEN_CENTER_UNIT_INDEX = 6
+export const STAMPER_CENTER_UNIT_INDEX = 2
+export const OVEN_CENTER_UNIT_INDEX = 4
 
+
+const Wrap = styled.div`
+  width: 1200px;
+`
 
 type MachineProps = {
   testIdPrefix?: string
@@ -55,8 +64,10 @@ const Machine = ({
   const biscuits = useMachine(selectBiscuits)
   const setBiscuits = useMachine(selectSetBiscuits)
 
-  const switchValue = useSwitchPart(selectValue)
-  const onChangeMotorPart = useMotorPart(selectMotorOnChange)
+  const switchValue = useSwitchPart(selectSwitchValue)
+  const onChangeSwitchValue = useSwitchPart(selectSwitchOnChangeValue)
+  const onChangeSwitchDisabled = useSwitchPart(selectSwitchOnChangeDisabled)
+  const onChangeMotor = useMotorPart(selectMotorOnChange)
 
   const shouldExtrude = useExtruderPart(selectShouldExtrude)
   const onExtrudeStart = useExtruderPart(selectOnExtrudeStart)
@@ -70,6 +81,7 @@ const Machine = ({
   const setShouldMove = useConveyorBeltPart(selectSetShouldMove)
 
   const isOvenReady = useOvenPart(selectIsOvenReady)
+  const IsOvenALive = useOvenPart(selectIsOvenALive)
   const onChangeOvenPart = useOvenPart(selectOvenOnChange)
 
 
@@ -85,15 +97,15 @@ const Machine = ({
 
   const machineMove = useCallback(() => {
     setShouldMove(true)
-    onChangeMotorPart('on')
-  }, [setShouldMove, onChangeMotorPart])
+    onChangeMotor('on')
+  }, [setShouldMove, onChangeMotor])
 
 
   useEffect(() => {
     if (!shouldMove) {
-      onChangeMotorPart('pause')
+      onChangeMotor('pause')
     }
-  }, [shouldMove, onChangeMotorPart])
+  }, [shouldMove, onChangeMotor])
 
 
   const machineCraft = useCallback(() => {
@@ -149,12 +161,12 @@ const Machine = ({
 
   useEffect(() => {
     if (switchValue === 'on') {
-      onChangeMotorPart('pause')
+      onChangeMotor('pause')
       onExtrudePause()
       onStampPause()
       onChangeOvenPart('on')
     }
-  }, [switchValue, onChangeMotorPart, onExtrudePause, onChangeOvenPart, onStampPause])
+  }, [switchValue, onChangeMotor, onExtrudePause, onChangeOvenPart, onStampPause])
 
 
   useEffect(() => {
@@ -166,10 +178,18 @@ const Machine = ({
 
   useEffect(() => {
     if (switchValue === 'off') {
-      onChangeMotorPart('off')
+      onChangeMotor('off')
       onChangeOvenPart('off')
     }
-  }, [switchValue, onChangeMotorPart, onChangeOvenPart])
+  }, [switchValue, onChangeMotor, onChangeOvenPart])
+
+
+  useEffect(() => {
+    if (!IsOvenALive) {
+      onChangeSwitchValue('pause')
+      onChangeSwitchDisabled(true)
+    }
+  }, [IsOvenALive, onChangeSwitchValue, onChangeSwitchDisabled])
 
 
   return (
@@ -177,10 +197,10 @@ const Machine = ({
       data-testid={`${testIdPrefix}.Machine`}
       className={className}
     >
-      <div className="flex select-none">
+      <Wrap className="flex select-none mt-96 mx-auto">
         <MotorPart
           testIdPrefix={`${testIdPrefix}.Machine`}
-          className="-mt-2 mr-2"
+          className="-mt-2 ml-8 mr-2"
         />
 
         <ConveyorBeltPart
@@ -190,11 +210,11 @@ const Machine = ({
         <CollectionBoxPart
           testIdPrefix={`${testIdPrefix}.Machine`}
         />
-      </div>
+      </Wrap>
 
       <SwitchPart
         testIdPrefix={`${testIdPrefix}.Machine`}
-        className="flex justify-center mt-20 -ml-36"
+        className="flex justify-center mt-20"
       />
     </div>
   )

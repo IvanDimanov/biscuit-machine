@@ -9,7 +9,8 @@ type SwitchPartDataState = {
 }
 
 type SwitchPartState = SwitchPartDataState & {
-  onChange: SwitchProps['onChange']
+  onChangeValue: SwitchProps['onChange']
+  onChangeDisabled: (newDisabled: boolean) => void
   resetState: () => void
 }
 
@@ -22,8 +23,12 @@ const initialState: SwitchPartDataState = {
 const useSwitchPart = createStore<SwitchPartState>((set) => ({
   ...initialState,
 
-  onChange: (newValue: SwitchProps['value']) => set((state) => {
+  onChangeValue: (newValue) => set((state) => {
     state.value = newValue
+  }),
+
+  onChangeDisabled: (newDisabled) => set((state) => {
+    state.disabled = newDisabled
   }),
 
   resetState: () => set(() => initialState),
@@ -32,7 +37,8 @@ const useSwitchPart = createStore<SwitchPartState>((set) => ({
 
 export const selectValue = (state: SwitchPartState) => state.value
 export const selectDisabled = (state: SwitchPartState) => state.disabled
-export const selectOnChange = (state: SwitchPartState) => state.onChange
+export const selectOnChangeValue = (state: SwitchPartState) => state.onChangeValue
+export const selectOnChangeDisabled = (state: SwitchPartState) => state.onChangeDisabled
 export const selectResetState = (state: SwitchPartState) => state.resetState
 
 

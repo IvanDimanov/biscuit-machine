@@ -7,8 +7,8 @@ import createStore from './createStore'
 const REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MIN = Number(process.env.REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MIN)
 const REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MAX = Number(process.env.REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MAX)
 
-const OVEN_INITIAL_TEMPERATURE = 30
-const OVEN_INITIAL_LIFE_POINTS = 50
+const OVEN_INITIAL_TEMPERATURE = Math.round(REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MIN / 7.33)
+const OVEN_INITIAL_LIFE_POINTS = Math.round(REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MAX / 5)
 
 /**
  * We gonna increase Oven `temperature`
@@ -32,20 +32,20 @@ const regulateTemperature = (newValue, set) => {
   /* Temperature heating increments */
   if (newValue === 'on') {
     temperatureInterval = setInterval(() => set((state) => {
-      if (state.temperature < (0.5 * REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MIN)) {
-        state.temperature += 30
+      if (state.temperature < (0.6 * REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MIN)) {
+        state.temperature += 40
         state.lifePoints = getOvenLifePoints(state)
         return
       }
 
       if (state.temperature < (0.9 * REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MIN)) {
-        state.temperature += 20
+        state.temperature += 30
         state.lifePoints = getOvenLifePoints(state)
         return
       }
 
       if (state.temperature < (0.99 * REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MIN)) {
-        state.temperature += 2
+        state.temperature += 3
         state.lifePoints = getOvenLifePoints(state)
         return
       }

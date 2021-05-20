@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-import useSwitchPart, { selectValue, selectDisabled, selectOnChange } from '@src/globalState/useSwitchPart'
+import useSwitchPart, { selectValue, selectDisabled, selectOnChangeValue } from '@src/globalState/useSwitchPart'
 import { Switch } from '@src/components'
 
 
@@ -15,7 +15,7 @@ const SwitchPart = ({
 }: SwitchPartProps) => {
   const value = useSwitchPart(selectValue)
   const disabled = useSwitchPart(selectDisabled)
-  const onChange = useSwitchPart(selectOnChange)
+  const onChangeValue = useSwitchPart(selectOnChangeValue)
 
   return (
     <div
@@ -25,7 +25,7 @@ const SwitchPart = ({
       <Switch
         testIdPrefix={`${testIdPrefix}.SwitchPart`}
         value={value}
-        onChange={onChange}
+        onChange={onChangeValue}
         disabled={disabled}
       />
     </div>

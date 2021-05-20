@@ -24,7 +24,7 @@ import StamperPart from '../StamperPart'
 import OvenPart from '../OvenPart'
 
 
-const CONVEYOR_BELT_TOTAL_CENTER_UNITS = 9
+const CONVEYOR_BELT_TOTAL_CENTER_UNITS = 6
 
 type ConveyorBeltPartProps = {
   testIdPrefix?: string

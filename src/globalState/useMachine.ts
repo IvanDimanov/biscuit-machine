@@ -3,6 +3,9 @@ import { BiscuitProps } from '@src/components/Biscuit'
 
 import createStore from './createStore'
 
+const REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MIN = Number(process.env.REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MIN)
+const REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MAX = Number(process.env.REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MAX)
+
 const BISCUIT_INITIAL_SCORE = 0.1
 const BISCUIT_STAMP_SCORE = 0.2
 const BISCUIT_BACKED_SCORE = 1
@@ -25,6 +28,7 @@ type MachineDataState = {
    biscuits: MachineBiscuit[]
    biscuitScores: MachineBiscuitScore[]
    totalScore: number
+   totalCollectedBiscuits: number
 }
 
 type MachineState = MachineDataState & {
@@ -42,6 +46,7 @@ const initialState: MachineDataState = {
   biscuits: [],
   biscuitScores: [],
   totalScore: 0,
+  totalCollectedBiscuits: 0,
 }
 
 const useMachine = createStore<MachineState>((set, get) => ({
@@ -135,12 +140,12 @@ const useMachine = createStore<MachineState>((set, get) => ({
 
       biscuitScore.backingScore += temperature
 
-      if (biscuitScore.backingScore > 2000 && biscuit.form === 'unbacked') {
+      if (biscuitScore.backingScore > 8 * REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MIN && biscuit.form === 'unbacked') {
         biscuit.form = 'backed'
         biscuitScore.score += BISCUIT_BACKED_SCORE
       }
 
-      if (biscuitScore.backingScore > 3500 && biscuit.form === 'backed') {
+      if (biscuitScore.backingScore > 21 * REACT_APP_OVEN_OPTIMAL_TEMPERATURE_MAX && biscuit.form === 'backed') {
         biscuit.form = 'overBacked'
         biscuitScore.score += BISCUIT_OVER_BACKED_SCORE
       }
@@ -150,6 +155,7 @@ const useMachine = createStore<MachineState>((set, get) => ({
 
   addScore: (score) => set((state) => {
     state.totalScore += score
+    state.totalCollectedBiscuits += 1
   }),
 
 
@@ -158,6 +164,8 @@ const useMachine = createStore<MachineState>((set, get) => ({
 
 
 export const selectBiscuits = (state: MachineState) => state.biscuits
+export const selectTotalScore = (state: MachineState) => state.totalScore
+export const selectTotalCollectedBiscuits = (state: MachineState) => state.totalCollectedBiscuits
 export const selectMoveBiscuits = (state: MachineState) => state.moveBiscuits
 export const selectAddBiscuits = (state: MachineState) => state.addBiscuit
 export const selectSetBiscuits = (state: MachineState) => state.setBiscuits
