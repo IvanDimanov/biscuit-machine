@@ -63,7 +63,7 @@ const Wrap = styled.div`
 export type MachineProps = {
   testIdPrefix?: string
   className?: string
-  onGameOver: (totalScore: number, totalCollectedBiscuits: number, isOvenALive: boolean) => void
+  onGameOver: (isOvenALive: boolean, totalScore: number, totalCollectedBiscuits: number) => void
 }
 
 const Machine = ({
@@ -213,7 +213,7 @@ const Machine = ({
       setIsMachineStarted(false)
       onChangeSwitchDisabled(true)
       setBiscuits(() => [])
-      onGameOver(totalScore, totalCollectedBiscuits, isOvenALive)
+      onGameOver(isOvenALive, totalScore, totalCollectedBiscuits)
     }
   }, [
     switchValue,
@@ -221,9 +221,9 @@ const Machine = ({
     onChangeSwitchDisabled,
     setBiscuits,
     onGameOver,
+    isOvenALive,
     totalScore,
     totalCollectedBiscuits,
-    isOvenALive,
   ])
 
 
@@ -234,7 +234,7 @@ const Machine = ({
       onChangeSwitchDisabled(true)
 
       timer = setTimeout(() => {
-        onGameOver(totalScore, totalCollectedBiscuits, isOvenALive)
+        onGameOver(isOvenALive, totalScore, totalCollectedBiscuits)
       }, EXPLOSION_ANIMATION_TIME_IN_SECONDS * 1000)
     }
     return () => clearTimeout(timer)
