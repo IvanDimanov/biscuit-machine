@@ -40,21 +40,23 @@ const SoundControls = ({
       className={className}
     >
 
-      <div className="flex space-x-4">
+      <div className="flex divide-x-2 divide-gray-600">
         <div
           data-testid={`${testIdPrefix}.SoundControls.GameMusic`}
-          className="inline-block cursor-pointer opacity-80 hover:opacity-100"
+          className="inline-block cursor-pointer opacity-80 hover:opacity-100 p-2"
           onClick={toggleGameMusicVolume}
         >
           {gameMusicVolume ? (
             <img
               data-testid={`${testIdPrefix}.SoundControls.GameMusic.OnButton`}
+              className="w-10"
               src={ImageMusicOn}
               alt="Game music is on"
             />
           ) : (
             <img
               data-testid={`${testIdPrefix}.SoundControls.GameMusic.OffButton`}
+              className="w-10"
               src={ImageMusicOff}
               alt="Game music is off"
             />
@@ -64,18 +66,20 @@ const SoundControls = ({
 
         <div
           data-testid={`${testIdPrefix}.SoundControls.sfx`}
-          className="inline-block cursor-pointer opacity-80 hover:opacity-100"
+          className="inline-block cursor-pointer opacity-80 hover:opacity-100 p-2"
           onClick={toggleSfxVolume}
         >
           {sfxVolume ? (
             <img
               data-testid={`${testIdPrefix}.SoundControls.sfx.OnButton`}
+              className="w-10"
               src={ImageSfxOn}
               alt="Game sound effects are on"
             />
           ) : (
             <img
               data-testid={`${testIdPrefix}.SoundControls.sfx.OffButton`}
+              className="w-10"
               src={ImageSfxOff}
               alt="Game sound effects are off"
             />

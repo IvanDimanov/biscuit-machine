@@ -1,8 +1,6 @@
 import { useCallback, useState } from 'react'
 import styled from '@emotion/styled'
 
-// import SoundAndConfettiTest from './SoundAndConfettiTest'
-
 import Machine, { MachineProps } from '@src/Machine'
 
 import useMachine, { selectResetState as selectResetMachineState } from '@src/globalState/useMachine'
@@ -16,6 +14,7 @@ import useCollectionBoxPart, { selectResetState as selectResetBoxState } from '@
 
 import Title from './Title'
 import Footer from './Footer'
+import LanguageControls from './LanguageControls'
 import SoundControls from './SoundControls'
 import ModalWon from './modals/ModalWon'
 import ModalLost from './modals/ModalLost'
@@ -82,7 +81,8 @@ const App = () => {
     <StyledApp className="bg-yellow-200 h-screen">
       <Title />
 
-      <SoundControls className="absolute right-20" />
+      <LanguageControls className="absolute right-20" />
+      <SoundControls className="absolute right-20 mt-16" />
 
       <Machine
         testIdPrefix="BiscuitMachine"
