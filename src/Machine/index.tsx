@@ -228,14 +228,16 @@ const Machine = ({
 
 
   useEffect(() => {
+    let timer
     if (!isOvenALive) {
       onChangeSwitchValue('pause')
       onChangeSwitchDisabled(true)
 
-      setTimeout(() => {
+      timer = setTimeout(() => {
         onGameOver(totalScore, totalCollectedBiscuits, isOvenALive)
       }, EXPLOSION_ANIMATION_TIME_IN_SECONDS * 1000)
     }
+    return () => clearTimeout(timer)
   }, [isOvenALive, onChangeSwitchValue, onChangeSwitchDisabled, onGameOver, totalScore, totalCollectedBiscuits])
 
 

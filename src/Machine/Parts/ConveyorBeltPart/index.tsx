@@ -7,6 +7,8 @@ import useMachine, {
   selectMoveBiscuits,
   selectAddScore,
 } from '@src/globalState/useMachine'
+
+import useSwitchPart, { selectValue as selectSwitchValue } from '@src/globalState/useSwitchPart'
 import useConveyorBeltPart, { selectShouldMove, selectSetShouldMove } from '@src/globalState/useConveyorBeltPart'
 import useCollectionBoxPart, { selectSetItem } from '@src/globalState/useCollectionBoxPart'
 
@@ -38,6 +40,8 @@ const ConveyorBeltPart = ({
   const biscuits = useMachine(selectBiscuits)
   const moveBiscuits = useMachine(selectMoveBiscuits)
   const addScore = useMachine(selectAddScore)
+
+  const switchValue = useSwitchPart(selectSwitchValue)
 
   const shouldMove = useConveyorBeltPart(selectShouldMove)
   const setShouldMove = useConveyorBeltPart(selectSetShouldMove)
@@ -91,6 +95,11 @@ const ConveyorBeltPart = ({
 
   const onMoveEnd = useCallback(() => {
     setShouldMove(false)
+
+    if (switchValue === 'off') {
+      return
+    }
+
     const { removedBiscuits, removedBiscuitScores } = moveBiscuits(CONVEYOR_BELT_TOTAL_CENTER_UNITS)
 
     removedBiscuits
@@ -110,7 +119,7 @@ const ConveyorBeltPart = ({
           ),
         })
       })
-  }, [setShouldMove, moveBiscuits, addScore, setCollectionBoxItem])
+  }, [switchValue, setShouldMove, moveBiscuits, addScore, setCollectionBoxItem])
 
 
   return (
