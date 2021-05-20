@@ -230,6 +230,7 @@ const Machine = ({
   useEffect(() => {
     let timer
     if (!isOvenALive) {
+      setIsMachineStarted(false)
       onChangeSwitchValue('pause')
       onChangeSwitchDisabled(true)
 

@@ -64,9 +64,16 @@ const ModalWon = ({
   useEffect(() => {
     let timer
     if (isOpen) {
-      timer = setTimeout(() => setIsConfettiActive(true), 2000)
+      timer = setTimeout(() => setIsConfettiActive(true), 1000)
     }
     return () => clearTimeout(timer)
+  }, [isOpen])
+
+
+  useEffect(() => {
+    if (!isOpen) {
+      setIsConfettiActive(false)
+    }
   }, [isOpen])
 
 
@@ -82,7 +89,7 @@ const ModalWon = ({
           </div>
 
           <Header className="text-7xl text-green-600 font-extrabold text-center uppercase">
-            You Won {String(isConfettiActive)}
+            You Won
           </Header>
 
           <Scoreboard

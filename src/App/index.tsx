@@ -58,7 +58,7 @@ const App = () => {
   ])
 
 
-  const [gameOverType, setGameOverType] = useState<'won' | 'lost' | 'game not over yet'>('game not over yet')
+  const [gameOverType, setGameOverType] = useState<'won' | 'lost' | 'play'>('play')
   const [totalScore, setTotalScore] = useState(0)
   const [totalCollectedBiscuits, setTotalCollectedBiscuits] = useState(0)
 
@@ -70,7 +70,7 @@ const App = () => {
 
 
   const onPlayAgain = useCallback(() => {
-    setGameOverType('game not over yet')
+    setGameOverType('play')
     setTotalScore(0)
     setTotalCollectedBiscuits(0)
     resetAllStates()

@@ -21,7 +21,7 @@ const ExtruderPart = ({
   const onExtrudeEnd = useExtruderPart(selectOnExtrudeEnd)
 
   const extruderOnExtrudeEnd = useCallback(() => {
-    if (statusValue) {
+    if (statusValue !== 'off') {
       addBiscuit()
     }
 
