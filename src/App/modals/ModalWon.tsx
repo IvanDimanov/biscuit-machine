@@ -3,9 +3,11 @@ import PropTypes from 'prop-types'
 import Modal from 'react-modal'
 import Confetti, { ConfettiConfig } from 'react-dom-confetti'
 import styled from '@emotion/styled'
+import Sound from 'react-sound'
 
 import { Button } from '@src/components'
 
+import SoundFileUrl from './sounds/gameOverWon.wav'
 import Scoreboard from './Scoreboard'
 
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
@@ -122,6 +124,11 @@ const ModalWon = ({
           config={confettiConfig}
         />
       </div>
+
+      <Sound
+        url={SoundFileUrl}
+        playStatus={isOpen ? 'PLAYING' : 'STOPPED'}
+      />
     </div>
   )
 }

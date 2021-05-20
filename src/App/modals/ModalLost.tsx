@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types'
 import Modal from 'react-modal'
 import styled from '@emotion/styled'
+import Sound from 'react-sound'
 
 import { Button } from '@src/components'
 
+import SoundFileUrl from './sounds/gameOverLost.wav'
 import Scoreboard from './Scoreboard'
 
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
@@ -43,41 +45,49 @@ const ModalLost = ({
   totalCollectedBiscuits,
   onPlayAgain,
 }: ModalLostProps) => (
-  <Modal
-    isOpen={isOpen}
-    style={style}
-  >
-    <div data-testid={`${testIdPrefix}.ModalLost.Content`}>
-      <div className="text-xs text-center mb-4">
-        Better luck next time
+  <div>
+    <Modal
+      isOpen={isOpen}
+      style={style}
+    >
+      <div data-testid={`${testIdPrefix}.ModalLost.Content`}>
+        <div className="text-xs text-center mb-4">
+          Better luck next time
+        </div>
+
+        <Header className="text-7xl text-red-600 font-extrabold text-center uppercase">
+          Game Over
+        </Header>
+
+        <Scoreboard
+          testIdPrefix={`${testIdPrefix}.ModalLost`}
+          className="w-64 my-10 mx-auto"
+          totalScore={totalScore}
+          totalCollectedBiscuits={totalCollectedBiscuits}
+        />
+
+        <div className="text-xs text-center">
+          Ready to try again?
+        </div>
+
+        <div className="flex justify-center my-2">
+          <Button
+            testIdPrefix={`${testIdPrefix}.ModalLost.PlayAgainButton`}
+            variant="primary"
+            onClick={onPlayAgain}
+          >
+            Play again
+          </Button>
+        </div>
       </div>
+    </Modal>
 
-      <Header className="text-7xl text-red-600 font-extrabold text-center uppercase">
-        Game Over
-      </Header>
 
-      <Scoreboard
-        testIdPrefix={`${testIdPrefix}.ModalLost`}
-        className="w-64 my-10 mx-auto"
-        totalScore={totalScore}
-        totalCollectedBiscuits={totalCollectedBiscuits}
-      />
-
-      <div className="text-xs text-center">
-        Ready to try again?
-      </div>
-
-      <div className="flex justify-center my-2">
-        <Button
-          testIdPrefix={`${testIdPrefix}.ModalLost.PlayAgainButton`}
-          variant="primary"
-          onClick={onPlayAgain}
-        >
-          Play again
-        </Button>
-      </div>
-    </div>
-  </Modal>
+    <Sound
+      url={SoundFileUrl}
+      playStatus={isOpen ? 'PLAYING' : 'STOPPED'}
+    />
+  </div>
 )
 
 
