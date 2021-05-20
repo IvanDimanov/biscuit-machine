@@ -21,14 +21,16 @@ const ExtruderPart = ({
   const onExtrudeEnd = useExtruderPart(selectOnExtrudeEnd)
 
   const extruderOnExtrudeEnd = useCallback(() => {
-    addBiscuit()
+    if (statusValue) {
+      addBiscuit()
+    }
 
     /**
      * We announce the extruder completion with a delay
      * just to make the new biscuit visually clear when added
      */
     setTimeout(onExtrudeEnd, 100)
-  }, [addBiscuit, onExtrudeEnd])
+  }, [statusValue, addBiscuit, onExtrudeEnd])
 
 
   return (

@@ -1,8 +1,9 @@
+import { useCallback } from 'react'
 import styled from '@emotion/styled'
 
 // import SoundAndConfettiTest from './SoundAndConfettiTest'
 
-import Machine from '@src/Machine'
+import Machine, { MachineProps } from '@src/Machine'
 
 import Title from './Title'
 import Footer from './Footer'
@@ -16,11 +17,21 @@ const StyledApp = styled.div`
 `
 
 const App = () => {
+  const onGameOver = useCallback<MachineProps['onGameOver']>((totalScore, totalCollectedBiscuits, isOvenALive) => {
+    console.log('totalScore =', totalScore)
+    console.log('totalCollectedBiscuits =', totalCollectedBiscuits)
+    console.log('isOvenALive =', isOvenALive)
+  }, [])
+
+
   return (
     <StyledApp className="bg-yellow-200 h-screen">
       <Title />
 
-      <Machine testIdPrefix="BiscuitMachine" />
+      <Machine
+        testIdPrefix="BiscuitMachine"
+        onGameOver={onGameOver}
+      />
 
       <Footer />
     </StyledApp>

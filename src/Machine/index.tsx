@@ -2,28 +2,36 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 
+import { EXPLOSION_ANIMATION_TIME_IN_SECONDS } from '@src/components/Explosion'
+
 import useMachine, {
   selectBiscuits,
+  selectTotalScore,
+  selectTotalCollectedBiscuits,
   selectSetBiscuits,
   MachineBiscuit,
 } from '@src/globalState/useMachine'
+
 import useSwitchPart, {
   selectValue as selectSwitchValue,
   selectOnChangeValue as selectSwitchOnChangeValue,
   selectOnChangeDisabled as selectSwitchOnChangeDisabled,
 } from '@src/globalState/useSwitchPart'
+
 import useMotorPart, { selectOnChange as selectMotorOnChange } from '@src/globalState/useMotorPart'
 
 import useExtruderPart, {
   selectShouldExtrude,
   selectOnExtrudeStart,
   selectOnPause as selectOnExtrudePause,
+  selectOnOff as selectOnExtrudeOff,
 } from '@src/globalState/useExtruderPart'
 
 import useStamperPart, {
   selectShouldStamp,
   selectOnStampStart,
   selectOnPause as selectOnStampPause,
+  selectOnOff as selectOnStampOff,
 } from '@src/globalState/useStamperPart'
 
 import useConveyorBeltPart, {
@@ -52,16 +60,20 @@ const Wrap = styled.div`
   width: 1200px;
 `
 
-type MachineProps = {
+export type MachineProps = {
   testIdPrefix?: string
   className?: string
+  onGameOver: (totalScore: number, totalCollectedBiscuits: number, isOvenALive: boolean) => void
 }
 
 const Machine = ({
   testIdPrefix,
   className,
+  onGameOver,
 }: MachineProps) => {
   const biscuits = useMachine(selectBiscuits)
+  const totalScore = useMachine(selectTotalScore)
+  const totalCollectedBiscuits = useMachine(selectTotalCollectedBiscuits)
   const setBiscuits = useMachine(selectSetBiscuits)
 
   const switchValue = useSwitchPart(selectSwitchValue)
@@ -72,16 +84,18 @@ const Machine = ({
   const shouldExtrude = useExtruderPart(selectShouldExtrude)
   const onExtrudeStart = useExtruderPart(selectOnExtrudeStart)
   const onExtrudePause = useExtruderPart(selectOnExtrudePause)
+  const onExtrudeOff = useExtruderPart(selectOnExtrudeOff)
 
   const shouldStamp = useStamperPart(selectShouldStamp)
   const onStampStart = useStamperPart(selectOnStampStart)
   const onStampPause = useStamperPart(selectOnStampPause)
+  const onStampOff = useStamperPart(selectOnStampOff)
 
   const shouldMove = useConveyorBeltPart(selectShouldMove)
   const setShouldMove = useConveyorBeltPart(selectSetShouldMove)
 
   const isOvenReady = useOvenPart(selectIsOvenReady)
-  const IsOvenALive = useOvenPart(selectIsOvenALive)
+  const isOvenALive = useOvenPart(selectIsOvenALive)
   const onChangeOvenPart = useOvenPart(selectOvenOnChange)
 
 
@@ -179,17 +193,50 @@ const Machine = ({
   useEffect(() => {
     if (switchValue === 'off') {
       onChangeMotor('off')
+      onExtrudeOff()
+      onStampOff()
       onChangeOvenPart('off')
     }
-  }, [switchValue, onChangeMotor, onChangeOvenPart])
+  }, [switchValue, onChangeMotor, onExtrudeOff, onStampOff, onChangeOvenPart])
+
+
+  const [isMachineStarted, setIsMachineStarted] = useState(false)
+  useEffect(() => {
+    if (switchValue === 'on') {
+      setIsMachineStarted(true)
+    }
+  }, [switchValue])
 
 
   useEffect(() => {
-    if (!IsOvenALive) {
+    if (switchValue === 'off' && isMachineStarted) {
+      setIsMachineStarted(false)
+      onChangeSwitchDisabled(true)
+      setBiscuits(() => [])
+      onGameOver(totalScore, totalCollectedBiscuits, isOvenALive)
+    }
+  }, [
+    switchValue,
+    isMachineStarted,
+    onChangeSwitchDisabled,
+    setBiscuits,
+    onGameOver,
+    totalScore,
+    totalCollectedBiscuits,
+    isOvenALive,
+  ])
+
+
+  useEffect(() => {
+    if (!isOvenALive) {
       onChangeSwitchValue('pause')
       onChangeSwitchDisabled(true)
+
+      setTimeout(() => {
+        onGameOver(totalScore, totalCollectedBiscuits, isOvenALive)
+      }, EXPLOSION_ANIMATION_TIME_IN_SECONDS * 1000)
     }
-  }, [IsOvenALive, onChangeSwitchValue, onChangeSwitchDisabled])
+  }, [isOvenALive, onChangeSwitchValue, onChangeSwitchDisabled, onGameOver, totalScore, totalCollectedBiscuits])
 
 
   return (
@@ -224,11 +271,13 @@ const Machine = ({
 Machine.propTypes = {
   testIdPrefix: PropTypes.string,
   className: PropTypes.string,
+  onGameOver: PropTypes.func,
 }
 
 Machine.defaultProps = {
   testIdPrefix: 'Test',
   className: undefined,
+  onGameOver: () => {},
 }
 
 Machine.displayName = 'Machine'

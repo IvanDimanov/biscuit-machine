@@ -154,7 +154,7 @@ const useMachine = createStore<MachineState>((set, get) => ({
 
 
   addScore: (score) => set((state) => {
-    state.totalScore += score
+    state.totalScore = Math.round((state.totalScore + score) * 1000) / 1000
     state.totalCollectedBiscuits += 1
   }),
 

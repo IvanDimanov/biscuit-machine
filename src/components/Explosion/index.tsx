@@ -10,7 +10,7 @@ import SoundFileUrl from './sounds/explosion.wav'
 
 
 /* Used as a notification when the explosion is completed */
-const ANIMATION_TIME_IN_SECONDS = 4
+export const EXPLOSION_ANIMATION_TIME_IN_SECONDS = 4
 
 const Wrap = styled.div`
   position: relative;
@@ -35,7 +35,7 @@ const Wrap = styled.div`
 
   div {
     position: absolute;
-    animation: smokeAnimation ${ANIMATION_TIME_IN_SECONDS}s linear forwards;
+    animation: smokeAnimation ${EXPLOSION_ANIMATION_TIME_IN_SECONDS}s linear forwards;
   }
 `
 
@@ -84,7 +84,7 @@ const Explosion = ({
 
   useEffect(() => {
     if (shouldExplode) {
-      timer.current = setTimeout(onExplosionEnd, ANIMATION_TIME_IN_SECONDS * 1000)
+      timer.current = setTimeout(onExplosionEnd, EXPLOSION_ANIMATION_TIME_IN_SECONDS * 1000)
     }
     return () => timer.current && clearTimeout(timer.current)
   }, [shouldExplode, onExplosionEnd])
