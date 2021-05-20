@@ -7,6 +7,8 @@ import Sound from 'react-sound'
 
 import { Button } from '@src/components'
 
+import useSfx, { selectVolume } from '@src/globalState/useSfx'
+
 import SoundFileUrl from './sounds/gameOverWon.wav'
 import Scoreboard from './Scoreboard'
 
@@ -61,6 +63,8 @@ const ModalWon = ({
   totalCollectedBiscuits,
   onPlayAgain,
 }: ModalWonProps) => {
+  const sfxVolume = useSfx(selectVolume)
+
   const [isConfettiActive, setIsConfettiActive] = useState(false)
 
   useEffect(() => {
@@ -127,6 +131,7 @@ const ModalWon = ({
 
       <Sound
         url={SoundFileUrl}
+        volume={sfxVolume}
         playStatus={isOpen ? 'PLAYING' : 'STOPPED'}
       />
     </div>

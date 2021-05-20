@@ -16,6 +16,7 @@ import useCollectionBoxPart, { selectResetState as selectResetBoxState } from '@
 
 import Title from './Title'
 import Footer from './Footer'
+import SoundControls from './SoundControls'
 import ModalWon from './modals/ModalWon'
 import ModalLost from './modals/ModalLost'
 
@@ -80,6 +81,8 @@ const App = () => {
   return (
     <StyledApp className="bg-yellow-200 h-screen">
       <Title />
+
+      <SoundControls className="absolute right-20" />
 
       <Machine
         testIdPrefix="BiscuitMachine"

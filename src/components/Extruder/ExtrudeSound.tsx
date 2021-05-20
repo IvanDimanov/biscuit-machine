@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types'
 import Sound from 'react-sound'
 
+import useSfx, { selectVolume } from '@src/globalState/useSfx'
+
 import SoundFileUrl from './sounds/put.wav'
 
 
@@ -10,12 +12,17 @@ type ExtrudeSoundProps = {
 
 const ExtrudeSound = ({
   shouldExtrude,
-}: ExtrudeSoundProps) => (
-  <Sound
-    url={SoundFileUrl}
-    playStatus={shouldExtrude ? 'PLAYING' : 'STOPPED'}
-  />
-)
+}: ExtrudeSoundProps) => {
+  const sfxVolume = useSfx(selectVolume)
+
+  return (
+    <Sound
+      url={SoundFileUrl}
+      volume={sfxVolume}
+      playStatus={shouldExtrude ? 'PLAYING' : 'STOPPED'}
+    />
+  )
+}
 
 
 ExtrudeSound.propTypes = {

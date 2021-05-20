@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types'
 import Sound from 'react-sound'
 
+import useSfx, { selectVolume } from '@src/globalState/useSfx'
+
 import SoundFileUrl from './sounds/stamp.wav'
 
 
@@ -10,12 +12,17 @@ type StampSoundProps = {
 
 const StampSound = ({
   shouldStamp,
-}: StampSoundProps) => (
-  <Sound
-    url={SoundFileUrl}
-    playStatus={shouldStamp ? 'PLAYING' : 'STOPPED'}
-  />
-)
+}: StampSoundProps) => {
+  const sfxVolume = useSfx(selectVolume)
+
+  return (
+    <Sound
+      url={SoundFileUrl}
+      volume={sfxVolume}
+      playStatus={shouldStamp ? 'PLAYING' : 'STOPPED'}
+    />
+  )
+}
 
 
 StampSound.propTypes = {

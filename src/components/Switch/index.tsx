@@ -1,9 +1,9 @@
 import { ChangeEvent, useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
-import Sound, { ReactSoundProps } from 'react-sound'
+import { ReactSoundProps } from 'react-sound'
 import styled from '@emotion/styled'
 
-import SoundFileUrl from './sounds/onChange.wav'
+import SwitchSound from './SwitchSound'
 
 const FOREGROUND_COLOR = '#17181c'
 const BACKGROUND_COLOR = '#e3e4e8'
@@ -208,8 +208,7 @@ const Switch = ({
         </form>
       </Wrap>
 
-      <Sound
-        url={SoundFileUrl}
+      <SwitchSound
         playStatus={soundPlayStatus}
         onFinishedPlaying={stopPlayStatus}
       />

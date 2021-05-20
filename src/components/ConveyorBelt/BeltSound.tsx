@@ -3,6 +3,8 @@ import Sound, { ReactSoundProps } from 'react-sound'
 
 import rescaleInput from '@src/utils/rescaleInput'
 
+import useSfx, { selectVolume } from '@src/globalState/useSfx'
+
 import { CENTER_UNITS_PER_SECOND_MIN, CENTER_UNITS_PER_SECOND_MAX } from './index'
 import SoundFileUrl from './sounds/belt.wav'
 
@@ -16,6 +18,8 @@ type BeltSoundProps = {
 const BeltSound = ({
   centerUnitsPerSecond,
 }: BeltSoundProps) => {
+  const sfxVolume = useSfx(selectVolume)
+
   const [playStatus, setPlayStatus] = useState<ReactSoundProps['playStatus']>('STOPPED')
   useEffect(() => {
     if (Math.max(0, centerUnitsPerSecond)) {
@@ -36,6 +40,7 @@ const BeltSound = ({
   return (
     <Sound
       url={SoundFileUrl}
+      volume={sfxVolume}
       loop
       playStatus={playStatus}
       playbackRate={playbackRate}

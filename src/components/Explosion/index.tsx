@@ -6,6 +6,8 @@ import styled from '@emotion/styled'
 
 import getRandomNumber from '@src/utils/getRandomNumber'
 
+import useSfx, { selectVolume } from '@src/globalState/useSfx'
+
 import SoundFileUrl from './sounds/explosion.wav'
 
 
@@ -66,6 +68,8 @@ const Explosion = ({
   density,
   onExplosionEnd,
 }: ExplosionProps) => {
+  const sfxVolume = useSfx(selectVolume)
+
   const [symbols, setSymbols] = useState<ExplosionSymbol[]>([])
 
   useEffect(() => setSymbols(() => Array.from({ length: Math.abs(density) })
@@ -96,7 +100,7 @@ const Explosion = ({
       className={className}
     >
       {shouldExplode ? (
-        <>
+        <div>
           <Wrap>
             {symbols.map(({ key, char, style }) => (
               <div key={key} style={style}>
@@ -107,9 +111,10 @@ const Explosion = ({
 
           <Sound
             url={SoundFileUrl}
+            volume={sfxVolume}
             playStatus="PLAYING"
           />
-        </>
+        </div>
       ) : null}
     </div>
   )

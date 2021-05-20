@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import useOvenPart, {
@@ -62,6 +62,12 @@ const OvenPart = ({
 
   const [isExplosionEnd, setIsExplosionEnd] = useState(false)
   const onExplosionEnd = useCallback(() => setIsExplosionEnd(true), [])
+
+  useEffect(() => {
+    if (!isOvenALive) {
+      setIsExplosionEnd(false)
+    }
+  }, [isOvenALive])
 
 
   return (
