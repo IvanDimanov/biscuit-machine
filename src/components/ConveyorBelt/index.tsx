@@ -1,5 +1,6 @@
 import { ReactNode, CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import styled from '@emotion/styled'
 
 import ImageLeftEdge1 from './images/animationFrames/leftEdge1.png'
@@ -109,6 +110,8 @@ const ConveyorBelt = ({
   shouldMove,
   onMoveEnd,
 }: ConveyorBeltProps) => {
+  const { t } = useTranslation()
+
   const frameRate = useMemo(() => Math.max(0, centerUnitsPerSecond) * totalLoopFrames, [centerUnitsPerSecond])
 
   const [frame, setFrame] = useState(0)
@@ -270,7 +273,7 @@ const ConveyorBelt = ({
             <img
               className={imageClassName}
               src={getFrameSrc(frame, direction, 'leftEdge')}
-              alt="Left edge"
+              alt={t('ConveyorBelt.Belt.LeftEdge')}
             />
           </div>
 
@@ -290,7 +293,7 @@ const ConveyorBelt = ({
               <img
                 className={imageClassName}
                 src={getFrameSrc(frame, direction, 'center')}
-                alt="Center"
+                alt={t('ConveyorBelt.Belt.Center')}
               />
             </div>
           ))}
@@ -299,7 +302,7 @@ const ConveyorBelt = ({
             <img
               className={imageClassName}
               src={getFrameSrc(frame, direction, 'rightEdge')}
-              alt="Right edge"
+              alt={t('ConveyorBelt.Belt.RightEdge')}
             />
           </div>
         </div>

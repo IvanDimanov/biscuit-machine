@@ -1,5 +1,6 @@
 import { ChangeEvent, useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import { ReactSoundProps } from 'react-sound'
 import styled from '@emotion/styled'
 
@@ -153,6 +154,8 @@ const Switch = ({
   onChange,
   disabled,
 }: SwitchProps) => {
+  const { t } = useTranslation()
+
   const onChangeInput = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSoundPlayStatus('PLAYING')
     onChange( event.target.value as SwitchProps['value'] )
@@ -179,7 +182,7 @@ const Switch = ({
               checked={value === 'on'}
               disabled={disabled}
             />
-            <span>On</span>
+            <span>{t('Switch.On')}</span>
           </label>
 
           <label>
@@ -191,7 +194,7 @@ const Switch = ({
               checked={value === 'pause'}
               disabled={disabled}
             />
-            <span>Pause</span>
+            <span>{t('Switch.Pause')}</span>
           </label>
 
           <label>
@@ -203,7 +206,7 @@ const Switch = ({
               checked={value === 'off'}
               disabled={disabled}
             />
-            <span>Off</span>
+            <span>{t('Switch.Off')}</span>
           </label>
         </form>
       </Wrap>

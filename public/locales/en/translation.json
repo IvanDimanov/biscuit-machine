@@ -44,5 +44,37 @@
     "Unbacked": "Unbacked biscuit",
     "Backed": "Backed biscuit",
     "OverBacked": "Over backed biscuit"
+  },
+  "CollectionBox": {
+    "Box": "Collection box"
+  },
+  "ConveyorBelt": {
+    "Belt": {
+      "LeftEdge": "Left edge",
+      "Center": "Center",
+      "RightEdge": "Right edge"
+    }
+  },
+  "Extruder": {
+    "Image": "Extruder"
+  },
+  "Motor": {
+    "Image": "Motor"
+  },
+  "Oven": {
+    "Image": "Oven",
+    "HeatingElementOn": "Heating is On",
+    "HeatingElementOff": "Heating is Off"
+  },
+  "Status": {
+    "Blank": "Status Blank",
+    "On": "Status On",
+    "Off": "Status Off",
+    "Pause": "Status Pause"
+  },
+  "Switch": {
+    "On": "On",
+    "Pause": "Pause",
+    "Off": "Off"
   }
 }

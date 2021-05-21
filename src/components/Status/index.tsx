@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import PropTypes from 'prop-types'
 
 import ImageStatusOn from './images/StatusOn.png'
@@ -21,6 +22,8 @@ const Status = ({
   value,
   bar,
 }: StatusProps) => {
+  const { t } = useTranslation()
+
   return (
     <div
       className={className}
@@ -50,28 +53,28 @@ const Status = ({
         <img
           className="absolute"
           src={ImageStatusBlank}
-          alt="Status Blank"
+          alt={t('Status.Blank')}
         />
 
         <img
           data-testid={`${testIdPrefix}.Status.On`}
           className={getClassName(value === 'on')}
           src={ImageStatusOn}
-          alt="Status On"
+          alt={t('Status.On')}
         />
 
         <img
           data-testid={`${testIdPrefix}.Status.Off`}
           className={getClassName(value === 'off')}
           src={ImageStatusOff}
-          alt="Status Off"
+          alt={t('Status.Off')}
         />
 
         <img
           data-testid={`${testIdPrefix}.Status.Pause`}
           className={getClassName(value === 'pause')}
           src={ImageStatusPause}
-          alt="Status Pause"
+          alt={t('Status.Pause')}
         />
       </div>
     </div>

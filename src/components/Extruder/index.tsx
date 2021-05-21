@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import styled from '@emotion/styled'
 
 import ExtrudeSound from './ExtrudeSound'
@@ -112,6 +113,8 @@ const Extruder = ({
   shouldExtrude,
   onExtrudeEnd,
 }: ExtruderProps) => {
+  const { t } = useTranslation()
+
   const timer = useRef<NodeJS.Timeout>()
 
   useEffect(() => {
@@ -135,7 +138,7 @@ const Extruder = ({
       <img
         className="absolute z-10"
         src={ImageExtruder}
-        alt="Extruder"
+        alt={t('Extruder.Image')}
       />
 
       <DropWrap>

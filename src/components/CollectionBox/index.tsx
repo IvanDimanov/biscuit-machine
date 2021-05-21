@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import memoize from 'lodash.memoize'
 import styled from '@emotion/styled'
 
@@ -49,6 +50,8 @@ const CollectionBox = ({
   className,
   item,
 }: CollectionBoxProps) => {
+  const { t } = useTranslation()
+
   const [items, setItems] = useState<Item[]>([])
 
   const addRef = useMemo(
@@ -98,7 +101,7 @@ const CollectionBox = ({
           data-testid={`${testIdPrefix}.CollectionBox.Box`}
           className="w-64"
           src={ImageBox}
-          alt="Collection box"
+          alt={t('CollectionBox.Box')}
         />
       </div>
 

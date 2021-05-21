@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import styled from '@emotion/styled'
 
 import MotorSound from './MotorSound'
@@ -35,23 +36,27 @@ const Motor = ({
   testIdPrefix,
   className,
   status,
-}: MotorProps) => (
-  <div
-    data-testid={`${testIdPrefix}.Motor`}
-    className={className}
-  >
-    <MotorWrap className={status === 'on' ? 'animate' : ''}>
-      <img
-        data-testid={`${testIdPrefix}.Motor.Image`}
-        className="w-40"
-        src={ImageMotor}
-        alt="Motor"
-      />
-    </MotorWrap>
+}: MotorProps) => {
+  const { t } = useTranslation()
 
-    <MotorSound status={status} />
-  </div>
-)
+  return (
+    <div
+      data-testid={`${testIdPrefix}.Motor`}
+      className={className}
+    >
+      <MotorWrap className={status === 'on' ? 'animate' : ''}>
+        <img
+          data-testid={`${testIdPrefix}.Motor.Image`}
+          className="w-40"
+          src={ImageMotor}
+          alt={t('Motor.Image')}
+        />
+      </MotorWrap>
+
+      <MotorSound status={status} />
+    </div>
+  )
+}
 
 
 Motor.propTypes = {
