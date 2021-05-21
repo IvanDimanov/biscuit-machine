@@ -2,6 +2,8 @@ import { Story, Meta } from '@storybook/react/types-6-0'
 import { useState, useCallback } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
+import '@src/App/i18n'
+
 import { CollectionBox } from '@src/components'
 import { CollectionBoxProps } from '@src/components/CollectionBox'
 

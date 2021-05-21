@@ -2,6 +2,8 @@ import { Story, Meta } from '@storybook/react/types-6-0'
 import { useCallback, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
+import '@src/App/i18n'
+
 import { ConveyorBelt } from '@src/components'
 import { ConveyorBeltProps } from '@src/components/ConveyorBelt'
 

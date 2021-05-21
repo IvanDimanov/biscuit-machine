@@ -1,6 +1,8 @@
 import { Story, Meta } from '@storybook/react/types-6-0'
 import { useState, useCallback } from 'react'
 
+import '@src/App/i18n'
+
 import { Extruder } from '@src/components'
 
 export default {

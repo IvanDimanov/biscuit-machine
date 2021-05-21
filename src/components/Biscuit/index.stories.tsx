@@ -1,6 +1,8 @@
 import { Story, Meta } from '@storybook/react/types-6-0'
 import { useCallback, useState } from 'react'
 
+import '@src/App/i18n'
+
 import { Biscuit } from '@src/components'
 import { BiscuitProps } from '@src/components/Biscuit'
 
