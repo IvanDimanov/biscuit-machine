@@ -31,26 +31,33 @@ const Status = ({
     >
       <div className="relative w-10 h-24">
         {bar === 'bottomLeft' ? (
-          <div className={`
-            absolute
-            border-r-8 border-b-8 border-gray-900 rounded-br-2xl
-            w-10 h-10
-            mt-20
-            -ml-4
-          `} />
+          <div
+            data-testid={`${testIdPrefix}.Status.Bar.BottomLeft`}
+            className={`
+              absolute
+              border-r-8 border-b-8 border-gray-900 rounded-br-2xl
+              w-10 h-10
+              mt-20
+              -ml-4
+            `}
+          />
         ) : null}
 
         {bar === 'bottomRight' ? (
-          <div className={`
-            absolute
-            border-l-8 border-b-8 border-gray-900 rounded-bl-2xl
-            w-10 h-10
-            mt-20
-            ml-4
-          `} />
+          <div
+            data-testid={`${testIdPrefix}.Status.Bar.BottomRight`}
+            className={`
+              absolute
+              border-l-8 border-b-8 border-gray-900 rounded-bl-2xl
+              w-10 h-10
+              mt-20
+              ml-4
+            `}
+          />
         ) : null}
 
         <img
+          data-testid={`${testIdPrefix}.Status.Blank`}
           className="absolute"
           src={ImageStatusBlank}
           alt={t('Status.Blank')}

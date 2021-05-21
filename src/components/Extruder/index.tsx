@@ -8,7 +8,7 @@ import ImageExtruder from './images/extruder.png'
 
 
 /* Used as a notification when the extrude is completed */
-const ANIMATION_TIME_IN_SECONDS = 2
+export const EXTRUDER_ANIMATION_TIME_IN_SECONDS = 2
 
 const ContainerWrap = styled.div`
   border: 3px solid #444;
@@ -96,7 +96,7 @@ const DropWrap = styled.div`
   }
   
   .drop.animate {
-    animation: dropAnimation cubic-bezier(0.95, 0.05, 0.795, 0.035) ${ANIMATION_TIME_IN_SECONDS}s;
+    animation: dropAnimation cubic-bezier(0.95, 0.05, 0.795, 0.035) ${EXTRUDER_ANIMATION_TIME_IN_SECONDS}s;
   }
 `
 
@@ -119,7 +119,7 @@ const Extruder = ({
 
   useEffect(() => {
     if (shouldExtrude) {
-      timer.current = setTimeout(onExtrudeEnd, ANIMATION_TIME_IN_SECONDS * 1000)
+      timer.current = setTimeout(onExtrudeEnd, EXTRUDER_ANIMATION_TIME_IN_SECONDS * 1000)
     }
     return () => timer.current && clearTimeout(timer.current)
   }, [shouldExtrude, onExtrudeEnd])

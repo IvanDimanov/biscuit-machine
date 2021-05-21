@@ -175,6 +175,7 @@ const Switch = ({
         <form>
           <label>
             <input
+              data-testid={`${testIdPrefix}.Switch.Check.On`}
               type="radio"
               name="value"
               value="on"
@@ -187,6 +188,7 @@ const Switch = ({
 
           <label>
             <input
+              data-testid={`${testIdPrefix}.Switch.Check.Pause`}
               type="radio"
               name="value"
               value="pause"
@@ -199,6 +201,7 @@ const Switch = ({
 
           <label>
             <input
+              data-testid={`${testIdPrefix}.Switch.Check.Off`}
               type="radio"
               name="value"
               value="off"

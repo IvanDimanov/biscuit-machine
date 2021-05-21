@@ -1,7 +1,11 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
-import Backend from 'i18next-http-backend'
+
+// @ts-ignore Can ignore since these files are used for testing components and not real translations
+import enTranslation from '../../public/locales/en/translation.json'
+// @ts-ignore Can ignore since these files are used for testing components and not real translations
+import bgTranslation from '../../public/locales/bg/translation.json'
 
 i18n
   // detect user language
@@ -9,7 +13,6 @@ i18n
   .use(LanguageDetector)
   // pass the i18n instance to react-i18next.
   .use(initReactI18next)
-  .use(Backend)
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
@@ -18,8 +21,14 @@ i18n
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
-    backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json',
+
+    resources: {
+      en: {
+        translation: enTranslation,
+      },
+      bg: {
+        translation: bgTranslation,
+      },
     },
   })
 

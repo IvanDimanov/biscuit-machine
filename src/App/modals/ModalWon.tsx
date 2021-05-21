@@ -34,6 +34,7 @@ const modalWidth = 600
 const style = {
   overlay: {
     zIndex: 20,
+    overflow: 'hidden',
   },
   content: {
     top: '150px',
@@ -102,7 +103,7 @@ const ModalWon = ({
 
           <Scoreboard
             testIdPrefix={`${testIdPrefix}.ModalWon`}
-            className="w-64 my-10 mx-auto"
+            className="w-96 my-10 mx-auto"
             totalScore={totalScore}
             totalCollectedBiscuits={totalCollectedBiscuits}
           />
@@ -124,11 +125,13 @@ const ModalWon = ({
       </Modal>
 
 
-      <div className=" absolute left-1/2 top-1/3 z-40">
-        <Confetti
-          active={isConfettiActive}
-          config={confettiConfig}
-        />
+      <div className="absolute top-0 w-full h-full overflow-hidden flex justify-center">
+        <div className="absolute top-1/3 z-40">
+          <Confetti
+            active={isConfettiActive}
+            config={confettiConfig}
+          />
+        </div>
       </div>
 
       <Sound

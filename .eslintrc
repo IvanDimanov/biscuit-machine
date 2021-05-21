@@ -2,11 +2,17 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
+    "plugin:jest-dom/recommended",
+    "plugin:testing-library/react",
     "react-app",
     "google"
   ],
 
-  "plugins": ["jest"],
+  "plugins": [
+    "jest",
+    "jest-dom",
+    "testing-library"
+  ],
 
   "env": {
     "jest/globals": true

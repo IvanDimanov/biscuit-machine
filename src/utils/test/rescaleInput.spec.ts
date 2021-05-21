@@ -14,7 +14,7 @@ describe('/utils/rescaleInput()', () => {
           inputScaleMin,
           [inputScaleMin, inputScaleMax],
           [outputScaleMin, outputScaleMax],
-        )
+        ),
       ).toEqual(outputScaleMin)
     })
 
@@ -30,7 +30,7 @@ describe('/utils/rescaleInput()', () => {
           inputScaleMax,
           [inputScaleMin, inputScaleMax],
           [outputScaleMin, outputScaleMax],
-        )
+        ),
       ).toEqual(outputScaleMax)
     })
   })
@@ -48,7 +48,7 @@ describe('/utils/rescaleInput()', () => {
           inputScaleMax * 1/3,
           [inputScaleMin, inputScaleMax],
           [outputScaleMin, outputScaleMax],
-        )
+        ),
       ).toEqual(outputScaleMax * 1/3)
     })
 
@@ -64,7 +64,7 @@ describe('/utils/rescaleInput()', () => {
           inputScaleMax * 1/2,
           [inputScaleMin, inputScaleMax],
           [outputScaleMin, outputScaleMax],
-        )
+        ),
       ).toEqual(outputScaleMax * 1/2)
     })
 
@@ -80,7 +80,7 @@ describe('/utils/rescaleInput()', () => {
           inputScaleMax * 3/5,
           [inputScaleMin, inputScaleMax],
           [outputScaleMin, outputScaleMax],
-        )
+        ),
       ).toEqual(outputScaleMax * 3/5)
     })
   })

@@ -67,7 +67,6 @@
     "HeatingElementOff": "Heating is Off"
   },
   "Status": {
-    "Blank": "Status Blank",
     "On": "Status On",
     "Off": "Status Off",
     "Pause": "Status Pause"

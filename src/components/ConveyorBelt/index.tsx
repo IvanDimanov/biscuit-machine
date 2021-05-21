@@ -271,6 +271,7 @@ const ConveyorBelt = ({
         >
           <div>
             <img
+              data-testid={`${testIdPrefix}.ConveyorBelt.LeftEdge`}
               className={imageClassName}
               src={getFrameSrc(frame, direction, 'leftEdge')}
               alt={t('ConveyorBelt.Belt.LeftEdge')}
@@ -291,6 +292,7 @@ const ConveyorBelt = ({
                 ))}
 
               <img
+                data-testid={`${testIdPrefix}.ConveyorBelt.Center[${key}]`}
                 className={imageClassName}
                 src={getFrameSrc(frame, direction, 'center')}
                 alt={t('ConveyorBelt.Belt.Center')}
@@ -300,6 +302,7 @@ const ConveyorBelt = ({
 
           <div>
             <img
+              data-testid={`${testIdPrefix}.ConveyorBelt.RightEdge`}
               className={imageClassName}
               src={getFrameSrc(frame, direction, 'rightEdge')}
               alt={t('ConveyorBelt.Belt.RightEdge')}

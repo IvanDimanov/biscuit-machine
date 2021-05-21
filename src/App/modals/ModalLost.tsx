@@ -18,6 +18,7 @@ const modalWidth = 600
 const style = {
   overlay: {
     zIndex: 20,
+    overflow: 'hidden',
   },
   content: {
     top: '150px',
@@ -68,7 +69,7 @@ const ModalLost = ({
 
           <Scoreboard
             testIdPrefix={`${testIdPrefix}.ModalLost`}
-            className="w-64 my-10 mx-auto"
+            className="w-96 my-10 mx-auto"
             totalScore={totalScore}
             totalCollectedBiscuits={totalCollectedBiscuits}
           />

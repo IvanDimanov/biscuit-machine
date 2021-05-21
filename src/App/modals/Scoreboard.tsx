@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import CountUp from 'react-countup'
 
 
-const COUNT_UP_DURATION_IN_SECONDS = 3
+export const COUNT_UP_DURATION_IN_SECONDS = 3
 
 type ScoreboardProps = {
   testIdPrefix?: string

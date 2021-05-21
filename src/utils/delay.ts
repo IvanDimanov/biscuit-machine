@@ -9,7 +9,7 @@
  *
  * @return {object} Promise that will be resolved or rejected after specific time.
  */
-function delay(timeout: number = 100, response = undefined, isSuccess: boolean = true) {
+function delay(timeout: number = 100, response: any = undefined, isSuccess: boolean = true) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (isSuccess) {

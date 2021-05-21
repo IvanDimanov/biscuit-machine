@@ -4,6 +4,7 @@ import styled from '@emotion/styled'
 
 import rescaleInput from '@src/utils/rescaleInput'
 
+const THERMOMETER_ANIMATION_TIME_IN_SECONDS = 0.25
 
 const RED_BAR_MIN_HEIGHT = 27
 const RED_BAR_MAX_HEIGHT = 175
@@ -17,7 +18,7 @@ type IndicatorProps = {
 }
 
 const Indicator = styled.div<IndicatorProps>`
-  transition: margin-top 0.25s ease-in;
+  transition: margin-top ${THERMOMETER_ANIMATION_TIME_IN_SECONDS}s ease-in;
   ${({ marginTop }) => `margin-top: ${marginTop}px;`}
 `
 
@@ -26,7 +27,7 @@ type PinnedTemperatureProps = {
 }
 
 const PinnedTemperature = styled.div<PinnedTemperatureProps>`
-  transition: margin-top 0.25s ease-in;
+  transition: margin-top ${THERMOMETER_ANIMATION_TIME_IN_SECONDS}s ease-in;
   ${({ marginTop }) => `margin-top: ${marginTop}px;`}
 `
 
@@ -40,7 +41,7 @@ type RedBarProps = {
 
 const RedBar = styled.div<RedBarProps>`
   box-shadow: inset 0 -7px 6px 0 #000;
-  transition: height 0.25s ease-in;
+  transition: height ${THERMOMETER_ANIMATION_TIME_IN_SECONDS}s ease-in;
   ${({ height }) => `height: ${height}px;`}
 `
 
@@ -122,7 +123,7 @@ const Thermometer = ({
         <div className="relative text-gray-700">
           {pinnedTemperatures.map((pinnedTemperature) => (
             <PinnedTemperature
-              data-testid={`${testIdPrefix}.PinnedTemperature.${pinnedTemperature}`}
+              data-testid={`${testIdPrefix}.Thermometer.PinnedTemperature.${pinnedTemperature}`}
               key={pinnedTemperature}
               className="absolute text-right leading-5 -ml-16 w-18"
               marginTop={getPinnedTemperatureMarginTop(pinnedTemperature)}

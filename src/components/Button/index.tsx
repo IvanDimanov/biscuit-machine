@@ -8,7 +8,7 @@ export type ButtonProps = {
   variant: 'primary' | 'default'
   size: 'small' | 'medium' | 'large'
   children?: ReactNode
-  onClick: (event: MouseEvent<HTMLDivElement>) => void
+  onClick: (event: MouseEvent<HTMLButtonElement>) => void
   disabled: boolean
 }
 
@@ -52,7 +52,7 @@ const Button = ({
 
 
   return (
-    <div
+    <button
       data-testid={`${testIdPrefix}.Button`}
       className={`
         cursor-pointer
@@ -61,14 +61,15 @@ const Button = ({
         rounded-lg
         ${colorClasses}
         ${sizeClasses}
-        ${className}
+        ${className || ''}
       `}
       onClick={onClick}
-      role="button"
       aria-pressed="false"
+      aria-disabled={disabled}
+      disabled={disabled}
     >
       {children}
-    </div>
+    </button>
   )
 }
 

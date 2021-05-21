@@ -5,16 +5,16 @@ import styled from '@emotion/styled'
 import StampSound from './StampSound'
 
 /* Used as a notification when the stamp is it it`s lowest point */
-const STAMP_DOWN_ANIMATION_TIME_IN_SECONDS = 0.5
+export const STAMP_DOWN_ANIMATION_TIME_IN_SECONDS = 0.5
 
 /* How much time the stamper stays fully extended before it contracts */
 const ANIMATION_PAUSE_IN_SECONDS = 1
 
 /* Used as a notification when the stamp is completed */
-const ANIMATION_TIME_IN_SECONDS = 2
+export const STAMP_ANIMATION_TIME_IN_SECONDS = 2
 
 /* Used as a notification when the stamp is it it`s lowest point */
-const STAMP_UP_ANIMATION_TIME_IN_SECONDS = ANIMATION_TIME_IN_SECONDS -
+const STAMP_UP_ANIMATION_TIME_IN_SECONDS = STAMP_ANIMATION_TIME_IN_SECONDS -
   STAMP_DOWN_ANIMATION_TIME_IN_SECONDS -
   ANIMATION_PAUSE_IN_SECONDS
 
@@ -138,7 +138,7 @@ const Stamper = ({
       setIsStampEndDone(false)
 
       timerOnStamp.current = setTimeout(() => setIsStampDone(true), STAMP_DOWN_ANIMATION_TIME_IN_SECONDS * 1000)
-      timerOnStampEnd.current = setTimeout(() => setIsStampEndDone(true), ANIMATION_TIME_IN_SECONDS * 1000)
+      timerOnStampEnd.current = setTimeout(() => setIsStampEndDone(true), STAMP_ANIMATION_TIME_IN_SECONDS * 1000)
     }
   }, [shouldStamp])
 
