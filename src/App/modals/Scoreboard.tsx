@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import CountUp from 'react-countup'
 
 
@@ -17,51 +18,55 @@ const Scoreboard = ({
   className,
   totalScore,
   totalCollectedBiscuits,
-}: ScoreboardProps) => (
-  <div
-    data-testid={`${testIdPrefix}.Scoreboard`}
-    className={className}
-  >
-    <div className="flex items-center justify-between border-t border-b border-gray-600 py-4 px-8">
-      <div
-        data-testid={`${testIdPrefix}.Scoreboard.TotalScoreLabel`}
-        className="text-2xl"
-      >
-        Score:
+}: ScoreboardProps) => {
+  const { t } = useTranslation()
+
+  return (
+    <div
+      data-testid={`${testIdPrefix}.Scoreboard`}
+      className={className}
+    >
+      <div className="flex items-center justify-between border-t border-b border-gray-600 py-4 px-8">
+        <div
+          data-testid={`${testIdPrefix}.Scoreboard.TotalScoreLabel`}
+          className="text-2xl"
+        >
+          {t('Scoreboard.TotalScoreLabel')}
+        </div>
+
+        <div
+          data-testid={`${testIdPrefix}.Scoreboard.TotalScoreValue`}
+          className="text-4xl text-green-500 font-bold"
+        >
+          <CountUp
+            end={totalScore}
+            decimals={2}
+            duration={COUNT_UP_DURATION_IN_SECONDS}
+          />
+        </div>
       </div>
 
-      <div
-        data-testid={`${testIdPrefix}.Scoreboard.TotalScoreValue`}
-        className="text-4xl text-green-500 font-bold"
-      >
-        <CountUp
-          end={totalScore}
-          decimals={2}
-          duration={COUNT_UP_DURATION_IN_SECONDS}
-        />
+      <div className="flex items-center justify-between border-b border-gray-600 py-4 px-8">
+        <div
+          data-testid={`${testIdPrefix}.Scoreboard.TotalCollectedBiscuitsLabel`}
+          className="text-2xl"
+        >
+          {t('Scoreboard.TotalCollectedBiscuitsLabel')}
+        </div>
+
+        <div
+          data-testid={`${testIdPrefix}.Scoreboard.totalCollectedBiscuitsValue`}
+          className="text-4xl text-green-500 font-bold"
+        >
+          <CountUp
+            end={totalCollectedBiscuits}
+            duration={COUNT_UP_DURATION_IN_SECONDS}
+          />
+        </div>
       </div>
     </div>
-
-    <div className="flex items-center justify-between border-b border-gray-600 py-4 px-8">
-      <div
-        data-testid={`${testIdPrefix}.Scoreboard.totalCollectedBiscuitsLabel`}
-        className="text-2xl"
-      >
-        Biscuits:
-      </div>
-
-      <div
-        data-testid={`${testIdPrefix}.Scoreboard.totalCollectedBiscuitsValue`}
-        className="text-4xl text-green-500 font-bold"
-      >
-        <CountUp
-          end={totalCollectedBiscuits}
-          duration={COUNT_UP_DURATION_IN_SECONDS}
-        />
-      </div>
-    </div>
-  </div>
-)
+  )
+}
 
 
 Scoreboard.propTypes = {

@@ -1,0 +1,48 @@
+{
+  "App": {
+    "Helmet": {
+      "title": "The Biscuit Machine",
+      "description": "Online game where user bakes biscuits"
+    }
+  },
+  "Title": {
+    "TextTitle": "The Biscuit Machine"
+  },
+  "ModalWon": {
+    "encourage": "Congrats!",
+    "Header": "You Won",
+    "playAgain": "Ready to try again?",
+    "PlayAgainButton": "Play again"
+  },
+  "ModalLost": {
+    "encourage": "Better luck next time",
+    "Header": "Game Over",
+    "playAgain": "Ready to try again?",
+    "PlayAgainButton": "Play again"
+  },
+  "Scoreboard": {
+    "TotalScoreLabel": "Score:",
+    "TotalCollectedBiscuitsLabel": "Biscuits:"
+  },
+  "SoundControls": {
+    "GameMusic": {
+      "OnButton": "Game music is on",
+      "OffButton": "Game music is off"
+    },
+    "sfx": {
+      "OnButton": "Game sound effects are on",
+      "OffButton": "Game sound effects are off"
+    }
+  },
+  "Footer": {
+    "madeWith": "Made with",
+    "by": "by",
+    "author": "Ivan"
+  },
+  "Biscuit": {
+    "Blob": "Blob of biscuit dough",
+    "Unbacked": "Unbacked biscuit",
+    "Backed": "Backed biscuit",
+    "OverBacked": "Over backed biscuit"
+  }
+}

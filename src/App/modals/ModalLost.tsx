@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import Modal from 'react-modal'
+import { useTranslation } from 'react-i18next'
 import styled from '@emotion/styled'
 import Sound from 'react-sound'
 
@@ -47,6 +48,7 @@ const ModalLost = ({
   totalCollectedBiscuits,
   onPlayAgain,
 }: ModalLostProps) => {
+  const { t } = useTranslation()
   const sfxVolume = useSfx(selectVolume)
 
   return (
@@ -57,11 +59,11 @@ const ModalLost = ({
       >
         <div data-testid={`${testIdPrefix}.ModalLost.Content`}>
           <div className="text-xs text-center mb-4">
-            Better luck next time
+            {t('ModalLost.encourage')}
           </div>
 
           <Header className="text-7xl text-red-600 font-extrabold text-center uppercase">
-            Game Over
+            {t('ModalLost.Header')}
           </Header>
 
           <Scoreboard
@@ -72,7 +74,7 @@ const ModalLost = ({
           />
 
           <div className="text-xs text-center">
-            Ready to try again?
+            {t('ModalLost.playAgain')}
           </div>
 
           <div className="flex justify-center my-2">
@@ -81,7 +83,7 @@ const ModalLost = ({
               variant="primary"
               onClick={onPlayAgain}
             >
-              Play again
+              {t('ModalLost.PlayAgainButton')}
             </Button>
           </div>
         </div>

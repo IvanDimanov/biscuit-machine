@@ -1,9 +1,7 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import memoize from 'lodash.memoize'
-
-
-import useLanguage, { selectLanguage, selectSetLanguage, LanguageDataState } from '@src/globalState/useLanguage'
 
 import ImageFlagBg from './images/flagBg.png'
 import ImageFlagEn from './images/flagEn.png'
@@ -19,13 +17,10 @@ const LanguageControls = ({
   testIdPrefix,
   className,
 }: LanguageControlsProps) => {
-  const language = useLanguage(selectLanguage)
-  const setLanguage = useLanguage(selectSetLanguage)
-
-  const onChangeLanguage = useMemo<(language: LanguageDataState['language']) => (() => void)>(
-    () => memoize((language: LanguageDataState['language']) => () => setLanguage(language)),
-    [setLanguage],
-  )
+  const { i18n } = useTranslation()
+  const onChangeLanguage = useMemo(
+    () => memoize((language) => () => i18n.changeLanguage(language)),
+    [i18n])
 
 
   return (
@@ -37,7 +32,7 @@ const LanguageControls = ({
       <div className="flex divide-x-2 divide-gray-600">
         <div
           data-testid={`${testIdPrefix}.LanguageControls.Bulgarian`}
-          className={`inline-block cursor-pointer hover:opacity-100 p-2 ${language === 'bg' ? 'opacity-80' : 'opacity-50'}`}
+          className={`inline-block cursor-pointer hover:opacity-100 p-2 ${i18n.language === 'bg' ? 'opacity-80' : 'opacity-50'}`}
           onClick={onChangeLanguage('bg')}
         >
           <img
@@ -50,7 +45,7 @@ const LanguageControls = ({
 
         <div
           data-testid={`${testIdPrefix}.LanguageControls.English`}
-          className={`inline-block cursor-pointer hover:opacity-100 p-2 ${language === 'en' ? 'opacity-80' : 'opacity-50'}`}
+          className={`inline-block cursor-pointer hover:opacity-100 p-2 ${i18n.language === 'en' ? 'opacity-80' : 'opacity-50'}`}
           onClick={onChangeLanguage('en')}
         >
           <img

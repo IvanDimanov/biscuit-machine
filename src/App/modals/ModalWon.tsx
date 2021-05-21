@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import Modal from 'react-modal'
 import Confetti, { ConfettiConfig } from 'react-dom-confetti'
 import styled from '@emotion/styled'
@@ -63,6 +64,7 @@ const ModalWon = ({
   totalCollectedBiscuits,
   onPlayAgain,
 }: ModalWonProps) => {
+  const { t } = useTranslation()
   const sfxVolume = useSfx(selectVolume)
 
   const [isConfettiActive, setIsConfettiActive] = useState(false)
@@ -91,11 +93,11 @@ const ModalWon = ({
       >
         <div data-testid={`${testIdPrefix}.ModalWon.Content`}>
           <div className="text-xs text-center mb-4">
-            Congrats!
+            {t('ModalWon.encourage')}
           </div>
 
           <Header className="text-7xl text-green-600 font-extrabold text-center uppercase">
-            You Won
+            {t('ModalWon.Header')}
           </Header>
 
           <Scoreboard
@@ -106,7 +108,7 @@ const ModalWon = ({
           />
 
           <div className="text-xs text-center">
-            Ready to try again?
+            {t('ModalWon.playAgain')}
           </div>
 
           <div className="flex justify-center my-2">
@@ -115,7 +117,7 @@ const ModalWon = ({
               variant="primary"
               onClick={onPlayAgain}
             >
-              Play again
+              {t('ModalWon.PlayAgainButton')}
             </Button>
           </div>
         </div>

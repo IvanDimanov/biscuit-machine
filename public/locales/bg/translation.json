@@ -1,0 +1,48 @@
+{
+  "App": {
+    "Helmet": {
+      "title": "Машината за бисквитки",
+      "description": "Мрежова игра, където потребителя изпича бисквитки"
+    }
+  },
+  "Title": {
+    "TextTitle": "Машината за бисквитки"
+  },
+  "ModalWon": {
+    "encourage": "Поздравления!",
+    "Header": "Ти спечели",
+    "playAgain": "Готов ли си да опиташ пак?",
+    "PlayAgainButton": "Играй отново"
+  },
+  "ModalLost": {
+    "encourage": "Повече късмет следващия път",
+    "Header": "Играта свърши",
+    "playAgain": "Готов ли си да опиташ пак?",
+    "PlayAgainButton": "Играй отново"
+  },
+  "Scoreboard": {
+    "TotalScoreLabel": "Резултат:",
+    "TotalCollectedBiscuitsLabel": "Бисквитки:"
+  },
+  "SoundControls": {
+    "GameMusic": {
+      "OnButton": "Музиката на играта е включена",
+      "OffButton": "Музиката на играта е изключена"
+    },
+    "sfx": {
+      "OnButton": "Звуковите ефекти на играта са включени",
+      "OffButton": "Звуковите ефекти на играта са изключени"
+    }
+  },
+  "Footer": {
+    "madeWith": "Направено с",
+    "by": "от",
+    "author": "Иван"
+  },
+  "Biscuit": {
+    "Blob": "Част от тесто за бисквити",
+    "Unbacked": "Неопечена бисквитка",
+    "Backed": "Опечена бисквитка",
+    "OverBacked": "Препечена бисквитка"
+  }
+}

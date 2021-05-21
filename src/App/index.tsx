@@ -1,5 +1,7 @@
 import { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import styled from '@emotion/styled'
+import { Helmet } from 'react-helmet'
 
 import Machine, { MachineProps } from '@src/Machine'
 
@@ -19,6 +21,7 @@ import SoundControls from './SoundControls'
 import ModalWon from './modals/ModalWon'
 import ModalLost from './modals/ModalLost'
 
+import './i18n'
 import './index.css'
 
 
@@ -28,6 +31,8 @@ const StyledApp = styled.div`
 `
 
 const App = () => {
+  const { t } = useTranslation()
+
   const resetMachineState = useMachine(selectResetMachineState)
   const resetSwitchState = useSwitchPart(selectResetSwitchState)
   const resetMotorState = useMotorPart(selectResetMotorState)
@@ -79,6 +84,14 @@ const App = () => {
 
   return (
     <StyledApp className="bg-yellow-200 h-screen">
+      <Helmet>
+        <title>{t('App.Helmet.title')}</title>
+        <meta
+          name="description"
+          content={t('App.Helmet.description')}
+        />
+      </Helmet>
+
       <Title />
 
       <LanguageControls className="absolute right-20" />

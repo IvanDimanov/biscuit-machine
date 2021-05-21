@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import Sound from 'react-sound'
 
 import useSfx, { selectVolume, selectSetVolume } from '@src/globalState/useSfx'
@@ -23,6 +24,8 @@ const SoundControls = ({
   testIdPrefix,
   className,
 }: SoundControlsProps) => {
+  const { t } = useTranslation()
+
   const sfxVolume = useSfx(selectVolume)
   const setSfxVolume = useSfx(selectSetVolume)
 
@@ -51,14 +54,14 @@ const SoundControls = ({
               data-testid={`${testIdPrefix}.SoundControls.GameMusic.OnButton`}
               className="w-10"
               src={ImageMusicOn}
-              alt="Game music is on"
+              alt={t('SoundControls.GameMusic.OnButton')}
             />
           ) : (
             <img
               data-testid={`${testIdPrefix}.SoundControls.GameMusic.OffButton`}
               className="w-10"
               src={ImageMusicOff}
-              alt="Game music is off"
+              alt={t('SoundControls.GameMusic.OffButton')}
             />
           )}
         </div>
@@ -74,14 +77,14 @@ const SoundControls = ({
               data-testid={`${testIdPrefix}.SoundControls.sfx.OnButton`}
               className="w-10"
               src={ImageSfxOn}
-              alt="Game sound effects are on"
+              alt={t('SoundControls.sfx.OnButton')}
             />
           ) : (
             <img
               data-testid={`${testIdPrefix}.SoundControls.sfx.OffButton`}
               className="w-10"
               src={ImageSfxOff}
-              alt="Game sound effects are off"
+              alt={t('SoundControls.sfx.OffButton')}
             />
           )}
         </div>
