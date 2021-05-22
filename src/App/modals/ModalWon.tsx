@@ -125,14 +125,16 @@ const ModalWon = ({
       </Modal>
 
 
-      <div className="absolute top-0 w-full h-full overflow-hidden flex justify-center">
-        <div className="absolute top-1/3 z-40">
-          <Confetti
-            active={isConfettiActive}
-            config={confettiConfig}
-          />
+      {isOpen ? (
+        <div className="absolute top-0 w-full h-full overflow-hidden flex justify-center">
+          <div className="absolute top-1/3 z-40">
+            <Confetti
+              active={isConfettiActive}
+              config={confettiConfig}
+            />
+          </div>
         </div>
-      </div>
+      ) : null}
 
       <Sound
         url={SoundFileUrl}
