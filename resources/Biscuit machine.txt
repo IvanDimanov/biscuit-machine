@@ -1,0 +1,162 @@
+
+
+--------------------------------------------------------------------
+
+                        Biscuit machine
+
+--------------------------------------------------------------------
+
+
+
+file:///home/dimanov/Downloads/The_biscuit_machine_task.pdf
+
+
+
+
+
+
+E2E tests with playwright
+
+https://github.com/playwright-community/playwright-jest-examples/tree/master/basic-ts
+
+https://github.com/playwright-community/playwright-jest-examples/tree/master/create-react-app
+
+
+
+
+
+https://playwright.dev/docs/selectors
+
+
+
+
+
+
+
+
+Add `resources` folder
+
+
+
+
+
+
+Write README.md
+
+
+https://60a8a3b8988a5e003be6c930-ltcciglazg.chromatic.com/?path=/docs/introduction--page
+https://www.chromatic.com/build?appId=60a8a3b8988a5e003be6c930&number=2
+npx chromatic --project-token=288ef3b57af4
+
+
+When installing dependencies
+    use yarn
+
+
+
+
+Used images
+-----------------------------------------
+https://www.vectorstock.com/royalty-free-vector/cookie-icon-on-white-background-for-graphic-vector-23495096
+
+https://gamedeveloperstudio.itch.io/conveyor-belt
+
+https://www.flaticon.com/search?word=oven
+
+https://game-icons.net/1x1/delapouite/cookie.html
+
+https://pngimg.com/uploads/box/box_PNG96.png
+
+
+
+Used colors
+-----------------------------------------
+https://www.schemecolor.com/sweet-cookies.php
+
+
+
+Used sounds
+-----------------------------------------
+https://mixkit.co/free-sound-effects/game
+
+
+Sound Editing
+-----------------------------------------
+https://twistedwave.com
+
+
+
+
+
+
+
+Create a walk-through video of the game
+
+Create a walk-through video of Storybook
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Switch animations
+    https://codepen.io/jkantner/pen/PoPvoGK
+    https://codepen.io/lukasoe/pen/BpMNjw
+    https://codepen.io/vineethtrv/pen/xbyvmZ
+
+
+
+Extruder Animation
+    Top
+        https://codepen.io/fliseno1k/pen/WNboLBy?editors=1100
+        https://codepen.io/ivandimanov/pen/rNyeGMq?editors=1100
+
+    Dripping
+        https://codepen.io/ivandimanov/pen/wvJKQrV?editors=1100
+
+
+Oven
+    Explosion
+        https://codepen.io/steylish/pen/YLxggB
+
+    Smoke
+        https://codepen.io/manuelcoluccia/pen/zYZYyrV
+        https://codepen.io/ivandimanov/pen/eYvZPMb?editors=1100
+
+    Electrical Sparks
+        https://codepen.io/OAlpha/pen/eYYKMGQ
+        https://codepen.io/steylish/pen/YLxggB
+
+    Heating
+        https://codepen.io/Vany/pen/aHgqv
+
+
+
+Thermometer
+    https://askteammate.com/npm/react-thermometer-chart/
+    https://zamarrowski.github.io/react-thermometer-component/
+
+
+
+
+
+Unit tests
+https://xogito.atlassian.net/wiki/spaces/GEAR/pages/1610547211/Unit+Tests+FrontEnd
+
+
+https://github.com/testing-library/user-event#clickelement-eventinit-options
+
+
+Testing with zustand
+https://github.com/pmndrs/zustand/wiki/Testing
+
+
