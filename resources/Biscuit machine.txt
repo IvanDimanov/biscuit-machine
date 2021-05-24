@@ -11,10 +11,6 @@
 file:///home/dimanov/Downloads/The_biscuit_machine_task.pdf
 
 
-
-
-
-
 E2E tests with playwright
 
 https://github.com/playwright-community/playwright-jest-examples/tree/master/basic-ts
@@ -25,32 +21,24 @@ https://github.com/playwright-community/playwright-jest-examples/tree/master/cre
 
 
 
-https://playwright.dev/docs/selectors
 
-
-
-
-
-
-
-
-Add `resources` folder
-
-
-
-
-
-
-Write README.md
-
-
-https://60a8a3b8988a5e003be6c930-ltcciglazg.chromatic.com/?path=/docs/introduction--page
+https://60a8a3b8988a5e003be6c930-swljbtygpu.chromatic.com
 https://www.chromatic.com/build?appId=60a8a3b8988a5e003be6c930&number=2
 npx chromatic --project-token=288ef3b57af4
 
 
-When installing dependencies
-    use yarn
+
+
+
+
+Create a walk-through video of the game
+
+Create a walk-through video of Storybook
+
+
+
+
+
 
 
 
@@ -83,21 +71,6 @@ https://mixkit.co/free-sound-effects/game
 Sound Editing
 -----------------------------------------
 https://twistedwave.com
-
-
-
-
-
-
-
-Create a walk-through video of the game
-
-Create a walk-through video of Storybook
-
-
-
-
-
 
 
 

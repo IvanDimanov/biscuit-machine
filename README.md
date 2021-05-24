@@ -1,8 +1,12 @@
 # The Biscuit Machine
 Online game where user bakes biscuits.
 
-## [Live Demo](https://biscuit-machine.herokuapp.com/swagger)
-## [![App](https://raw.githubusercontent.com/IvanDimanov/biscuit-machine/master/image.png)](https://biscuit-machine.herokuapp.com/swagger)
+## [Live Demo](https://biscuit-machine.vercel.app)
+## [![App](https://raw.githubusercontent.com/IvanDimanov/biscuit-machine/master/image.png)](https://biscuit-machine.vercel.app)
+
+## Videos
+- Game walkthrough: https://www.loom.com/share/dada09e7eecc4ee0a462036c0fa270f1
+- Storybook walkthrough: https://www.loom.com/share/3169823d135f4f1494421ccdaa3aed96
 
 
 ## Running locally
