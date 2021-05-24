@@ -1,61 +1,94 @@
-# Profile :: Livescore API / Soccer API
-Profile UI related to the Livescore API and Soccer API platforms
+# The Biscuit Machine
+Online game where user bakes biscuits.
+
+## [Live Demo](https://biscuit-machine.herokuapp.com/swagger)
+## [![App](https://raw.githubusercontent.com/IvanDimanov/biscuit-machine/master/image.png)](https://biscuit-machine.herokuapp.com/swagger)
 
 
 ## Running locally
 ```
-git clone git@gitlab.com:livescore/profile.git
-cd profile
-npm ci
-npm start
+git clone git@github.com:IvanDimanov/biscuit-machine.git
+cd biscuit-machine
+yarn
+yarn start
 ```
-__Note:__ Should you need to install the HTTPS certificate then consider taking a look at [mkcert](https://github.com/FiloSottile/mkcert).
 
+
+## Test
+Running unit tests:
+```
+yarn test
+```
+
+Running E2E tests:
+```
+yarn test-e2e
+```
 
 
 ## Tech stack
 - Create React App - scaffolding - [https://reactjs.org](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app)
-- using HTTPS locally - [mkcert](https://github.com/FiloSottile/mkcert)
-- Redux Toolkit - global state management - [https://redux-toolkit.js.org](https://redux-toolkit.js.org)
-- React Query + axios - API handling - [https://react-query.tanstack.com](https://react-query.tanstack.com) + [https://github.com/axios/axio](https://github.com/axios/axio)
+- Zustand - global state management - [https://zustand.surge.sh/](https://zustand.surge.sh)
+- Joi - schema validation for the ENV VARs - [https://www.npmjs.com/package/joi](https://www.npmjs.com/package/joi)
 - Storybook - interactive components - [https://storybook.js.org](https://storybook.js.org)
-- Ant Design - basic UI components - [http://ant.design](http://ant.design)
-- react-icons - supercharged icons repo - [https://react-icons.github.io/react-icons](https://react-icons.github.io/react-icons)
 - TailwindCSS - for all that common CSS rules - [https://tailwindcss.com](https://tailwindcss.com)
-
 
 
 ## File & Folder structure
 Here we describe what you can find and where.
 ```
 /src
-  /api
-    -- All BackEnd API calls should use an axios wrapper, e.g.:
-    -- axiosClient.post('/api/user', { username, password })
-
   /App
-    -- Root folder where we add Store and Theme Providers,
-    -- implement page routers, and base CSS rules
+    -- Root folder where we add Internationalization, check ENV VARs,
+    -- implement Suspense fallback and base CSS rules
 
   /components
-    -- All UI blocks that do not use global state data can be found here.
+    -- All UI blocks that can be reused in multiple machine parts
     -- It is generally desirable to keep balance between reusable components and "props dripping"
 
   /globalState
-    -- Every piece of shared data hosts a "data slice" in this folder.
-    -- Every "slice" exposes actions for manipulating the global data object.
+    -- Every piece of shared data has its own hook
+    -- Every hook exposes selectors for data and action manipulation
 
-  /layouts
-    -- Pages are commonly rendered in containers with menus, links, and headers.
-    -- Such layouts can be generated for authenticated users and free public access.
-
-  /pages
-    -- These components combines the global state data with common UI components
-    -- to generate complete data flow for every user.
+  /Machine
+    -- Main instants where all game machine parts are combined and synched
 
   /stories
-    -- Storybook placeholder for its info page
+    -- Storybook placeholder hosting main project info
 
   /utils
-    -- Common set of handy functions that manage money, time, strings, etc.
+    -- Common set of handy functions that manage random numbers, rescaling, etc.
 ```
+
+
+## Used resources
+During the development of this game a number of public images, color schemes, sounds, and animations were used.
+Here`s a list of their domains.
+
+### Used images
+- [https://www.vectorstock.com/royalty-free-vector](https://www.vectorstock.com/royalty-free-vector)
+- [https://gamedeveloperstudio.itch.io/conveyor-belt](https://gamedeveloperstudio.itch.io/conveyor-belt)
+- [https://www.flaticon.com/search?word=oven](https://www.flaticon.com/search?word=oven)
+- [https://game-icons.net](https://game-icons.net)
+- [https://pngimg.com](https://pngimg.com)
+
+### Used colors
+- [https://www.schemecolor.com/sweet-cookies.php](https://www.schemecolor.com/sweet-cookies.php)
+
+### Used sounds
+- [https://mixkit.co/free-sound-effects/game](https://mixkit.co/free-sound-effects/game)
+
+### Sound Editing
+- [https://twistedwave.com](https://twistedwave.com)
+
+### CSS Animations
+- [https://codepen.io/jkantner/pen/PoPvoGK](https://codepen.io/jkantner/pen/PoPvoGK)
+- [https://codepen.io/lukasoe/pen/BpMNjw](https://codepen.io/lukasoe/pen/BpMNjw)
+- [https://codepen.io/vineethtrv/pen/xbyvmZ](https://codepen.io/vineethtrv/pen/xbyvmZ)
+- [https://codepen.io/ivandimanov/pen/rNyeGMq?editors=1100](https://codepen.io/ivandimanov/pen/rNyeGMq?editors=1100)
+- [https://codepen.io/ivandimanov/pen/wvJKQrV?editors=1100](https://codepen.io/ivandimanov/pen/wvJKQrV?editors=1100)
+- [https://codepen.io/steylish/pen/YLxggB](https://codepen.io/steylish/pen/YLxggB)
+- [https://codepen.io/ivandimanov/pen/eYvZPMb?editors=1100](https://codepen.io/ivandimanov/pen/eYvZPMb?editors=1100)
+- [https://codepen.io/Vany/pen/aHgqv](https://codepen.io/Vany/pen/aHgqv)
+- [https://askteammate.com/npm/react-thermometer-chart/](https://askteammate.com/npm/react-thermometer-chart/)
+- [https://zamarrowski.github.io/react-thermometer-component/](https://zamarrowski.github.io/react-thermometer-component/)
