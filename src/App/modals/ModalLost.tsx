@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Modal from 'react-modal'
 import { useTranslation } from 'react-i18next'
@@ -10,9 +11,6 @@ import useSfx, { selectVolume } from '@src/globalState/useSfx'
 
 import SoundFileUrl from './sounds/gameOverLost.wav'
 import Scoreboard from './Scoreboard'
-
-// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
-Modal.setAppElement('#root')
 
 const modalWidth = 600
 const style = {
@@ -51,6 +49,11 @@ const ModalLost = ({
 }: ModalLostProps) => {
   const { t } = useTranslation()
   const sfxVolume = useSfx(selectVolume)
+
+  useEffect(() => {
+    // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
+    Modal.setAppElement('#root')
+  }, [])
 
   return (
     <div>

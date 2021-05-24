@@ -18,11 +18,17 @@ yarn start
 ```
 
 
-## Test
+## Tests
 Running unit tests:
 ```
 yarn test
 ```
+
+Generate unit test coverage:
+```
+yarn test-coverage
+```
+Then you can open `./src/coverage/index.html`.
 
 Running E2E tests:
 ```
@@ -34,7 +40,7 @@ Access Storybook components [here](https://60a8a3b8988a5e003be6c930-wnkvlscdvv.c
 ## Tech stack
 - Create React App - scaffolding - [https://reactjs.org](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app)
 - Zustand - global state management - [https://zustand.surge.sh/](https://zustand.surge.sh)
-- Joi - schema validation for the ENV VARs - [https://www.npmjs.com/package/joi](https://www.npmjs.com/package/joi)
+- Joi - schema validation used for ENV VARs - [https://www.npmjs.com/package/joi](https://www.npmjs.com/package/joi)
 - Storybook - interactive components - [https://storybook.js.org](https://storybook.js.org)
 - TailwindCSS - for all that common CSS rules - [https://tailwindcss.com](https://tailwindcss.com)
 

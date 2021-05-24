@@ -11,6 +11,7 @@
     "lint": "eslint './**/*.{js,jsx,ts,tsx}'",
     "build": "craco build",
     "test": "NODE_ENV=test craco test",
+    "test-coverage": "NODE_ENV=test CI=true craco test --coverage",
     "test-e2e": "NODE_ENV=test jest e2e",
     "prestorybook": "tailwindcss-cli build src/App/index.css -o .storybook/index.css",
     "storybook": "start-storybook -p 6006 -s public",
@@ -34,6 +35,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "!<rootDir>/src/**/*.stories.{js,jsx,ts,tsx}",
+      "!<rootDir>/node_modules/"
+    ],
+    "coverageReporters": ["html"]
   },
   "dependencies": {
     "@emotion/react": "11.4.0",

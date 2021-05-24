@@ -13,9 +13,6 @@ import useSfx, { selectVolume } from '@src/globalState/useSfx'
 import SoundFileUrl from './sounds/gameOverWon.wav'
 import Scoreboard from './Scoreboard'
 
-// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
-Modal.setAppElement('#root')
-
 
 const confettiConfig: ConfettiConfig = {
   angle: 360,
@@ -67,6 +64,11 @@ const ModalWon = ({
 }: ModalWonProps) => {
   const { t } = useTranslation()
   const sfxVolume = useSfx(selectVolume)
+
+  useEffect(() => {
+    // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
+    Modal.setAppElement('#root')
+  }, [])
 
   const [isConfettiActive, setIsConfettiActive] = useState(false)
 
