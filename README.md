@@ -28,6 +28,7 @@ Running E2E tests:
 ```
 yarn test-e2e
 ```
+Access Storybook components [here](https://60a8a3b8988a5e003be6c930-wnkvlscdvv.chromatic.com).
 
 
 ## Tech stack

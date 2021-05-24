@@ -92,6 +92,7 @@ const DropWrap = styled.div`
   }
 
   .drop {
+    width: 0px;
     fill: rgb(189, 140, 97);
   }
   
