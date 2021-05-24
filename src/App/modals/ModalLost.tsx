@@ -63,7 +63,10 @@ const ModalLost = ({
             {t('ModalLost.encourage')}
           </div>
 
-          <Header className="text-7xl text-red-600 font-extrabold text-center uppercase">
+          <Header
+            data-testid={`${testIdPrefix}.ModalLost.Header`}
+            className="text-7xl text-red-600 font-extrabold text-center uppercase"
+          >
             {t('ModalLost.Header')}
           </Header>
 

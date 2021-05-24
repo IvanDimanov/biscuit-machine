@@ -8,7 +8,10 @@ const Footer = () => {
       data-testid="Footer"
       className="static"
     >
-      <div className="absolute leading-10 text-center text-yellow-300 bottom-0 w-full">
+      <div
+        data-testid="Footer.Text"
+        className="absolute leading-10 text-center text-yellow-300 bottom-0 w-full"
+      >
         {t('Footer.madeWith')}
         {' '}
         &#129505;

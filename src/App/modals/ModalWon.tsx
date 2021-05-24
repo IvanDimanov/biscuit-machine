@@ -97,7 +97,10 @@ const ModalWon = ({
             {t('ModalWon.encourage')}
           </div>
 
-          <Header className="text-7xl text-green-600 font-extrabold text-center uppercase">
+          <Header
+            data-testid={`${testIdPrefix}.ModalWon.Header`}
+            className="text-7xl text-green-600 font-extrabold text-center uppercase"
+          >
             {t('ModalWon.Header')}
           </Header>
 

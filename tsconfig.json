@@ -11,7 +11,7 @@
     "allowJs": true,
     "jsx": "react-jsx",
     "outDir": "./build",
-    "rootDir": "./src",
+    "rootDir": "./",
     "strict": true,
     "noImplicitAny": false,
     "baseUrl": "./src",
@@ -31,7 +31,8 @@
     "./types.d.ts"
   ],
   "include": [
-    "src"
+    "src",
+    "e2e"
   ],
   "exclude": [
     "node_modules",

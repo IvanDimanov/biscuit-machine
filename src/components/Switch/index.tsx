@@ -183,7 +183,9 @@ const Switch = ({
               checked={value === 'on'}
               disabled={disabled}
             />
-            <span>{t('Switch.On')}</span>
+            <span data-testid={`${testIdPrefix}.Switch.Check.On.Label`}>
+              {t('Switch.On')}
+            </span>
           </label>
 
           <label>
@@ -196,7 +198,9 @@ const Switch = ({
               checked={value === 'pause'}
               disabled={disabled}
             />
-            <span>{t('Switch.Pause')}</span>
+            <span data-testid={`${testIdPrefix}.Switch.Check.Pause.Label`}>
+              {t('Switch.Pause')}
+            </span>
           </label>
 
           <label>
@@ -209,7 +213,9 @@ const Switch = ({
               checked={value === 'off'}
               disabled={disabled}
             />
-            <span>{t('Switch.Off')}</span>
+            <span data-testid={`${testIdPrefix}.Switch.Check.Off.Label`}>
+              {t('Switch.Off')}
+            </span>
           </label>
         </form>
       </Wrap>
