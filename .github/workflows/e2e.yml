@@ -124,7 +124,7 @@ jobs:
                   value: ${{ matrix.fixtures }}
 
                 - name: 'run_id'
-                  value: ${{ step.e2e.run_id }}
+                  value: ${{ steps.e2e.run_id }}
 
       - name: Run E2E Tests
         id: e2e
@@ -148,7 +148,7 @@ jobs:
                   value: ${{ matrix.fixtures }}
 
                 - name: 'run_id'
-                  value: ${{ step.e2e.run_id }}
+                  value: ${{ steps.e2e.run_id }}
 
       - name: Announce E2E tests failure
         id: e2e-failure-message
@@ -168,4 +168,4 @@ jobs:
                   value: ${{ matrix.fixtures }}
 
                 - name: 'run_id'
-                  value: ${{ step.e2e.run_id }}
+                  value: ${{ steps.e2e.run_id }}
