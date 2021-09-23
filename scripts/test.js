@@ -26,7 +26,7 @@ function delay(timeout = 100, response, isSuccess = true) {
   console.log('Starting scripts/test.js with', code)
 
   const isSuccess = code !== 'admin_iwm7.testcafe.js' && code !== 'admin_iwm9.testcafe.js'
-  await delay(3000, new Error(`Unable to process ${code}`), isSuccess)
+  await delay(1000, new Error(`Unable to process ${code}`), isSuccess)
 
   console.log('Success for', code)
 })()
