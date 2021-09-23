@@ -147,6 +147,11 @@ jobs:
           curl -s ${{ github.api_url }}/repos/${{ github.repository }}/actions/runs/${{ github.run_id }} | jq -r '.check_suite_id'
           curl -s ${{ github.api_url }}/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
+      - name: Check ENV VARs accessible to Node.js
+        if: failure()
+        run: |
+          node --eval 'console.log(process.env)'
+
       - name: check artifacts URL
         if: failure()
         run: |
