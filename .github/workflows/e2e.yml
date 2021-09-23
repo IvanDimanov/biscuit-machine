@@ -1,0 +1,121 @@
+name: Regressions
+
+on:
+  workflow_dispatch:
+    inputs:
+      targetProxy:
+        description: 'Provide the target URL for proxying the Backend requests'
+        # Placeholder to indicate what to type
+        default: 'http://nexus.stage.amana.vpn'
+        required: false
+  pull_request:
+    branches:
+      - master
+      - v*
+      - main
+  push:
+    branches:
+      - master
+      - v*
+concurrency:
+  group: regressions-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  announce:
+    runs-on: ubuntu-18.04
+    timeout-minutes: 30
+
+    steps:
+      - name: MS teams Start Announcement
+        run: echo "MS teams Start Announcement"
+
+  setup:
+    runs-on: ubuntu-18.04
+    timeout-minutes: 30
+    env:
+      RESULTS_PATH: ${{ github.workspace }}
+
+    steps:
+      - name: initiate
+        uses: actions/checkout@v2.3.4
+
+      - name: Cache node modules
+        id: cache-node-modules
+        uses: actions/cache@v2.1.6
+        with:
+          path: node_modules
+          key: node_modules-${{ hashFiles('package.json') }}
+
+      - name: install Node Modules
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: |
+            build
+
+  e2e:
+    needs: setup
+    runs-on: ubuntu-18.04
+    timeout-minutes: 30
+    env:
+      RESULTS_PATH: ${{ github.workspace }}
+    strategy:
+      matrix:
+        fixtures:
+          - admin_iwm.testcafe.js
+          - admin_iwm2.testcafe.js
+          - admin_iwm3.testcafe.js
+          - admin_iwm4.testcafe.js
+        # - admin_iwm5.testcafe.js
+          - admin_iwm6.testcafe.js
+          - admin_iwm7.testcafe.js
+          - admin_iwm8.testcafe.js
+          - admin_iwm9.testcafe.js
+          - rm_portal.testcafe.js
+
+    steps:
+      - name: initiate
+        uses: actions/checkout@v2.3.4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2.4.0
+        with:
+          node-version: '14'
+
+      - name: Cache node modules
+        id: cache-node-modules
+        uses: actions/cache@v2.1.6
+        with:
+          path: node_modules
+          key: node_modules-${{ hashFiles('package.json') }}
+
+      - name: install Node Modules
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Use Build
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
+
+      - name: Run E2E Tests
+        id: e2e
+        run: echo ${{ matrix['fixtures'] }}
+
+      - name: Archive e2e artifacts
+        id: artifacts
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: e2e
+          path: |
+            artifacts/videos/
