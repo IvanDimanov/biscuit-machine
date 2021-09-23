@@ -61,8 +61,26 @@ jobs:
           path: |
             build
 
-  e2e:
+  e2e-start-message:
     needs: setup
+    runs-on: ubuntu-18.04
+    timeout-minutes: 30
+    steps:
+      - name: Announce E2E tests start
+        id: e2e-start-message
+        uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
+        with: 
+          webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          theme-color: 'Info'
+          summary: "Starting E2E tests"
+          title: "Starting E2E tests"
+          sections: |
+            - activityImage: "{gh:avatar-url}"
+              activityTitle: "E2E tests triggered by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
+              activitySubtitle: "You can check progress here: {gh:run-number-link}"
+
+  e2e:
+    needs: e2e-start-message
     runs-on: ubuntu-18.04
     timeout-minutes: 30
     env:
@@ -107,48 +125,9 @@ jobs:
           name: build
           path: build
 
-      - name: Announce E2E tests start
-        id: e2e-start-message
-        uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
-        with: 
-          webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-          theme-color: 'Info'
-          summary: "Starting E2E tests"
-          title: "Starting E2E tests"
-          sections: |
-            - activityImage: "{gh:avatar-url}"
-              activityTitle: "E2E tests triggered by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
-              activitySubtitle: "You can check progress here: {gh:run-number-link}"
-              facts:
-                - name: 'Failed E2E test'
-                  value: ${{ matrix.fixtures }}
-
-                - name: 'run_id'
-                  value: ${{ steps.e2e.run_id }}
-
       - name: Run E2E Tests
         id: e2e
         run: node --unhandled-rejections=strict ./scripts/test.js ${{ matrix.fixtures }}
-
-      - name: Announce E2E tests success
-        id: e2e-success-message
-        if: success()
-        uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
-        with: 
-          webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-          theme-color: 'Success'
-          summary: "E2E tests passed"
-          title: "E2E tests passed"
-          sections: |
-            - activityImage: "{gh:avatar-url}"
-              activityTitle: "[This commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) pass E2E tests: ${{ matrix.fixtures }}"
-              activitySubtitle: "You can check progress here: {gh:run-number-link}"
-              facts:
-                - name: 'Passed E2E test'
-                  value: ${{ matrix.fixtures }}
-
-                - name: 'run_id'
-                  value: ${{ steps.e2e.run_id }}
 
       - name: Announce E2E tests failure
         id: e2e-failure-message
@@ -167,5 +146,20 @@ jobs:
                 - name: 'Failed E2E test'
                   value: ${{ matrix.fixtures }}
 
-                - name: 'run_id'
-                  value: ${{ steps.e2e.run_id }}
+  e2e-success-message:
+    needs: setup
+    runs-on: ubuntu-18.04
+    timeout-minutes: 30
+    steps:
+      - name: Announce E2E tests passed
+        id: e2e-passed-message
+        uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
+        with: 
+          webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          theme-color: 'Success'
+          summary: "All E2E tests passed"
+          title: "All E2E tests passed"
+          sections: |
+            - activityImage: "{gh:avatar-url}"
+              activityTitle: "All E2E tests triggered by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) have successfully passed"
+              activitySubtitle: "You can check progress here: {gh:run-number-link}"
