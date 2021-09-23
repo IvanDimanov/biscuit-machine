@@ -126,22 +126,19 @@ jobs:
 
       - name: Announce E2E tests failure
         id: e2e-failure-message
-        run: echo "Message MS Teams about E2E tests failure"
         if: failure()
-        with:
-          name: e2e
-          uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
-          with: 
-            webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-            theme-color: 'Error'
-            summary: 'E2E tests failed'
-            title: 'E2E tests failed'
-            sections: |
-              - activityImage: "{gh:avatar-url}"
-                activityTitle: "Commit by [{gh:actor}]({gh:actor-url}) failed E2E tests"
-                activitySubtitle: "You can check progress [here]({gh:run-number-link})"
-                facts:
-                  - name: 'Fact 1'
-                    value: 'Value 1'
-                  - name: 'Fact 2'
-                    value: 'Value 2'
+        uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
+        with: 
+          webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          theme-color: 'Error'
+          summary: 'E2E tests failed'
+          title: 'E2E tests failed'
+          sections: |
+            - activityImage: "{gh:avatar-url}"
+              activityTitle: "Commit by [{gh:actor}]({gh:actor-url}) failed E2E tests"
+              activitySubtitle: "You can check progress [here]({gh:run-number-link})"
+              facts:
+                - name: 'Fact 1'
+                  value: 'Value 1'
+                - name: 'Fact 2'
+                  value: 'Value 2'
