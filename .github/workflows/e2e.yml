@@ -109,7 +109,7 @@ jobs:
 
       - name: Announce E2E tests start
         id: e2e-start-message
-        if: ${{ matrix['fixtures'] == 'admin_iwm.testcafe.js' }}
+        if: ${{ matrix.fixtures == 'admin_iwm.testcafe.js' }}
         uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
         with: 
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
@@ -119,11 +119,11 @@ jobs:
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "Commit by [{gh:actor}]({gh:actor-url}) started E2E tests"
-              activitySubtitle: "You can check progress [here]({gh:run-number-link})"
+              activitySubtitle: "You can check progress here: {gh:run-number-link}"
 
       - name: Run E2E Tests
         id: e2e
-        run: node --unhandled-rejections=strict ./scripts/test.js ${{ matrix['fixtures'] }}
+        run: node --unhandled-rejections=strict ./scripts/test.js ${{ matrix.fixtures }}
 
       - name: Announce E2E tests failure
         id: e2e-failure-message
@@ -132,32 +132,57 @@ jobs:
         with: 
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
           theme-color: 'Error'
-          summary: "${{ matrix['fixtures'] }} E2E tests failed"
-          title: "${{ matrix['fixtures'] }} E2E tests failed"
+          summary: "E2E tests failed"
+          title: "E2E tests failed"
           sections: |
             - activityImage: "{gh:avatar-url}"
-              activityTitle: "Commit by [{gh:actor}]({gh:actor-url}) failed ${{ matrix['fixtures'] }} E2E tests"
-              activitySubtitle: "You can check progress {gh:run-number-link} ${{ github.run_id }} ${{ github.job_id }} ${{ github.job }}"
+              activityTitle: "Commit by [{gh:actor}]({gh:actor-url}) failed E2E tests: ${{ matrix.fixtures }}"
+              activitySubtitle: "You can check progress here: {gh:run-number-link}"
               facts:
+                - name: 'Failed E2E test'
+                  value: ${{ matrix.fixtures }}
+
                 - name: 'run_id'
                   value: ${{ github.run_id }}
+
                 - name: 'job_id'
                   value: ${{ github.job_id }}
+
                 - name: 'job'
                   value: ${{ github.job }}
+
+                - name: 'toJSON(job)'
+                  value: ${{ toJSON(github.job) }}
+
+                - name: 'toJSON(job) #2'
+                  value: ${{ toJSON(job) }}
+
                 - name: 'job.status'
                   value: ${{ github.job.status }}
+
                 - name: 'action'
                   value: ${{ github.action }}
+
+                - name: 'toJSON(action)'
+                  value: ${{ toJSON(github.action) }}
+
+                - name: 'toJSON(action) #2'
+                  value: ${{ toJSON(action) }}
+
                 - name: 'action_path'
                   value: ${{ github.action_path }}
+
                 - name: 'event'
                   value: ${{ github.event }}
+
                 - name: 'event_name'
                   value: ${{ github.event_name }}
+
                 - name: 'event_path'
                   value: ${{ github.event_path }}
+
                 - name: 'workflow'
                   value: ${{ github.workflow }}
+
                 - name: 'workspace'
                   value: ${{ github.workspace }}
