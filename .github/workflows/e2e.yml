@@ -110,6 +110,8 @@ jobs:
       - name: Run E2E Tests
         id: e2e
         run: node --unhandled-rejections=strict ./scripts/test.js ${{ matrix['fixtures'] }}
+        if: failure()
+          run: echo "Failed E2E Tests ${{ matrix['fixtures'] }}, ${{ github.run_id }}, ${{ github.workflow }}"
 
       - name: Archive e2e artifacts
         id: artifacts
