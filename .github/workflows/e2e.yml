@@ -156,9 +156,6 @@ jobs:
                   value: ${{ github.run_number }}
 
                 - name: 'job_id'
-                  value: ${{ job_id }}
-
-                - name: 'job_id #2'
                   value: ${{ github.job_id }}
 
   e2e-success-message:
