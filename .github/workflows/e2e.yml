@@ -146,11 +146,8 @@ jobs:
                 - name: 'Failed E2E test'
                   value: ${{ matrix.fixtures }}
 
-                - name: Results
-                  value: "${{ steps.e2e.outcome }}"
-
-                # - name: Artifacts
-                #   value: "${{ steps.artifacts.outcome }}"
+                - name: Artifacts
+                  value: "${{ steps.artifacts.outcome }}"
 
 
   e2e-success-message:
