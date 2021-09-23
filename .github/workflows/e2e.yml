@@ -107,19 +107,38 @@ jobs:
           name: build
           path: build
 
-      - name: MS Teams messages
-        id: e2e-messages
-        uses: toko-bifrost/ms-teams-deploy-card@master
-        with:
-          github-token: ${{ github.token }}
-          webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-          timezone: "CET"
-          view-status-action-text: "View Regression progress"
-          card-layout-start: "compact"
-          card-layout-exit: "complete"
-          show-on-start: true
-          show-on-exit: true
-          show-on-failure: true
+      # - name: MS Teams messages
+      #   id: e2e-messages
+      #   uses: toko-bifrost/ms-teams-deploy-card@master
+      #   with:
+      #     github-token: ${{ github.token }}
+      #     webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+      #     timezone: "CET"
+      #     view-status-action-text: "View Regression progress"
+      #     card-layout-start: "compact"
+      #     card-layout-exit: "complete"
+      #     show-on-start: true
+      #     show-on-exit: true
+      #     show-on-failure: true
+
+      - name: Announce E2E tests start
+        id: e2e-start-message
+        uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
+        with: 
+          webhook_url: ${{ secrets.WEBHOOK_URL }}
+          theme-color: 'Info'
+          summary: 'Card Summary'
+          title: 'Card title'
+          text: 'Card text'
+          sections: |
+            - activityTitle: "Section title by {gh:actor}"
+              activitySubtitle: "Section subtitle. Make click [here]({gh:actor-url}) to go to user profile"
+              activityImage: "{gh:avatar-url}"
+              facts:
+                - name: 'Fact 1'
+                  value: 'Value 1'
+                - name: 'Fact 2'
+                  value: 'Value 2'
 
       - name: Run E2E Tests
         id: e2e
