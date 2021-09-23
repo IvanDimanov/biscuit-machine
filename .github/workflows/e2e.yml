@@ -130,7 +130,7 @@ jobs:
       - name: Use Build
         uses: actions/download-artifact@v2
         with:
-          name: build
+          name: build-${{ github.sha }})
           path: build
 
       - name: Run E2E Tests
