@@ -123,6 +123,9 @@ jobs:
                 - name: 'Failed E2E test'
                   value: ${{ matrix.fixtures }}
 
+                - name: 'run_id'
+                  value: ${{ step.e2e.run_id }}
+
       - name: Run E2E Tests
         id: e2e
         run: node --unhandled-rejections=strict ./scripts/test.js ${{ matrix.fixtures }}
@@ -144,6 +147,9 @@ jobs:
                 - name: 'Passed E2E test'
                   value: ${{ matrix.fixtures }}
 
+                - name: 'run_id'
+                  value: ${{ step.e2e.run_id }}
+
       - name: Announce E2E tests failure
         id: e2e-failure-message
         if: failure()
@@ -160,3 +166,6 @@ jobs:
               facts:
                 - name: 'Failed E2E test'
                   value: ${{ matrix.fixtures }}
+
+                - name: 'run_id'
+                  value: ${{ step.e2e.run_id }}
