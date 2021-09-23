@@ -126,6 +126,7 @@ jobs:
 
       - name: Announce E2E tests failure
         id: e2e-failure-message
+        run: echo "Message MS Teams about E2E tests failure"
         if: failure()
         with:
           name: e2e
