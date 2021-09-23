@@ -144,8 +144,8 @@ jobs:
           echo ${{ github.event_name }}
           echo ${{ github.run_id }}
           echo ${{ github.run_number }}
-          curl -s ${{ github.server_url }}/repos/$${{ github.repository }}/actions/runs/${{ github.run_id }} | jq -r '.check_suite_id'
-          curl -s ${{ github.server_url }}/repos/$${{ github.repository }}/actions/runs/${{ github.run_id }}
+          curl -s ${{ github.server_url }}/repos/${{ github.repository }}/actions/runs/${{ github.run_id }} | jq -r '.check_suite_id'
+          curl -s ${{ github.server_url }}/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: check artifacts URL
         if: failure()
