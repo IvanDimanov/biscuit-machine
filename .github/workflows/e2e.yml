@@ -113,11 +113,11 @@ jobs:
         with: 
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
           theme-color: 'Info'
-          summary: 'Starting E2E tests'
-          title: 'Starting E2E tests'
+          summary: "Starting ${{ matrix['fixtures'] }} E2E tests"
+          title: "Starting ${{ matrix['fixtures'] }} E2E tests"
           sections: |
             - activityImage: "{gh:avatar-url}"
-              activityTitle: "Commit by [{gh:actor}]({gh:actor-url}) started E2E tests"
+              activityTitle: "Commit by [{gh:actor}]({gh:actor-url}) started ${{ matrix['fixtures'] }} E2E tests"
               activitySubtitle: "You can check progress [here]({gh:run-number-link})"
 
       - name: Run E2E Tests
@@ -131,11 +131,11 @@ jobs:
         with: 
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
           theme-color: 'Error'
-          summary: 'E2E tests failed'
-          title: 'E2E tests failed'
+          summary: "${{ matrix['fixtures'] }} E2E tests failed"
+          title: "${{ matrix['fixtures'] }} E2E tests failed"
           sections: |
             - activityImage: "{gh:avatar-url}"
-              activityTitle: "Commit by [{gh:actor}]({gh:actor-url}) failed E2E tests"
+              activityTitle: "Commit by [{gh:actor}]({gh:actor-url}) failed ${{ matrix['fixtures'] }} E2E tests"
               activitySubtitle: "You can check progress [here]({gh:run-number-link})"
               facts:
                 - name: 'Fact 1'
