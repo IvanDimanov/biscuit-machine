@@ -109,7 +109,6 @@ jobs:
 
       - name: Announce E2E tests start
         id: e2e-start-message
-        if: ${{ matrix.fixtures == 'admin_iwm.testcafe.js' }}
         uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
         with: 
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
@@ -120,10 +119,30 @@ jobs:
             - activityImage: "{gh:avatar-url}"
               activityTitle: "E2E tests triggered by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
               activitySubtitle: "You can check progress here: {gh:run-number-link}"
+              facts:
+                - name: 'Failed E2E test'
+                  value: ${{ matrix.fixtures }}
 
       - name: Run E2E Tests
         id: e2e
         run: node --unhandled-rejections=strict ./scripts/test.js ${{ matrix.fixtures }}
+
+      - name: Announce E2E tests success
+        id: e2e-success-message
+        if: success()
+        uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
+        with: 
+          webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          theme-color: 'Success'
+          summary: "E2E tests passed"
+          title: "E2E tests passed"
+          sections: |
+            - activityImage: "{gh:avatar-url}"
+              activityTitle: "[This commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) pass E2E tests: ${{ matrix.fixtures }}"
+              activitySubtitle: "You can check progress here: {gh:run-number-link}"
+              facts:
+                - name: 'Passed E2E test'
+                  value: ${{ matrix.fixtures }}
 
       - name: Announce E2E tests failure
         id: e2e-failure-message
@@ -141,15 +160,3 @@ jobs:
               facts:
                 - name: 'Failed E2E test'
                   value: ${{ matrix.fixtures }}
-
-                - name: 'status'
-                  value: ${{ steps.e2e.status }}
-
-                - name: 'outputs'
-                  value: ${{ steps.e2e.outputs }}
-
-                - name: 'outputs.stdout'
-                  value: ${{ steps.e2e.outputs.stdout }}
-
-                - name: 'outputs.stderr'
-                  value: ${{ steps.e2e.outputs.stderr }}
