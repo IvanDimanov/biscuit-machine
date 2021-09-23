@@ -139,12 +139,18 @@ jobs:
 
       - name: Debug artifacts
         if: failure()
-        run: echo ${{ steps.artifacts.output }}
+        run: |
+          echo ${{ github.base_ref }}
+          echo ${{ github.event_name }}
+          echo ${{ github.run_id }}
+          echo ${{ github.run_number }}
+          curl -s ${{ github.server_url }}/repos/$${{ github.repository }}/actions/runs/${{ github.run_id }} | jq -r '.check_suite_id'
+          curl -s ${{ github.server_url }}/repos/$${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: check artifacts URL
         if: failure()
         run: |
-          URL="https://api.github.com/repos${{ github.owner }}/${{ github.repository }}/actions/artifacts"
+          URL="${{ github.server_url }}/repos${{ github.owner }}/${{ github.repository }}/actions/artifacts"
           curl -u admin:${{ secrets.GITHUB_TOKEN }} $URL
 
 
