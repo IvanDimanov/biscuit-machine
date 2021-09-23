@@ -69,9 +69,6 @@ jobs:
       RESULTS_PATH: ${{ github.workspace }}
     strategy:
       matrix:
-        showStartMessage:
-          - true
-          - false
         fixtures:
           - admin_iwm.testcafe.js
           - admin_iwm2.testcafe.js
@@ -112,7 +109,7 @@ jobs:
 
       - name: Announce E2E tests start
         id: e2e-start-message
-        if: ${{ matrix.showStartMessage }}
+        if: ${{ matrix.fixtures == 'admin_iwm.testcafe.js' }}
         uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
         with: 
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
@@ -148,8 +145,11 @@ jobs:
                 - name: 'status'
                   value: ${{ steps.e2e.status }}
 
-                - name: 'output'
-                  value: ${{ steps.e2e.output }}
-
                 - name: 'outputs'
                   value: ${{ steps.e2e.outputs }}
+
+                - name: 'outputs.stdout'
+                  value: ${{ steps.e2e.outputs.stdout }}
+
+                - name: 'outputs.stderr'
+                  value: ${{ steps.e2e.outputs.stderr }}
