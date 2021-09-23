@@ -113,8 +113,18 @@ jobs:
 
       - name: Announce job failure
         id: e2e-failure-message
-        uses: actions/upload-artifact@v2
+        uses: toko-bifrost/ms-teams-deploy-card@master
         if: failure()
         with:
           name: e2e
-          run: echo "Failed E2E Tests ${{ matrix['fixtures'] }}, ${{ github.run_id }}, ${{ github.workflow }}"
+          github-token: ${{ github.token }}
+          webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          timezone: "CET"
+          enable-review-diffs-action: false
+          view-status-action-text: "View Regression results"
+          card-layout-start: "compact"
+          card-layout-exit: "complete"
+          show-on-start: false
+          custom-facts: |
+            - name: E2e results
+              value: "${{ steps.e2e.outcome }}"
