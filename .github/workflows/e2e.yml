@@ -146,6 +146,18 @@ jobs:
                 - name: 'Failed E2E test'
                   value: ${{ matrix.fixtures }}
 
+                - name: 'github-url'
+                  value: ${{ e2e.outputs.github-url }}
+
+                - name: 'github_url'
+                  value: ${{ e2e.outputs.github_url }}
+
+                - name: 'raw-url'
+                  value: ${{ e2e.outputs.raw-url }}
+
+                - name: 'raw_url'
+                  value: ${{ e2e.outputs.raw_url }}
+
   e2e-success-message:
     needs: e2e
     runs-on: ubuntu-18.04
