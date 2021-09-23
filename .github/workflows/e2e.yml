@@ -149,17 +149,17 @@ jobs:
                 - name: 'run_id'
                   value: ${{ github.run_id }}
 
+                - name: 'job_id'
+                  value: ${{ github.job_id }}
+
                 - name: 'run_number'
                   value: ${{ github.run_number }}
 
-                - name: 'job.id'
-                  value: ${{ job.id }}
+                - name: 'job_id'
+                  value: ${{ job_id }}
 
-                - name: 'job.container.id'
-                  value: ${{ job.container.id }}
-
-                - name: 'job.container.network'
-                  value: ${{ job.container.network }}
+                - name: 'job_id #2'
+                  value: ${{ github.job_id }}
 
   e2e-success-message:
     needs: e2e
