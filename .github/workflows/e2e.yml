@@ -94,9 +94,9 @@ jobs:
           - admin_iwm4.testcafe.js
         # - admin_iwm5.testcafe.js
           - admin_iwm6.testcafe.js
-          - admin_iwm7.testcafe.js
+        # - admin_iwm7.testcafe.js
           - admin_iwm8.testcafe.js
-          - admin_iwm9.testcafe.js
+        # - admin_iwm9.testcafe.js
           - rm_portal.testcafe.js
 
     steps:
