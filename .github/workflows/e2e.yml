@@ -146,17 +146,12 @@ jobs:
                 - name: 'Failed E2E test'
                   value: ${{ matrix.fixtures }}
 
-                - name: 'github-url'
-                  value: ${{ steps.e2e.outputs.github-url }}
+                - name: Results
+                  value: "${{ steps.e2e.outcome }}"
 
-                - name: 'github_url'
-                  value: ${{ steps.e2e.outputs.github_url }}
+                # - name: Artifacts
+                #   value: "${{ steps.artifacts.outcome }}"
 
-                - name: 'raw-url'
-                  value: ${{ steps.e2e.outputs.raw-url }}
-
-                - name: 'raw_url'
-                  value: ${{ steps.e2e.outputs.raw_url }}
 
   e2e-success-message:
     needs: e2e
