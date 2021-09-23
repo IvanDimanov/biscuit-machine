@@ -113,13 +113,6 @@ jobs:
 
       - name: Announce job failure
         if: failure()
-        run: echo "Failed E2E Tests ${{ matrix['fixtures'] }}, ${{ github.run_id }}, ${{ github.workflow }}"
-
-      - name: Archive e2e artifacts
-        id: artifacts
-        uses: actions/upload-artifact@v2
-        if: failure()
         with:
           name: e2e
-          path: |
-            artifacts/videos/
+          run: echo "Failed E2E Tests ${{ matrix['fixtures'] }}, ${{ github.run_id }}, ${{ github.workflow }}"
