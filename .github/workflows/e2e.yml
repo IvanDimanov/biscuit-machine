@@ -166,9 +166,6 @@ jobs:
                 - name: 'toJSON(action)'
                   value: ${{ toJSON(github.action) }}
 
-                - name: 'toJSON(action) #2'
-                  value: ${{ toJSON(action) }}
-
                 - name: 'action_path'
                   value: ${{ github.action_path }}
 
