@@ -125,7 +125,7 @@ jobs:
         id: e2e-start-message
         uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
         with: 
-          webhook_url: ${{ secrets.WEBHOOK_URL }}
+          webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
           theme-color: 'Info'
           summary: 'Card Summary'
           title: 'Card title'
