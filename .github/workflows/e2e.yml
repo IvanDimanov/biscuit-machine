@@ -71,6 +71,7 @@ jobs:
       matrix:
         showStartMessage:
           - true
+          - false
         fixtures:
           - admin_iwm.testcafe.js
           - admin_iwm2.testcafe.js
@@ -120,14 +121,8 @@ jobs:
           title: "Starting E2E tests"
           sections: |
             - activityImage: "{gh:avatar-url}"
-              activityTitle: "E2E tests triggered by [this commit](${{ github.event.head_commit.message }})"
+              activityTitle: "E2E tests triggered by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
               activitySubtitle: "You can check progress here: {gh:run-number-link}"
-              facts:
-                - name: 'ref'
-                  value: ${{ github.ref }}
-
-                - name: 'Commit URL'
-                  value: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
 
       - name: Run E2E Tests
         id: e2e
@@ -144,17 +139,17 @@ jobs:
           title: "E2E tests failed"
           sections: |
             - activityImage: "{gh:avatar-url}"
-              activityTitle: "Commit by [{gh:actor}]({gh:actor-url}) failed E2E tests: ${{ matrix.fixtures }}"
+              activityTitle: "[This commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) failed E2E tests: ${{ matrix.fixtures }}"
               activitySubtitle: "You can check progress here: {gh:run-number-link}"
               facts:
                 - name: 'Failed E2E test'
                   value: ${{ matrix.fixtures }}
 
-                - name: 'run_id'
-                  value: ${{ github.run_id }}
+                - name: 'status'
+                  value: ${{ steps.e2e.status }}
 
-                - name: 'job_id'
-                  value: ${{ github.job_id }}
+                - name: 'output'
+                  value: ${{ steps.e2e.output }}
 
-                - name: 'job'
-                  value: ${{ github.job }}
+                - name: 'outputs'
+                  value: ${{ steps.e2e.outputs }}
