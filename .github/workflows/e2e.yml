@@ -109,7 +109,7 @@ jobs:
 
       - name: Run E2E Tests
         id: e2e
-        run: node ./scripts/test.js ${{ matrix['fixtures'] }}
+        run: node --unhandled-rejections=strict ./scripts/test.js ${{ matrix['fixtures'] }}
 
       - name: Archive e2e artifacts
         id: artifacts
