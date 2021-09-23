@@ -55,6 +55,7 @@ jobs:
         run: npm run build
 
       - name: Upload production artifacts
+        id: artifacts
         uses: actions/upload-artifact@v2
         with:
           name: build
@@ -167,3 +168,6 @@ jobs:
             - activityImage: "{gh:avatar-url}"
               activityTitle: "All E2E tests triggered by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) have successfully passed"
               activitySubtitle: "You can check progress here: {gh:run-number-link}"
+              facts:
+                - name: Artifacts
+                  value: "${{ steps.artifacts.outcome }}"
