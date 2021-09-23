@@ -140,12 +140,12 @@ jobs:
       - name: Debug artifacts
         if: failure()
         run: |
-          echo ${{ github.base_ref }}
-          echo ${{ github.event_name }}
+          echo ${{ github.sha }}
           echo ${{ github.run_id }}
           echo ${{ github.run_number }}
           curl -s ${{ github.api_url }}/repos/${{ github.repository }}/actions/runs/${{ github.run_id }} | jq -r '.check_suite_id'
           curl -s ${{ github.api_url }}/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          curl -s ${{ github.api_url }}/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts
 
       - name: Check ENV VARs accessible to Node.js
         if: failure()
