@@ -152,6 +152,15 @@ jobs:
                 - name: 'run_number'
                   value: ${{ github.run_number }}
 
+                - name: 'job.id'
+                  value: ${{ github.job.id }}
+
+                - name: 'job.container.id'
+                  value: ${{ github.job.container.id }}
+
+                - name: 'job.container.network'
+                  value: ${{ github.job.container.network }}
+
   e2e-success-message:
     needs: e2e
     runs-on: ubuntu-18.04
