@@ -109,15 +109,16 @@ jobs:
 
       - name: Announce E2E tests start
         id: e2e-start-message
+        if: ${{ matrix['fixtures'] == 'admin_iwm.testcafe.js' }}
         uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
         with: 
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
           theme-color: 'Info'
-          summary: "Starting ${{ matrix['fixtures'] }} E2E tests"
-          title: "Starting ${{ matrix['fixtures'] }} E2E tests"
+          summary: "Starting E2E tests"
+          title: "Starting E2E tests"
           sections: |
             - activityImage: "{gh:avatar-url}"
-              activityTitle: "Commit by [{gh:actor}]({gh:actor-url}) started ${{ matrix['fixtures'] }} E2E tests"
+              activityTitle: "Commit by [{gh:actor}]({gh:actor-url}) started E2E tests"
               activitySubtitle: "You can check progress [here]({gh:run-number-link})"
 
       - name: Run E2E Tests
@@ -136,9 +137,27 @@ jobs:
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "Commit by [{gh:actor}]({gh:actor-url}) failed ${{ matrix['fixtures'] }} E2E tests"
-              activitySubtitle: "You can check progress [here]({gh:run-number-link})"
+              activitySubtitle: "You can check progress {gh:run-number-link} ${{ github.run_id }} ${{ github.job_id }} ${{ github.job }}"
               facts:
-                - name: 'Fact 1'
-                  value: 'Value 1'
-                - name: 'Fact 2'
-                  value: 'Value 2'
+                - name: 'run_id'
+                  value: ${{ github.run_id }}
+                - name: 'job_id'
+                  value: ${{ github.job_id }}
+                - name: 'job'
+                  value: ${{ github.job }}
+                - name: 'job.status'
+                  value: ${{ github.job.status }}
+                - name: 'action'
+                  value: ${{ github.action }}
+                - name: 'action_path'
+                  value: ${{ github.action_path }}
+                - name: 'event'
+                  value: ${{ github.event }}
+                - name: 'event_name'
+                  value: ${{ github.event_name }}
+                - name: 'event_path'
+                  value: ${{ github.event_path }}
+                - name: 'workflow'
+                  value: ${{ github.workflow }}
+                - name: 'workspace'
+                  value: ${{ github.workspace }}
