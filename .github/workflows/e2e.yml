@@ -112,6 +112,8 @@ jobs:
         run: node --unhandled-rejections=strict ./scripts/test.js ${{ matrix['fixtures'] }}
 
       - name: Announce job failure
+        id: e2e-failure-message
+        uses: actions/upload-artifact@v2
         if: failure()
         with:
           name: e2e
