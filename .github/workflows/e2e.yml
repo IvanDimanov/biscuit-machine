@@ -125,20 +125,6 @@ jobs:
           name: build
           path: build
 
-      - name: Get Current Job Log URL
-        uses: Tiryoh/gha-jobid-action@v0
-        id: jobs
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          job_name: ${{ github.job }}
-          repository: ${{ github.repository }}
-          run_id: ${{ github.run_id }}
-
-      - name: Output Current Job Log URL
-        run: |
-          echo ${{ steps.jobs.outputs.job_id }}
-          echo ${{ steps.jobs.outputs.html_url }}
-
       - name: Run E2E Tests
         id: e2e
         run: node --unhandled-rejections=strict ./scripts/test.js ${{ matrix.fixtures }}
@@ -159,15 +145,6 @@ jobs:
               facts:
                 - name: 'Failed E2E test'
                   value: ${{ matrix.fixtures }}
-
-                - name: 'run_id'
-                  value: ${{ github.run_id }}
-
-                - name: 'run_number'
-                  value: ${{ github.run_number }}
-
-                - name: 'job'
-                  value: ${{ github.job }}
 
   e2e-success-message:
     needs: e2e
