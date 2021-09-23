@@ -57,16 +57,11 @@ jobs:
       - name: Upload production artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: build
+          name: build-${{ github.sha }})
           path: |
             build
 
       - name: check artifacts id
-        run: |
-          URL="https://api.github.com/repos${{ github.owner }}/${{ github.repository }}/actions/artifacts"
-          curl -u admin:${{ secrets.GITHUB_TOKEN }} $URL |jq '.artifacts[].id'
-
-      - name: check artifacts id - 2
         run: |
           URL="https://api.github.com/repos${{ github.owner }}/${{ github.repository }}/actions/artifacts"
           curl -u admin:${{ secrets.GITHUB_TOKEN }} $URL
