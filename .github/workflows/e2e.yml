@@ -57,7 +57,7 @@ jobs:
       - name: Upload production artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: build-${{ github.sha }})
+          name: build-${{ github.sha }}
           path: |
             build
 
@@ -97,15 +97,15 @@ jobs:
       matrix:
         fixtures:
           - admin_iwm.testcafe.js
-          - admin_iwm2.testcafe.js
-          - admin_iwm3.testcafe.js
-          - admin_iwm4.testcafe.js
+          # - admin_iwm2.testcafe.js
+          # - admin_iwm3.testcafe.js
+          # - admin_iwm4.testcafe.js
         # - admin_iwm5.testcafe.js
-          - admin_iwm6.testcafe.js
-          - admin_iwm7.testcafe.js
-          - admin_iwm8.testcafe.js
+          # - admin_iwm6.testcafe.js
+          # - admin_iwm7.testcafe.js
+          # - admin_iwm8.testcafe.js
           - admin_iwm9.testcafe.js
-          - rm_portal.testcafe.js
+          # - rm_portal.testcafe.js
 
     steps:
       - name: initiate
@@ -130,15 +130,18 @@ jobs:
       - name: Use Build
         uses: actions/download-artifact@v2
         with:
-          name: build-${{ github.sha }})
+          name: build-${{ github.sha }}
           path: build
 
       - name: Run E2E Tests
         id: e2e
         run: node --unhandled-rejections=strict ./scripts/test.js ${{ matrix.fixtures }}
 
+      - name: Debug artifacts
+        if: failure()
+        run: echo ${{ steps.artifacts.output }}
 
-      - name: check artifacts id
+      - name: check artifacts URL
         if: failure()
         run: |
           URL="https://api.github.com/repos${{ github.owner }}/${{ github.repository }}/actions/artifacts"
