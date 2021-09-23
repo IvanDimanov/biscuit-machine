@@ -107,47 +107,20 @@ jobs:
           name: build
           path: build
 
-      - name: Announce E2E start
-        id: e2e-start-message
+      - name: MS Teams messages
+        id: e2e-messages
         uses: toko-bifrost/ms-teams-deploy-card@master
         with:
           github-token: ${{ github.token }}
           webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
           timezone: "CET"
-          title: "Starting E2E Tests"
           view-status-action-text: "View Regression progress"
           card-layout-start: "compact"
+          card-layout-exit: "complete"
+          show-on-start: true
+          show-on-exit: true
+          show-on-failure: true
 
       - name: Run E2E Tests
         id: e2e
         run: node --unhandled-rejections=strict ./scripts/test.js ${{ matrix['fixtures'] }}
-
-      - name: Announce E2E failure
-        id: e2e-failure-message
-        uses: toko-bifrost/ms-teams-deploy-card@master
-        if: failure()
-        with:
-          github-token: ${{ github.token }}
-          webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-          timezone: "CET"
-          enable-review-diffs-action: false
-          title: "E2E Tests failed"
-          view-status-action-text: "View Regression results"
-          card-layout-start: "compact"
-          card-layout-exit: "complete"
-          show-on-start: false
-          custom-facts: |
-            - name: E2e results
-              value: "${{ steps.e2e.outcome }}"
-
-      - name: Announce E2E success
-        id: e2e-success-message
-        uses: toko-bifrost/ms-teams-deploy-card@master
-        if: failure()
-        with:
-          github-token: ${{ github.token }}
-          webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-          timezone: "CET"
-          title: "E2E Tests passed with success"
-          view-status-action-text: "View Regression results"
-          card-layout-start: "compact"
