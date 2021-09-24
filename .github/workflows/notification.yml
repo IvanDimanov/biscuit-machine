@@ -86,6 +86,8 @@ jobs:
       - name: Check dir
         run: |
           ls -la
+          ls -la ./.github
+          ls -la ./.github/js-scripts
 
       - name: Read list of previously failed tests
         run: |
