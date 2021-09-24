@@ -91,7 +91,7 @@ jobs:
               activitySubtitle: "You can check progress here: {gh:run-number-link}"
 
   e2e:
-    needs: e2e-start-message
+    needs: setup
     runs-on: ubuntu-18.04
     timeout-minutes: 30
     env:
@@ -160,42 +160,3 @@ jobs:
         run: |
           URL="${{ github.api_url }}/repos${{ github.owner }}/${{ github.repository }}/actions/artifacts"
           curl -u admin:${{ secrets.GITHUB_TOKEN }} $URL
-
-
-      - name: Announce E2E tests failure
-        id: e2e-failure-message
-        if: failure()
-        uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
-        with: 
-          webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-          theme-color: 'Error'
-          summary: "E2E tests failed"
-          title: "E2E tests failed"
-          sections: |
-            - activityImage: "{gh:avatar-url}"
-              activityTitle: "[This commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) failed E2E tests: ${{ matrix.fixtures }}"
-              activitySubtitle: "You can check progress here: {gh:run-number-link}"
-              facts:
-                - name: 'Failed E2E test'
-                  value: ${{ matrix.fixtures }}
-
-                - name: Artifacts
-                  value: "${{ steps.artifacts.outcome }}"
-
-  e2e-success-message:
-    needs: e2e
-    runs-on: ubuntu-18.04
-    timeout-minutes: 30
-    steps:
-      - name: Announce E2E tests passed
-        id: e2e-passed-message
-        uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
-        with: 
-          webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-          theme-color: 'Success'
-          summary: "All E2E tests passed"
-          title: "All E2E tests passed"
-          sections: |
-            - activityImage: "{gh:avatar-url}"
-              activityTitle: "All E2E tests triggered by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) have successfully passed"
-              activitySubtitle: "You can check progress here: {gh:run-number-link}"
