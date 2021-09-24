@@ -1,0 +1,78 @@
+name: Notification
+
+on:
+  workflow_dispatch:
+    inputs:
+      message:
+        description: 'Send Notification'
+
+  workflow_run:
+    workflows: ["Regressions"]
+    types:
+      - completed
+
+concurrency:
+  group: regressions-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  setup:
+    runs-on: ubuntu-18.04
+    timeout-minutes: 30
+    env:
+      RESULTS_PATH: ${{ github.workspace }}
+
+    steps:
+      - name: initiate
+        uses: actions/checkout@v2.3.4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v2.4.0
+        with:
+          node-version: '14'
+
+      - name: Cache node modules
+        id: cache-node-modules
+        uses: actions/cache@v2.1.6
+        with:
+          path: node_modules
+          key: node_modules-${{ hashFiles('package.json') }}
+
+      - name: install Node Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm install --no-package-lock
+
+  message:
+    needs: setup
+    runs-on: ubuntu-18.04
+    timeout-minutes: 30
+    steps:
+      - name: initiate
+        uses: actions/checkout@v2.3.4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2.4.0
+        with:
+          node-version: '14'
+
+      - name: Cache node modules
+        id: cache-node-modules
+        uses: actions/cache@v2.1.6
+        with:
+          path: node_modules
+          key: node_modules-${{ hashFiles('package.json') }}
+
+      - name: install Node Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm install --no-package-lock
+
+      - name: Check available artifacts
+        if: failure()
+        id: get-artifacts-url
+        run: node ./.github/js-scripts/get-artifact-archive-url.js ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check artifacts URL
+        if: failure()
+        run: |
+          URL="${{ github.api_url }}/repos${{ github.owner }}/${{ github.repository }}/actions/artifacts"
+          curl -u admin:${{ secrets.GITHUB_TOKEN }} $URL

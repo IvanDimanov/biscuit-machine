@@ -49,7 +49,7 @@ jobs:
 
       - name: install Node Modules
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: npm ci
+        run: yarn
 
       - name: Build
         run: npm run build
@@ -57,12 +57,38 @@ jobs:
       - name: Upload production artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: build
+          name: build-${{ github.sha }}
           path: |
             build
 
-  e2e:
+      - name: check artifacts id
+        run: |
+          URL="https://api.github.com/repos${{ github.owner }}/${{ github.repository }}/actions/artifacts"
+          curl -u admin:${{ secrets.GITHUB_TOKEN }} $URL
+
+
+
+
+  e2e-start-message:
     needs: setup
+    runs-on: ubuntu-18.04
+    timeout-minutes: 30
+    steps:
+      - name: Announce E2E tests start
+        id: e2e-start-message
+        uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
+        with: 
+          webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          theme-color: 'Info'
+          summary: "Starting E2E tests"
+          title: "Starting E2E tests"
+          sections: |
+            - activityImage: "{gh:avatar-url}"
+              activityTitle: "E2E tests triggered by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
+              activitySubtitle: "You can check progress here: {gh:run-number-link}"
+
+  e2e:
+    needs: e2e-start-message
     runs-on: ubuntu-18.04
     timeout-minutes: 30
     env:
@@ -71,15 +97,15 @@ jobs:
       matrix:
         fixtures:
           - admin_iwm.testcafe.js
-          - admin_iwm2.testcafe.js
-          - admin_iwm3.testcafe.js
-          - admin_iwm4.testcafe.js
+          # - admin_iwm2.testcafe.js
+          # - admin_iwm3.testcafe.js
+          # - admin_iwm4.testcafe.js
         # - admin_iwm5.testcafe.js
-          - admin_iwm6.testcafe.js
-          - admin_iwm7.testcafe.js
-          - admin_iwm8.testcafe.js
+          # - admin_iwm6.testcafe.js
+          # - admin_iwm7.testcafe.js
+          # - admin_iwm8.testcafe.js
           - admin_iwm9.testcafe.js
-          - rm_portal.testcafe.js
+          # - rm_portal.testcafe.js
 
     steps:
       - name: initiate
@@ -99,23 +125,74 @@ jobs:
 
       - name: install Node Modules
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: npm ci
+        run: yarn
 
       - name: Use Build
         uses: actions/download-artifact@v2
         with:
-          name: build
+          name: build-${{ github.sha }}
           path: build
 
       - name: Run E2E Tests
         id: e2e
-        run: echo ${{ matrix['fixtures'] }}
+        run: node --unhandled-rejections=strict ./scripts/test.js ${{ matrix.fixtures }}
 
-      - name: Archive e2e artifacts
-        id: artifacts
-        uses: actions/upload-artifact@v2
+      - name: Debug artifacts
         if: failure()
-        with:
-          name: e2e
-          path: |
-            artifacts/videos/
+        run: |
+          echo ${{ github.sha }}
+          echo ${{ github.run_id }}
+          echo ${{ github.run_number }}
+          curl -s ${{ github.api_url }}/repos/${{ github.repository }}/actions/runs/${{ github.run_id }} | jq -r '.check_suite_id'
+          curl -s ${{ github.api_url }}/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          curl -s ${{ github.api_url }}/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts
+
+      - name: Check ENV VARs accessible to Node.js
+        if: failure()
+        run: |
+          node --eval 'console.log(process.env)'
+
+      - name: check artifacts URL
+        if: failure()
+        run: |
+          URL="${{ github.api_url }}/repos${{ github.owner }}/${{ github.repository }}/actions/artifacts"
+          curl -u admin:${{ secrets.GITHUB_TOKEN }} $URL
+
+
+      - name: Announce E2E tests failure
+        id: e2e-failure-message
+        if: failure()
+        uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
+        with: 
+          webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          theme-color: 'Error'
+          summary: "E2E tests failed"
+          title: "E2E tests failed"
+          sections: |
+            - activityImage: "{gh:avatar-url}"
+              activityTitle: "[This commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) failed E2E tests: ${{ matrix.fixtures }}"
+              activitySubtitle: "You can check progress here: {gh:run-number-link}"
+              facts:
+                - name: 'Failed E2E test'
+                  value: ${{ matrix.fixtures }}
+
+                - name: Artifacts
+                  value: "${{ steps.artifacts.outcome }}"
+
+  e2e-success-message:
+    needs: e2e
+    runs-on: ubuntu-18.04
+    timeout-minutes: 30
+    steps:
+      - name: Announce E2E tests passed
+        id: e2e-passed-message
+        uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
+        with: 
+          webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          theme-color: 'Success'
+          summary: "All E2E tests passed"
+          title: "All E2E tests passed"
+          sections: |
+            - activityImage: "{gh:avatar-url}"
+              activityTitle: "All E2E tests triggered by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) have successfully passed"
+              activitySubtitle: "You can check progress here: {gh:run-number-link}"
