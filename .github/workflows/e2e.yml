@@ -136,9 +136,26 @@ jobs:
           name: build-${{ github.sha }}
           path: build
 
+      - name: Get list of previously failed tests
+        uses: actions/download-artifact@v2
+        with:
+          name: failed-tests-${{ github.sha }}
+          path: failed-tests.txt
+
       - name: Run E2E Tests
         id: e2e
         run: node --unhandled-rejections=strict ./scripts/test.js ${{ matrix.fixtures }}
+
+      - name: Track failed test
+        if: failure()
+        run: |
+          echo ${{ matrix.fixtures }} >> failed-tests.txt
+
+      - name: Upload list of all failed tests
+        uses: actions/upload-artifact@v2
+        with:
+          name: failed-tests-${{ github.sha }}
+          path: failed-tests.txt
 
       - name: Debug artifacts
         if: failure()

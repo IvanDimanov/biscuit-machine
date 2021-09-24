@@ -80,3 +80,10 @@ jobs:
           echo ${{ github.event.workflow_run.conclusion }}
           echo ${{ github.event.workflow_run.run_id }}
           echo ${{ github.event.workflow_run.run_number }}
+
+      - name: Get list of previously failed tests
+        uses: actions/download-artifact@v2
+        with:
+          name: failed-tests-${{ github.sha }}
+          path: failed-tests.txt
+
