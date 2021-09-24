@@ -12,6 +12,8 @@ const {
   GITHUB_SHA,
 } = process.env
 
+const archiveFormat = 'zip'
+
 
 ;(async () => {
   const octokit = new Octokit({ auth: GITHUB_TOKEN })
@@ -31,7 +33,7 @@ const {
     owner,
     repo,
     artifact_id: artifact.id,
-    archive_format: 'zip',
+    archive_format: archiveFormat,
   })
 
   console.log( data )
@@ -43,15 +45,15 @@ const {
   console.log( GITHUB_TOKEN.split('').join('-') )
 
 
-  fs.writeFileSync(`./${artifactName}`, Buffer.from(data))
+  fs.writeFileSync(`./${artifactName}.${archiveFormat}`, Buffer.from(data))
 
   console.log('finished downloading')
-  const zip = new admZip(data)
+  const zip = new admZip(Buffer.from(data))
   
   console.log( zip.getEntries() )
 
   console.log('start unzip')
-  zip.extractAllTo(`./${artifactName}`, true)
+  zip.extractAllTo(`./admin-${artifactName}`, true)
 
   console.log('finished unzip')
 })()
