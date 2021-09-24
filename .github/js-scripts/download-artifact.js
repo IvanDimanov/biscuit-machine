@@ -42,15 +42,17 @@ const archiveFormat = 'zip'
   console.log( Buffer.from(data).toString('utf-8') )
   console.log( headers )
 
-  console.log( GITHUB_TOKEN.split('').join('-') )
-
 
   fs.writeFileSync(`./${artifactName}.${archiveFormat}`, Buffer.from(data))
 
   console.log('finished downloading')
   const zip = new admZip(Buffer.from(data))
   
-  console.log( zip.getEntries() )
+  zip.getEntries().forEach((zipEntry) => {
+    console.log('entryName =', zipEntry.entryName)
+    console.log('toString', zipEntry.toString())
+    console.log('content', zipEntry.getData().toString('utf8'))
+  })
 
   console.log('start unzip')
   zip.extractAllTo(`./admin-${artifactName}`, true)

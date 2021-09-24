@@ -86,6 +86,7 @@ jobs:
       - name: Check dir
         run: |
           ls -la
+          ls -la ./admin-workflowExchange
           ls -la ./.github
           ls -la ./.github/js-scripts
 
