@@ -1,3 +1,4 @@
+const fs = require('fs')
 const { Octokit } = require('@octokit/core')
 const admZip = require('adm-zip')
 
@@ -36,6 +37,8 @@ const {
   console.log( data )
   console.log( headers )
 
+
+  fs.writeFileSync(`./${artifactName}`, data)
 
   console.log('finished downloading')
   const zip = new admZip(data)
