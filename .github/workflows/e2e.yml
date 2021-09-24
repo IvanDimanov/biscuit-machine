@@ -13,10 +13,13 @@ on:
       - master
       - v*
       - main
+      - test-workflows
   push:
     branches:
       - master
       - v*
+      - test-workflows
+
 concurrency:
   group: regressions-${{ github.head_ref }}
   cancel-in-progress: true
