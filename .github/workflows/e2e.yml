@@ -26,14 +26,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  announce:
-    runs-on: ubuntu-18.04
-    timeout-minutes: 30
-
-    steps:
-      - name: MS teams Start Announcement
-        run: echo "MS teams Start Announcement"
-
   setup:
     runs-on: ubuntu-18.04
     timeout-minutes: 30
@@ -64,6 +56,16 @@ jobs:
           name: build-${{ github.sha }}
           path: |
             build
+
+      - name: Create a list of potential failed tests
+        run: |
+          touch failed-tests.txt
+
+      - name: Upload list of potential failed tests
+        uses: actions/upload-artifact@v2
+        with:
+          name: failed-tests
+          path: failed-tests.txt
 
       - name: check artifacts id
         run: |
@@ -140,7 +142,7 @@ jobs:
       - name: Get list of previously failed tests
         uses: actions/download-artifact@v2
         with:
-          name: failed-tests-${{ github.sha }}
+          name: failed-tests
           path: failed-tests.txt
 
       - name: Run E2E Tests
@@ -155,7 +157,7 @@ jobs:
       - name: Upload list of all failed tests
         uses: actions/upload-artifact@v2
         with:
-          name: failed-tests-${{ github.sha }}
+          name: failed-tests
           path: failed-tests.txt
 
       - name: Debug artifacts
