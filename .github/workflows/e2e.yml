@@ -11,12 +11,13 @@ on:
   pull_request:
     branches:
       - master
-      - v*
       - main
+      - v*
       - test-workflows
   push:
     branches:
       - master
+      - main
       - v*
       - test-workflows
 
