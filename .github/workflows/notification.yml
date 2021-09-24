@@ -42,8 +42,29 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm install --no-package-lock
 
-  message:
+  success-message:
     needs: setup
+    if: ${{ github.event.workflow_run.conclusion === 'success' }}
+    runs-on: ubuntu-18.04
+    timeout-minutes: 30
+    steps:
+      - name: Announce E2E tests passed
+        id: e2e-passed-message
+        uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
+        with: 
+          webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
+          theme-color: 'Success'
+          summary: "All E2E tests passed"
+          title: "All E2E tests passed"
+          sections: |
+            - activityImage: "{gh:avatar-url}"
+              activityTitle: "All E2E tests triggered by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) have successfully passed"
+              activitySubtitle: "You can view a detailed summary here: {gh:run-number-link}"
+              activitySubtitle: "You can view a detailed summary here: [${{ github.event.workflow_run.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/)"
+
+  failure-message:
+    needs: setup
+    if: ${{ github.event.workflow_run.conclusion === 'failure' }}
     runs-on: ubuntu-18.04
     timeout-minutes: 30
     steps:
@@ -79,18 +100,7 @@ jobs:
           echo ${{ github.event.workflow_run.conclusion }}
           echo ${{ github.event.workflow_run.run_id }}
           echo ${{ github.event.workflow_run.run_number }}
+          echo ${{ github.event.workflow_run }}
 
       - name: Download artifact
         run: node ./.github/js-scripts/download-artifact.js ${{ secrets.GITHUB_TOKEN }} workflowExchange
-
-      - name: Check dir
-        run: |
-          ls -la
-          ls -la ./admin-workflowExchange
-          ls -la ./.github
-          ls -la ./.github/js-scripts
-
-      - name: Read list of previously failed tests
-        run: |
-          cat workflowExchange/failed-tests.txt
-
