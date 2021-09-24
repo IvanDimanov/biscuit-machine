@@ -74,3 +74,9 @@ jobs:
         run: |
           URL="${{ github.api_url }}/repos${{ github.owner }}/${{ github.repository }}/actions/artifacts"
           curl -u admin:${{ secrets.GITHUB_TOKEN }} $URL
+
+      - name: Debug
+        run: |
+          echo ${{ github.event.workflow_run.conclusion }}
+          echo ${{ github.event.workflow_run.run_id }}
+          echo ${{ github.event.workflow_run.run_number }}
