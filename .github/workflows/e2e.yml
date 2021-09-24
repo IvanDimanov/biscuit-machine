@@ -156,6 +156,7 @@ jobs:
           echo ${{ matrix.fixtures }} >> workflowExchange/failed-tests.txt
 
       - name: Upload list of all failed tests
+        if: failure()
         uses: actions/upload-artifact@v2
         with:
           name: workflowExchange
