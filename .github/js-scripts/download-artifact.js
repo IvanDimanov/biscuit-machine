@@ -66,6 +66,6 @@ const archiveFormat = 'zip'
   const suiteId = runResponse.data.check_suite_url.split('/').pop()
 
   console.log( buildArtifactName )
-  console.log( `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/suites/${suiteId}/artifacts/${buildArtifact}` )
+  console.log( `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/suites/${suiteId}/artifacts/${buildArtifact.id}` )
 
 })()
