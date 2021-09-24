@@ -84,6 +84,10 @@ jobs:
       - name: Get list of previously failed tests
         uses: actions/download-artifact@v2
         with:
-          name: failed-tests
-          path: failed-tests.txt
+          name: workflowExchange
+          path: workflowExchange
+
+      - name: Read list of previously failed tests
+        run: |
+          cat workflowExchange/failed-tests.txt
 

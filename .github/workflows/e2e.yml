@@ -59,13 +59,14 @@ jobs:
 
       - name: Create a list of potential failed tests
         run: |
-          touch failed-tests.txt
+          mkdir workflowExchange
+          touch workflowExchange/failed-tests.txt
 
       - name: Upload list of potential failed tests
         uses: actions/upload-artifact@v2
         with:
-          name: failed-tests
-          path: failed-tests.txt
+          name: workflowExchange
+          path: workflowExchange
 
       - name: check artifacts id
         run: |
@@ -142,8 +143,8 @@ jobs:
       - name: Get list of previously failed tests
         uses: actions/download-artifact@v2
         with:
-          name: failed-tests
-          path: failed-tests.txt
+          name: workflowExchange
+          path: workflowExchange
 
       - name: Run E2E Tests
         id: e2e
@@ -152,13 +153,13 @@ jobs:
       - name: Track failed test
         if: failure()
         run: |
-          echo ${{ matrix.fixtures }} >> failed-tests.txt
+          echo ${{ matrix.fixtures }} >> workflowExchange/failed-tests.txt
 
       - name: Upload list of all failed tests
         uses: actions/upload-artifact@v2
         with:
-          name: failed-tests
-          path: failed-tests.txt
+          name: workflowExchange
+          path: workflowExchange
 
       - name: Debug artifacts
         if: failure()
