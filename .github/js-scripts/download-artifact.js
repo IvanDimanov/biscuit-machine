@@ -7,6 +7,7 @@ const artifactName = process.argv[3]
 
 
 const {
+  GITHUB_SERVER_URL,
   GITHUB_REPOSITORY,
   GITHUB_SHA,
 } = process.env
@@ -59,9 +60,12 @@ const archiveFormat = 'zip'
     run_id: runId,
   })
 
-  const buildArtifact = artifacts.find(({ name }) => name === `build-${GITHUB_SHA}`)
 
-  console.log( buildArtifact )
-  console.log( runResponse.data.check_suite_url )
+  const buildArtifactName = `build-${GITHUB_SHA}`
+  const buildArtifact = artifacts.find(({ name }) => name === buildArtifactName)
+  const suiteId = runResponse.data.check_suite_url.split('/').pop()
+
+  console.log( buildArtifactName )
+  console.log( `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/suites/${suiteId}/artifacts/${buildArtifact}` )
 
 })()
