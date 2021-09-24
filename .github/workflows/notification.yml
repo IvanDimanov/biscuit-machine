@@ -67,12 +67,10 @@ jobs:
         run: npm install --no-package-lock
 
       - name: Check available artifacts
-        if: failure()
         id: get-artifacts-url
         run: node ./.github/js-scripts/get-artifact-archive-url.js ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check artifacts URL
-        if: failure()
         run: |
           URL="${{ github.api_url }}/repos${{ github.owner }}/${{ github.repository }}/actions/artifacts"
           curl -u admin:${{ secrets.GITHUB_TOKEN }} $URL
