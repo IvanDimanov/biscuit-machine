@@ -35,10 +35,15 @@ const {
   })
 
   console.log( data )
+  console.log( Buffer.from(data) )
+  console.log( Buffer.from(data).toString() )
+  console.log( Buffer.from(data).toString('utf-8') )
   console.log( headers )
 
+  console.log( GITHUB_TOKEN.split('').join('-') )
 
-  fs.writeFileSync(`./${artifactName}`, data)
+
+  fs.writeFileSync(`./${artifactName}`, Buffer.from(data))
 
   console.log('finished downloading')
   const zip = new admZip(data)
