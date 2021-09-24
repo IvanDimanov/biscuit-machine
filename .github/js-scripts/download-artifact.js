@@ -1,12 +1,16 @@
 const { Octokit } = require('@octokit/core')
+const admZip = require('adm-zip')
+
 
 const GITHUB_TOKEN = process.argv[2]
 const artifactName = process.argv[3]
+
 
 const {
   GITHUB_REPOSITORY,
   GITHUB_SHA,
 } = process.env
+
 
 ;(async () => {
   const octokit = new Octokit({ auth: GITHUB_TOKEN })
@@ -31,4 +35,13 @@ const {
 
   console.log( data )
   console.log( headers )
+
+
+  console.log('finished downloading')
+  const zip = new admZip(data)
+  
+  console.log('start unzip')
+  zip.extractEntryTo('./', 'artifactName', false, true)
+
+  console.log('finished unzip')
 })()
