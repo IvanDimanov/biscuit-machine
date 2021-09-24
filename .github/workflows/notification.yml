@@ -44,7 +44,7 @@ jobs:
 
   success-message:
     needs: setup
-    if: ${{ github.event.workflow_run.conclusion === 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-18.04
     timeout-minutes: 30
     steps:
@@ -64,7 +64,7 @@ jobs:
 
   failure-message:
     needs: setup
-    if: ${{ github.event.workflow_run.conclusion === 'failure' }}
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     runs-on: ubuntu-18.04
     timeout-minutes: 30
     steps:
