@@ -67,7 +67,6 @@ jobs:
         run: npm install --no-package-lock
 
       - name: Check available artifacts
-        id: get-artifacts-url
         run: node ./.github/js-scripts/get-artifact-archive-url.js ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check artifacts URL
@@ -82,11 +81,7 @@ jobs:
           echo ${{ github.event.workflow_run.run_number }}
 
       - name: Download artifact
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          workflow: ${{ github.event.workflow_run.workflow_id }}
-          name: workflowExchange
+        run: node ./.github/js-scripts/download-artifact.js ${{ secrets.GITHUB_TOKEN }} workflowExchange
 
       - name: Check dir
         run: |
