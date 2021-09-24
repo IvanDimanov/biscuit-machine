@@ -40,8 +40,10 @@ const {
   console.log('finished downloading')
   const zip = new admZip(data)
   
+  console.log( zip.getEntries() )
+
   console.log('start unzip')
-  zip.extractEntryTo('./', 'artifactName', false, true)
+  zip.extractAllTo(`./${artifactName}`, true)
 
   console.log('finished unzip')
 })()
