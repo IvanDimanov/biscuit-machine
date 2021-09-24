@@ -31,9 +31,34 @@ const archiveFormat = 'zip'
     artifact_id: artifact.id,
     archive_format: archiveFormat,
   })
-  
+
+
+  let runId = ''
+  let failedTests = ''
+
   const zip = new admZip(Buffer.from(data))
   zip.getEntries().forEach((zipEntry) => {
-    console.log('content', zipEntry.getData().toString('utf8'))
+    if (zipEntry.entryName == 'failedRun.txt') {
+      const content = zipEntry.getData().toString('utf8')
+      runId = content.split('=')[1]
+    }
+
+    if (zipEntry.entryName == 'failedRun.txt') {
+      const content = zipEntry.getData().toString('utf8')
+      runId = content.split('=')[1]
+    }
   })
+
+
+  const runResponse = await octokit.request('GET /repos/{owner}/{repo}/actions/runs/{run_id}', {
+    owner,
+    repo,
+    run_id: runId,
+  })
+
+  const buildArtifact = artifacts.find(({ name }) => name === `build-${GITHUB_SHA}`)
+
+  console.log( buildArtifact )
+  console.log( runResponse )
+
 })()

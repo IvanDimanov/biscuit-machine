@@ -60,7 +60,7 @@ jobs:
       - name: Create a list of potential failed tests
         run: |
           mkdir workflowExchange
-          touch workflowExchange/failed-tests.txt
+          touch workflowExchange/failedTests.txt
 
       - name: Upload list of potential failed tests
         uses: actions/upload-artifact@v2
@@ -153,12 +153,12 @@ jobs:
       - name: Track failed run data
         if: failure()
         run: |
-          echo run_id=${{ github.run_id }} >> workflowExchange/failed-run.txt
+          echo run_id=${{ github.run_id }} >> workflowExchange/failedRun.txt
 
       - name: Track failed test
         if: failure()
         run: |
-          echo ${{ matrix.fixtures }} >> workflowExchange/failed-tests.txt
+          echo ${{ matrix.fixtures }} >> workflowExchange/failedTests.txt
 
       - name: Upload list of all failed tests
         if: failure()

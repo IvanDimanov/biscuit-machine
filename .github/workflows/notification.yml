@@ -52,14 +52,13 @@ jobs:
         id: e2e-passed-message
         uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
         with: 
-          webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
+          webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
           theme-color: 'Success'
           summary: "All E2E tests passed"
           title: "All E2E tests passed"
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "All E2E tests triggered by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) have successfully passed"
-              activitySubtitle: "You can view a detailed summary here: {gh:run-number-link}"
               activitySubtitle: "You can view a detailed summary here: [${{ github.event.workflow_run.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/)"
 
   failure-message:
