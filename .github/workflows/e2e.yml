@@ -112,9 +112,6 @@ jobs:
           path: build
           
 
-      - name: ChromeDriver
-        run: chromium-chromedriver -version
-
       - name: Verify ffmpeg
         run: ffmpeg -version
 
