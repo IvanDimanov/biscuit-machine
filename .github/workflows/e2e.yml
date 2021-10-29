@@ -110,6 +110,14 @@ jobs:
         with:
           name: build-${{ github.sha }}
           path: build
+          
+
+      - name: ChromeDriver
+        run: chromium-chromedriver -version
+
+      - name: Verify ffmpeg
+        run: ffmpeg -version
+
 
       - name: Run E2E Tests
         id: e2e
