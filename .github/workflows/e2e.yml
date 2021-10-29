@@ -96,7 +96,7 @@ jobs:
 
   e2e:
     needs: setup
-    runs-on: ubuntu-18.04
+    runs-on: ivandimanov/rfq-github-e2e:latest
     timeout-minutes: 30
     env:
       RESULTS_PATH: ${{ github.workspace }}
@@ -104,15 +104,8 @@ jobs:
       matrix:
         fixtures:
           - admin_iwm.testcafe.js
-          # - admin_iwm2.testcafe.js
-          # - admin_iwm3.testcafe.js
-          # - admin_iwm4.testcafe.js
-        # - admin_iwm5.testcafe.js
-          # - admin_iwm6.testcafe.js
           - admin_iwm7.testcafe.js
-          # - admin_iwm8.testcafe.js
           - admin_iwm9.testcafe.js
-          # - rm_portal.testcafe.js
 
     steps:
       - name: initiate
@@ -140,12 +133,6 @@ jobs:
           name: build-${{ github.sha }}
           path: build
 
-      - name: Get list of previously failed tests
-        uses: actions/download-artifact@v2
-        with:
-          name: workflowExchange-${{ github.sha }}
-          path: workflowExchange
-
       - name: Run E2E Tests
         id: e2e
         run: node --unhandled-rejections=strict ./scripts/test.js ${{ matrix.fixtures }}
@@ -159,31 +146,3 @@ jobs:
         if: failure()
         run: |
           echo ${{ matrix.fixtures }} >> workflowExchange/failedTests.txt
-
-      - name: Upload list of all failed tests
-        if: failure()
-        uses: actions/upload-artifact@v2
-        with:
-          name: workflowExchange-${{ github.sha }}
-          path: workflowExchange
-
-      - name: Debug artifacts
-        if: failure()
-        run: |
-          echo ${{ github.sha }}
-          echo ${{ github.run_id }}
-          echo ${{ github.run_number }}
-          curl -s ${{ github.api_url }}/repos/${{ github.repository }}/actions/runs/${{ github.run_id }} | jq -r '.check_suite_id'
-          curl -s ${{ github.api_url }}/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          curl -s ${{ github.api_url }}/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts
-
-      - name: Check ENV VARs accessible to Node.js
-        if: failure()
-        run: |
-          node --eval 'console.log(process.env)'
-
-      - name: check artifacts URL
-        if: failure()
-        run: |
-          URL="${{ github.api_url }}/repos${{ github.owner }}/${{ github.repository }}/actions/artifacts"
-          curl -u admin:${{ secrets.GITHUB_TOKEN }} $URL
