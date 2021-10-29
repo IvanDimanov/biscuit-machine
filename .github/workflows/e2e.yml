@@ -57,24 +57,6 @@ jobs:
           path: |
             build
 
-      - name: Create a list of potential failed tests
-        run: |
-          mkdir workflowExchange
-          touch workflowExchange/failedTests.txt
-
-      - name: Upload list of potential failed tests
-        uses: actions/upload-artifact@v2
-        with:
-          name: workflowExchange-${{ github.sha }}
-          path: workflowExchange
-
-      - name: check artifacts id
-        run: |
-          URL="https://api.github.com/repos${{ github.owner }}/${{ github.repository }}/actions/artifacts"
-          curl -u admin:${{ secrets.GITHUB_TOKEN }} $URL
-
-
-
 
   e2e-start-message:
     needs: setup
@@ -96,7 +78,8 @@ jobs:
 
   e2e:
     needs: setup
-    runs-on: ivandimanov/rfq-github-e2e:latest
+    runs-on: ubuntu-18.04
+    container: ivandimanov/rfq-github-e2e:latest
     timeout-minutes: 30
     env:
       RESULTS_PATH: ${{ github.workspace }}
@@ -110,11 +93,6 @@ jobs:
     steps:
       - name: initiate
         uses: actions/checkout@v2.3.4
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2.4.0
-        with:
-          node-version: '14'
 
       - name: Cache node modules
         id: cache-node-modules
@@ -137,12 +115,3 @@ jobs:
         id: e2e
         run: node --unhandled-rejections=strict ./scripts/test.js ${{ matrix.fixtures }}
 
-      - name: Track failed run data
-        if: failure()
-        run: |
-          echo run_id=${{ github.run_id }} >> workflowExchange/failedRun.txt
-
-      - name: Track failed test
-        if: failure()
-        run: |
-          echo ${{ matrix.fixtures }} >> workflowExchange/failedTests.txt
