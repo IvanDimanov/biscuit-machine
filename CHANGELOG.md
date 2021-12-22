@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.4.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.3.0...v1.4.0) (2021-12-22)
+
+
+### Features
+
+* add `defaultBranch` option ([#18](https://www.github.com/IvanDimanov/biscuit-machine/issues/18)) ([77becc0](https://www.github.com/IvanDimanov/biscuit-machine/commit/77becc079ea26fe1e7cdf49b668c836d9c09b82d))
+
+
+### Bug Fixes
+
+* typo ([4db004b](https://www.github.com/IvanDimanov/biscuit-machine/commit/4db004b5bbed5bf85578248beb37a53f82936a4c))
+* use as template var ([b50a234](https://www.github.com/IvanDimanov/biscuit-machine/commit/b50a234cd5e3f60e6035ae2f201e8114e5a7e7c8))
+
 ## [1.3.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.2.0...v1.3.0) (2021-12-22)
 
 
