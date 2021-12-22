@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.4.0...v1.5.0) (2021-12-22)
+
+
+### Features
+
+* update release check ([#20](https://www.github.com/IvanDimanov/biscuit-machine/issues/20)) ([1fa2b52](https://www.github.com/IvanDimanov/biscuit-machine/commit/1fa2b52003bec647cb2e0ebd58efc01781c30b9b))
+
 ## [1.4.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.3.0...v1.4.0) (2021-12-22)
 
 
