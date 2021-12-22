@@ -31,7 +31,7 @@ jobs:
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "MoveUI was successfully released by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
-              activitySubtitle: "You can view a detailed summary here: [${{ github.event.workflow_run.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/)"
+              activitySubtitle: "You can view a detailed summary here: [${{ github.event.workflow_run.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/) sha=${{ steps.release.outputs.sha }} pr=${{ steps.release.outputs.pr }}"
 
       - name: Send error message
         if: ${{ !steps.release.outputs.release_created }}
@@ -44,5 +44,4 @@ jobs:
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "There is an error with MoveUI release caused by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
-              activitySubtitle: "You can view a detailed summary here: [${{ github.event.workflow_run.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/)"
-
+              activitySubtitle: "You can view a detailed summary here: [${{ github.event.workflow_run.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/) sha=${{ steps.release.outputs.sha }} pr=${{ steps.release.outputs.pr }}"
