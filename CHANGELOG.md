@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.1.1](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.1.0...v1.1.1) (2021-12-22)
+
+
+### Bug Fixes
+
+* Set correct error message ([#12](https://www.github.com/IvanDimanov/biscuit-machine/issues/12)) ([8ab11f9](https://www.github.com/IvanDimanov/biscuit-machine/commit/8ab11f99a0c97a3658497ea22dd5bb46f5543fdd))
+
 ## [1.1.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.0.0...v1.1.0) (2021-12-22)
 
 
