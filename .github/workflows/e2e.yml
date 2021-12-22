@@ -45,7 +45,7 @@ jobs:
 
       - name: install Node Modules
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: yarn
+        run: npm i
 
       - name: Build
         run: npm run build
@@ -53,9 +53,8 @@ jobs:
       - name: Upload production artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: build-${{ github.sha }}
-          path: |
-            build
+          name: build
+          path: build
 
 
   e2e-start-message:
@@ -95,29 +94,6 @@ jobs:
       - name: initiate
         uses: actions/checkout@v2.3.4
 
-      - name: Cache node modules
-        id: cache-node-modules
-        uses: actions/cache@v2.1.6
-        with:
-          path: node_modules
-          key: node_modules-${{ hashFiles('package.json') }}
-
-      - name: install Node Modules
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: yarn
-
-      - name: Use Build
-        uses: actions/download-artifact@v2
-        with:
-          name: build-${{ github.sha }}
-          path: build
-          
-
-      - name: Verify ffmpeg
-        run: ffmpeg -version
-
-
       - name: Run E2E Tests
         id: e2e
         run: node --unhandled-rejections=strict ./scripts/test.js ${{ matrix.fixtures }}
-
