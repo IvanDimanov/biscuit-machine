@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+  workflow_dispatch:
+
+jobs:
+  versioning:
+    runs-on: [ self-hosted, ubuntu-18.04, release ]
+
+    steps:
+      - name: Release Please Bot
+        id: release
+        uses: GoogleCloudPlatform/release-please-action@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: node
+          changelog-types: '[{"type":"style","section":"Styling","hidden":false},{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
+
+      - name: Send success message
+        if: ${{ steps.release.outputs.release_created }}
+        uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
+        with: 
+          webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          theme-color: Success
+          summary: Release success
+          title: Release success
+          sections: |
+            - activityImage: "{gh:avatar-url}"
+              activityTitle: "MoveUI was successfully released by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
+              activitySubtitle: "You can view a detailed summary here: [${{ github.event.workflow_run.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/)"
+
+      - name: Send error message
+        if: ${{ !steps.release.outputs.release_created }}
+        uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
+        with: 
+          webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          theme-color: Error
+          summary: Release success
+          title: Release success
+          sections: |
+            - activityImage: "{gh:avatar-url}"
+              activityTitle: "MoveUI was successfully released by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
+              activitySubtitle: "You can view a detailed summary here: [${{ github.event.workflow_run.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/)"
+
