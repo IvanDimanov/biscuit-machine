@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.6.0...v1.7.0) (2021-12-22)
+
+
+### Features
+
+* Demo change ([#24](https://www.github.com/IvanDimanov/biscuit-machine/issues/24)) ([8832ee3](https://www.github.com/IvanDimanov/biscuit-machine/commit/8832ee35d199b2f4fd3de1525327e4ef742e0c6e))
+
 ## [1.6.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.5.0...v1.6.0) (2021-12-22)
 
 
