@@ -25,7 +25,7 @@ jobs:
           default-branch: ${{ github.event.inputs.defaultBranch }}
 
       - name: Send success message
-        if: ${{ steps.release.outputs.release_created }}
+        if: ${{ steps.release.outputs.pr }}
         uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
         with: 
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
@@ -35,10 +35,10 @@ jobs:
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "MoveUI was successfully released by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
-              activitySubtitle: "You can view a detailed summary here: [${{ github.event.workflow_run.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/) sha=${{ steps.release.outputs.sha }} pr=${{ steps.release.outputs.pr }}"
+              activitySubtitle: "You can view a detailed summary here: [#${{ steps.release.outputs.pr }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.release.outputs.pr }})"
 
       - name: Send error message
-        if: ${{ !steps.release.outputs.release_created }}
+        if: ${{ !steps.release.outputs.pr }}
         uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
         with: 
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
@@ -48,4 +48,4 @@ jobs:
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "There is an error with MoveUI release caused by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
-              activitySubtitle: "You can view a detailed summary here: [${{ github.event.workflow_run.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/) sha=${{ steps.release.outputs.sha }} pr=${{ steps.release.outputs.pr }}"
+              activitySubtitle: "You can view a detailed summary here: [${{ github.event.workflow_run.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/)"
