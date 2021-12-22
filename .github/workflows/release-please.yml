@@ -6,6 +6,9 @@ on:
       - main
 
   workflow_dispatch:
+    inputs:
+      defaultBranch:
+        description: Branch to open pull release PR against
 
 jobs:
   versioning:
@@ -19,6 +22,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
           changelog-types: '[{"type":"style","section":"Styling","hidden":false},{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
+          default-branch: github.event.inputs.message
 
       - name: Send success message
         if: ${{ steps.release.outputs.release_created }}
