@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.2.0...v1.3.0) (2021-12-22)
+
+
+### Features
+
+* add more info to messages ([#15](https://www.github.com/IvanDimanov/biscuit-machine/issues/15)) ([4dacea2](https://www.github.com/IvanDimanov/biscuit-machine/commit/4dacea2f430ef262243c4a38d1570aeba94c10ea))
+
 ## [1.2.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.1.1...v1.2.0) (2021-12-22)
 
 
