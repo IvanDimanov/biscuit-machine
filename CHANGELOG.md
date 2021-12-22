@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.1.1...v1.2.0) (2021-12-22)
+
+
+### Features
+
+* simplify E2E ([#14](https://www.github.com/IvanDimanov/biscuit-machine/issues/14)) ([b61a97f](https://www.github.com/IvanDimanov/biscuit-machine/commit/b61a97f64b06f0c7b9c7803dcf3797d5ec071e0f))
+
 ### [1.1.1](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.1.0...v1.1.1) (2021-12-22)
 
 
