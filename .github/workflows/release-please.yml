@@ -39,10 +39,10 @@ jobs:
         with: 
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
           theme-color: Error
-          summary: Release success
-          title: Release success
+          summary: Release error
+          title: Release error
           sections: |
             - activityImage: "{gh:avatar-url}"
-              activityTitle: "MoveUI was successfully released by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
+              activityTitle: "There is an error with MoveUI release caused by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
               activitySubtitle: "You can view a detailed summary here: [${{ github.event.workflow_run.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/)"
 
