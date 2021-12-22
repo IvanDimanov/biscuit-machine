@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.0.0...v1.1.0) (2021-12-22)
+
+
+### Features
+
+* Reduce (fake) E2E test ([#10](https://www.github.com/IvanDimanov/biscuit-machine/issues/10)) ([6c992a3](https://www.github.com/IvanDimanov/biscuit-machine/commit/6c992a3433c4e0dc6c31082428072848b3941a50))
+
 ## 1.0.0 (2021-12-22)
 
 
