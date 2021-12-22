@@ -9,7 +9,7 @@ on:
 
 jobs:
   versioning:
-    runs-on: [ self-hosted, ubuntu-18.04, release ]
+    runs-on: ubuntu-18.04
 
     steps:
       - name: Release Please Bot
