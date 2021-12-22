@@ -87,8 +87,9 @@ jobs:
       matrix:
         fixtures:
           - admin_iwm.testcafe.js
-          - admin_iwm7.testcafe.js
-          - admin_iwm9.testcafe.js
+          - admin_iwm2.testcafe.js
+#           - admin_iwm7.testcafe.js
+#           - admin_iwm9.testcafe.js
 
     steps:
       - name: initiate
