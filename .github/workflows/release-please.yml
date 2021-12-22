@@ -43,11 +43,11 @@ jobs:
         with: 
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
           theme-color: Success
-          summary: Release success
-          title: Release success
+          summary: Release success v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}
+          title: Release success v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}
           sections: |
             - activityImage: "{gh:avatar-url}"
-              activityTitle: "MoveUI was successfully released by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
+              activityTitle: "MoveUI was successfully released under v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }} by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) ${{ steps.release.outputs.html_url }} ${{ steps.release.outputs.tag_name }}"
               activitySubtitle: "Merged release PR can be found here: [#${{ steps.release.outputs.pr }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.release.outputs.pr }})"
 
       - name: Send error message
