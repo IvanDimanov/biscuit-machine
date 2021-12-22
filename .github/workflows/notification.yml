@@ -6,100 +6,19 @@ on:
       message:
         description: 'Send Notification'
 
-  workflow_run:
-    workflows: ["Regressions"]
-    types:
-      - completed
-
-concurrency:
-  group: regressions-${{ github.head_ref }}
-  cancel-in-progress: true
-
 jobs:
-  setup:
-    runs-on: ubuntu-18.04
-    timeout-minutes: 30
-    env:
-      RESULTS_PATH: ${{ github.workspace }}
-
-    steps:
-      - name: initiate
-        uses: actions/checkout@v2.3.4
-
-      - name: Use Node.js
-        uses: actions/setup-node@v2.4.0
-        with:
-          node-version: '14'
-
-      - name: Cache node modules
-        id: cache-node-modules
-        uses: actions/cache@v2.1.6
-        with:
-          path: node_modules
-          key: node_modules-${{ hashFiles('package.json') }}
-
-      - name: install Node Dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: npm install --no-package-lock
-
-  success-message:
-    needs: setup
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  send-message:
     runs-on: ubuntu-18.04
     timeout-minutes: 30
     steps:
-      - name: Announce E2E tests passed
-        id: e2e-passed-message
+      - name: Send message
         uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
         with: 
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
           theme-color: 'Success'
-          summary: "All E2E tests passed"
-          title: "All E2E tests passed"
+          summary: "Test message"
+          title: "Test message"
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "All E2E tests triggered by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) have successfully passed"
-              activitySubtitle: "You can view a detailed summary here: [${{ github.event.workflow_run.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/)"
-
-  failure-message:
-    needs: setup
-    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
-    runs-on: ubuntu-18.04
-    timeout-minutes: 30
-    steps:
-      - name: initiate
-        uses: actions/checkout@v2.3.4
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2.4.0
-        with:
-          node-version: '14'
-
-      - name: Cache node modules
-        id: cache-node-modules
-        uses: actions/cache@v2.1.6
-        with:
-          path: node_modules
-          key: node_modules-${{ hashFiles('package.json') }}
-
-      - name: install Node Dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: npm install --no-package-lock
-
-      - name: Check available artifacts
-        run: node ./.github/js-scripts/get-artifact-archive-url.js ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Check artifacts URL
-        run: |
-          URL="${{ github.api_url }}/repos${{ github.owner }}/${{ github.repository }}/actions/artifacts"
-          curl -u admin:${{ secrets.GITHUB_TOKEN }} $URL
-
-      - name: Debug
-        run: |
-          echo ${{ github.event.workflow_run.conclusion }}
-          echo ${{ github.event.workflow_run.run_id }}
-          echo ${{ github.event.workflow_run.run_number }}
-          echo ${{ github.event.workflow_run }}
-
-      - name: Download artifact
-        run: node ./.github/js-scripts/download-artifact.js ${{ secrets.GITHUB_TOKEN }} workflowExchange
+              activitySubtitle: "You can view a detailed summary here: [${{ github.event.workflow_run.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/) ++ message:${{ github.event.inputs.message }}"
