@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
+      - uses: actions/checkout@master
+
       - name: Make an empty commit with valid message to trigger "Please Release Bot" minor version release
         uses: actions-js/push@master
         with:
