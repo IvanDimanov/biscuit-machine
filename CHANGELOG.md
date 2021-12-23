@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.18.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.17.0...v1.18.0) (2021-12-23)
+
+
+### Features
+
+* no need for bump ([6cfb300](https://www.github.com/IvanDimanov/biscuit-machine/commit/6cfb300fdb8fa01e8c819689602244a070e4bc74))
+
 ## [1.17.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.16.0...v1.17.0) (2021-12-23)
 
 
