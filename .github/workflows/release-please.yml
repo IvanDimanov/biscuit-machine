@@ -30,11 +30,11 @@ jobs:
         with: 
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
           theme-color: Info
-          summary: Pending PR for release ${{ steps.release.outputs.tag_name }}
-          title: Pending PR for release ${{ steps.release.outputs.tag_name }}
+          summary: Pending release PR created
+          title: Pending release PR created
           sections: |
             - activityImage: "{gh:avatar-url}"
-              activityTitle: "PR is pending merge for MoveUI release ${{ steps.release.outputs.major }}-${{ steps.release.outputs.minor }}-${{ steps.release.outputs.patch }} [${{ steps.release.outputs.tag_name }}](${{ steps.release.outputs.html_url }}) using [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
+              activityTitle: "PR is pending merge for MoveUI release using [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
               activitySubtitle: "Pending PR can be found here: [#${{ steps.release.outputs.pr }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.release.outputs.pr }})"
 
       - name: Release success
