@@ -5,11 +5,33 @@ on:
     branches:
       - main
 
+  workflow_dispatch:
+    inputs:
+      semverType:
+        description: What kind of release version we want to trigger ?
+        required: true
+        type: choice
+        options:
+          - major
+          - minor
+        default: minor
+
 jobs:
   versioning:
     runs-on: ubuntu-18.04
 
     steps:
+      - name: Checkout repo
+        if: ${{ github.event.inputs.semverType }}
+        uses: actions/checkout@master
+
+      - name: Make an empty commit with valid message to trigger "Please Release Bot" minor version release
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          message: "${{ github.event.inputs.semverType == 'major' && 'feat!:' || 'feat:' }} Manually triggered release"
+          empty: true
+
       - name: Release Please Bot
         id: release
         uses: GoogleCloudPlatform/release-please-action@v2.35.0
@@ -21,7 +43,7 @@ jobs:
       - name: Send pending message
         if: ${{ steps.release.outputs.pr && !steps.release.outputs.sha }}
         uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
-        with: 
+        with:
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
           theme-color: Info
           summary: Pending release PR created
@@ -34,7 +56,7 @@ jobs:
       - name: Send success message
         if: ${{ steps.release.outputs.pr && steps.release.outputs.sha }}
         uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
-        with: 
+        with:
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
           theme-color: Success
           summary: Release ${{ steps.release.outputs.tag_name }} success
@@ -47,7 +69,7 @@ jobs:
       - name: Send error message
         if: ${{ !steps.release.outputs.pr }}
         uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
-        with: 
+        with:
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
           theme-color: Error
           summary: Release error
