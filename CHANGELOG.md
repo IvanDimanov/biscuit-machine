@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.13.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.12.0...v1.13.0) (2021-12-23)
+
+
+### Features
+
+* Update message ([2427525](https://www.github.com/IvanDimanov/biscuit-machine/commit/2427525791175d34a78b8e18202cb8aa1d3265c6))
+* update to latest version ([2d87795](https://www.github.com/IvanDimanov/biscuit-machine/commit/2d877952d1b930cbfdebb087e78e1ea5c4789394))
+* update version ([b2a4073](https://www.github.com/IvanDimanov/biscuit-machine/commit/b2a4073c3d16c55d95fe084fb548431f84270404))
+
 ## [1.12.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.11.0...v1.12.0) (2021-12-23)
 
 
