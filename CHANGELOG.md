@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.19.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.18.0...v1.19.0) (2021-12-23)
+
+
+### Features
+
+* Add release manually trigger ([52e4ce5](https://www.github.com/IvanDimanov/biscuit-machine/commit/52e4ce58bd00ecf5ffde6f191f1ef93cb57126e8))
+* make release-please only automated ([75b6431](https://www.github.com/IvanDimanov/biscuit-machine/commit/75b643137744e9740886c4b29ad66c884ffc2be4))
+
 ## [1.18.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.17.0...v1.18.0) (2021-12-23)
 
 
