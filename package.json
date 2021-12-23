@@ -1,6 +1,6 @@
 {
   "name": "biscuit-machine",
-  "version": "1.15.0",
+  "version": "1.16.0",
   "license": "MIT",
   "engines": {
     "node": ">=14.0.0",
