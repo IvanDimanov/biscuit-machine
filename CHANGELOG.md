@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.15.0...v1.16.0) (2021-12-23)
+
+
+### Features
+
+* try bump patch ([dca4def](https://www.github.com/IvanDimanov/biscuit-machine/commit/dca4defb814dd8a422d27cfc0e68ddb9f6d5a6ca))
+
 ## [1.15.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.14.0...v1.15.0) (2021-12-23)
 
 
