@@ -26,6 +26,7 @@ jobs:
         uses: actions/checkout@master
 
       - name: Make an empty commit with valid message to trigger "Please Release Bot" minor version release
+        if: ${{ github.event.inputs.semverType }}
         uses: actions-js/push@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
