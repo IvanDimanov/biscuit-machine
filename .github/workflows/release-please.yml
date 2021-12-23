@@ -61,3 +61,4 @@ jobs:
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "There is an error with MoveUI release caused by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
+              activitySubtitle: "One thing that may cause problem is the commit message: `${{ github.event.head_commit.message }}`"
