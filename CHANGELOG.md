@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.10.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.9.0...v1.10.0) (2021-12-23)
+
+
+### Features
+
+* Test update ([8096c9d](https://www.github.com/IvanDimanov/biscuit-machine/commit/8096c9d1829e26a9549850064e0ef34a7c5ca6ea))
+* update message ([14db069](https://www.github.com/IvanDimanov/biscuit-machine/commit/14db0691b95a4a33d8927163314e8abbf279796e))
+
+
+### Styling
+
+* update message ([62a16bc](https://www.github.com/IvanDimanov/biscuit-machine/commit/62a16bc7e38627b787e6c1fd20bc9b2f3c1867ec))
+
 ## [1.9.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.8.0...v1.9.0) (2021-12-22)
 
 
