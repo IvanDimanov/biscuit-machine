@@ -8,7 +8,8 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
-      - uses: actions/checkout@master
+      - name: Checkout repo
+        uses: actions/checkout@master
 
       - name: Make an empty commit with valid message to trigger "Please Release Bot" minor version release
         uses: actions-js/push@master
@@ -16,3 +17,10 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           message: "feat: Manually triggered release"
           empty: true
+
+      - name: Release Please Bot
+        uses: GoogleCloudPlatform/release-please-action@v2.35.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: node
+          changelog-types: '[{"type":"style","section":"Styling","hidden":false},{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
