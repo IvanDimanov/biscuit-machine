@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.22.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.21.0...v1.22.0) (2021-12-23)
+
+
+### Features
+
+* Manually triggered release ([24a9da8](https://www.github.com/IvanDimanov/biscuit-machine/commit/24a9da837b06e23503d724b5ccf9f9412e0b50fb))
+
 ## [1.21.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v1.20.0...v1.21.0) (2021-12-23)
 
 
