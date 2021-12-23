@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Release Please Bot
         id: release
-        uses: GoogleCloudPlatform/release-please-action@v2.4.0
+        uses: GoogleCloudPlatform/release-please-action@v2.35.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
