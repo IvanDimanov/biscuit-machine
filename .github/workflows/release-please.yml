@@ -23,6 +23,7 @@ jobs:
           release-type: node
           changelog-types: '[{"type":"style","section":"Styling","hidden":false},{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
           default-branch: ${{ github.event.inputs.defaultBranch }}
+          bump-patch-for-minor-pre-major: Yes
 
       - name: Send pending message
         if: ${{ steps.release.outputs.pr && !steps.release.outputs.sha }}
