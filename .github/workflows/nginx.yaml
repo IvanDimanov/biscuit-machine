@@ -7,5 +7,18 @@ jobs:
   start:
     runs-on: ubuntu-18.04
     steps:
-      - name: Run Nginx
-        run: docker run hello-world
+      - uses: actions/checkout@v2.3.5
+
+      - name: Create Demo page
+        run: echo "<h1>Demo Page</h1>" >> ./build/index.html
+
+      - name: Start local server
+        run: |
+          docker build --tag frontend .
+          docker run --detach --net=host frontend
+
+      - name: Create login session
+        run: |
+          ping http://localhost:8080
+          ping http://localhost:8080/index.html
+          ping http://localhost:8080/api/ping
