@@ -18,6 +18,10 @@ jobs:
         run: |
           docker build --tag frontend .
           docker run --detach --net=host frontend
+          docker image ls
+
+      - name: Debug
+        run: docker image ls
 
       - name: Create login session
         run: |
