@@ -1,0 +1,11 @@
+name: NGINX
+
+on:
+  workflow_dispatch:
+
+jobs:
+  start:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Run Nginx
+        run: docker run hello-world
