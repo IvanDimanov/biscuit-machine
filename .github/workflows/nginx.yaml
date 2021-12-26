@@ -21,6 +21,6 @@ jobs:
 
       - name: Create login session
         run: |
-          ping http://localhost:8080
-          ping http://localhost:8080/index.html
-          ping http://localhost:8080/api/ping
+          time curl http://localhost:8080
+          time curl http://localhost:8080/index.html
+          time curl http://localhost:8080/api/ping
