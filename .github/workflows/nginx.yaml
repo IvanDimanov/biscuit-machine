@@ -19,14 +19,9 @@ jobs:
           docker build --tag frontend:latest .
           docker run --detach --net=host frontend:latest
           sleep 20
-          docker image ls
-
-      - name: Debug
-        run: docker image ls
 
       - name: Create login session
         run: |
-          sleep 20
           time curl http://localhost:8080
           time curl http://localhost:8080/index.html
-          time curl http://localhost:8080/api/ping
+          time curl http://localhost:8080/api/status/health
