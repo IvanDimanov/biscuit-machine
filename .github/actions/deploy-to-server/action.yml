@@ -8,18 +8,13 @@ inputs:
     required: true
     default: test
 
-  shell:
-    description: Which shell client to use ?
-    required: false
-    default: bash
-
 
 runs:
   using: composite
   steps:
     - name: Validate input
       if: inputs.namespace != 'test' && inputs.namespace != 'stage' && inputs.namespace != 'prod'
-      shell: ${{ inputs.shell }}
+      shell: bash
       run: |
         echo "Invalid 'namespace' = '${{ inputs.namespace }}'"
         echo "Valid namespace options are:"
@@ -29,5 +24,5 @@ runs:
         exit 1
 
     - name: Deploy
-      shell: ${{ inputs.shell }}
+      shell: bash
       run: echo "Deploy to namespace ${{ inputs.namespace }}"
