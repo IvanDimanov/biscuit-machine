@@ -1,0 +1,22 @@
+name: Deploy to Statge
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  versioning:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Send deploy message
+        uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
+        with:
+          webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          theme-color: Success
+          summary: Sucessfull deploy of v?.?.?
+          title: Sucessfull deploy of v?.?.?
+          sections: |
+            - activityImage: "{gh:avatar-url}"
+              activityTitle: "PR is pending merge for MoveUI release using [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
+              activitySubtitle: "Pending PR can be found here: ${{ fromJson(github) }}"
