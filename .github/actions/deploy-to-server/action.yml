@@ -14,12 +14,11 @@ inputs:
     default: test
 
 
-env:
-  imagePath: docker-repo.amana.vpn/movedigital/mwm-admin-frontend:${{ inputs.imageTag }}
-
-
 runs:
   using: composite
+  env:
+    imagePath: docker-repo.amana.vpn/movedigital/mwm-admin-frontend:${{ inputs.imageTag }}
+
   steps:
     - name: Validate input
       if: inputs.namespace != 'test' && inputs.namespace != 'stage' && inputs.namespace != 'prod'
