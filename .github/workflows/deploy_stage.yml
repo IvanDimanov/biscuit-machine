@@ -1,8 +1,9 @@
 name: Deploy to Statge
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - release-v*
 
 jobs:
   versioning:
