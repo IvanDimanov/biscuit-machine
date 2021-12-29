@@ -19,7 +19,7 @@ runs:
   steps:
     - name: Validate input
       if: inputs.namespace != 'test' && inputs.namespace != 'stage' && inputs.namespace != 'prod'
-      shell: ${{ inputs.shell}}
+      shell: ${{ inputs.shell }}
       run: |
         echo "Invalid 'namespace' = '${{ inputs.namespace }}'"
         echo "Valid namespace options are:"
@@ -29,5 +29,5 @@ runs:
         throw 1
 
     - name: Deploy
-      shell: ${{ inputs.shell}}
+      shell: ${{ inputs.shell }}
       run: echo "Deploy to namespace ${{ inputs.namespace }}"
