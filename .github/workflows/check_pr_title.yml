@@ -2,11 +2,10 @@ name: Check PR title
 
 on:
   pull_request:
-    types:
-      - opened
-      - reopened
-      - edited
-      - synchronize
+    branches:
+      - master
+      - main
+      - v*
 
 jobs:
   conventional_commit_check:
