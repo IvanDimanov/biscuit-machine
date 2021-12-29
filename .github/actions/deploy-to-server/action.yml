@@ -8,16 +8,6 @@ inputs:
     required: true
     default: test
 
-  namespace2:
-    description: "Which server we want to deploy to? Valid options are: 'test', 'stage', 'prod'"
-    required: true
-    default: test
-
-  shellClient:
-    description: Which shell client to use ?
-    required: true
-    default: 12
-
 
 runs:
   using: composite
@@ -33,10 +23,6 @@ runs:
         echo "  prod"
         exit 1
 
-    - name: Deploy2
-      shell: bash
-      run: echo "Deploy to namespace2: ${{ inputs.namespace2 }}"
-
     - name: Deploy
       shell: bash
-      run: echo "Deploy to namespace: ${{ inputs.namespace }}"
+      run: echo "Deploy to namespace ${{ inputs.namespace }}"
