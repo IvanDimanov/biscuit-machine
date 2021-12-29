@@ -26,7 +26,6 @@ jobs:
           
       - uses: actions/checkout@v2.4.0
 
-      # - uses: ./.github/actions/get-repo
-
       - uses: ./.github/actions/deploy-to-server
-        # with: ''
+        with:
+          namespace1: 11
