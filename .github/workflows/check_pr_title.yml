@@ -7,6 +7,12 @@ on:
       - main
       - release-v*
 
+  push:
+    branches:
+      - master
+      - main
+      - release-v*
+
 jobs:
   check_pr_title:
     runs-on: ubuntu-18.04
