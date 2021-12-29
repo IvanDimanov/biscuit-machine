@@ -8,6 +8,11 @@ inputs:
     required: true
     default: test
 
+  namespace2:
+    description: "Which server we want to deploy to? Valid options are: 'test', 'stage', 'prod'"
+    required: true
+    default: test
+
   shellClient:
     description: Which shell client to use ?
     required: true
@@ -29,7 +34,7 @@ runs:
         exit 1
 
     - shell: bash
-      run: echo "shellClient: ${{ inputs.shellClient }}"
+      run: echo "shellClient: ${{ inputs.namespace2 }}"
 
     - name: Deploy
       shell: bash
