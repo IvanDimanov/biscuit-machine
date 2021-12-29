@@ -8,6 +8,11 @@ inputs:
     required: true
     default: test
 
+  shell:
+    description: Which shell client to use ?
+    required: false
+    default: bash
+
 
 runs:
   using: composite
@@ -23,6 +28,9 @@ runs:
         echo "  prod"
         exit 1
 
+    - shell: bash
+      run: echo "shell: ${{ inputs.shell }}"
+
     - name: Deploy
       shell: bash
-      run: echo "Deploy to namespace ${{ inputs.namespace }}"
+      run: echo "Deploy to namespace: ${{ inputs.namespace }}"
