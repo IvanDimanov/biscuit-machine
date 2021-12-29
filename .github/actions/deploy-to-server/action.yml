@@ -17,10 +17,10 @@ runs:
       shell: bash
       run: |
         echo "Invalid 'namespace' = '${{ inputs.namespace }}'"
-        echo "Valid namespace options are:"
-        echo "  test"
-        echo "  stage"
-        echo "  prod"
+        echo "Valid 'namespace' options are:"
+        echo "  'test'"
+        echo "  'stage'"
+        echo "  'prod'"
         exit 1
 
     - name: Deploy
