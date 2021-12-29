@@ -7,13 +7,11 @@ on:
     branches:
       - master
       - main
-      - v*
 
   push:
     branches:
       - master
       - main
-      - v*
 
 concurrency:
   group: regressions-${{ github.head_ref }}
