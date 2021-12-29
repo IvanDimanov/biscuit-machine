@@ -33,8 +33,9 @@ runs:
         echo "  prod"
         exit 1
 
-    - shell: bash
-      run: echo "shellClient: ${{ inputs.namespace2 }}"
+    - name: Deploy2
+      shell: bash
+      run: echo "Deploy to namespace2: ${{ inputs.namespace2 }}"
 
     - name: Deploy
       shell: bash
