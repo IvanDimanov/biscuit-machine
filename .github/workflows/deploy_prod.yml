@@ -5,7 +5,7 @@ on:
     inputs:
       imageTag:
         description: "Which Docker image tag you'd like to deploy ? (List of all available tags: https://docker-repo.amana.vpn/v2/movedigital/mwm-admin-frontend/tags/list)"
-        default: v1.0.0
+        default: latest
         required: true
 
 concurrency:
