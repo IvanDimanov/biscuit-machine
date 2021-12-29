@@ -16,9 +16,6 @@ inputs:
 
 runs:
   using: composite
-  env:
-    imagePath: docker-repo.amana.vpn/movedigital/mwm-admin-frontend:${{ inputs.imageTag }}
-
   steps:
     - name: Validate input
       if: inputs.namespace != 'test' && inputs.namespace != 'stage' && inputs.namespace != 'prod'
@@ -32,6 +29,8 @@ runs:
         exit 1
 
     - name: Deploy
+      env:
+        imagePath: docker-repo.amana.vpn/movedigital/mwm-admin-frontend:${{ inputs.imageTag }}
       shell: bash
       run: |
         echo "Deploy to namespace: ${{ inputs.namespace }}"
