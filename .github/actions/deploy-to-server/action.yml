@@ -8,7 +8,7 @@ inputs:
     required: true
     default: test
 
-  shell:
+  shellClient:
     description: Which shell client to use ?
     required: false
     default: 12
@@ -29,7 +29,7 @@ runs:
         exit 1
 
     - shell: bash
-      run: echo "shell: ${{ inputs.shell }}"
+      run: echo "shellClient: ${{ inputs.shellClient }}"
 
     - name: Deploy
       shell: bash
