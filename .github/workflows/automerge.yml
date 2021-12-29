@@ -1,5 +1,7 @@
+# When a PR has a tag label of "autorelease: pending"
+# then this Github Action will automatically merge the PR
+# (when all PR merge requirelemts are met: such as unit tests, PR title check)
 name: Automerge
-desciprion: When a PR has a tag label of "autorelease: pending" then this Github Action will automatically merge the PR (when all PR merge requirelemts are met, such as unit tests, PR title check)
 
 on:
   pull_request:
