@@ -12,9 +12,6 @@ concurrency:
   group: deploy-prod-${{ github.head_ref }}
   cancel-in-progress: true
 
-env:
-  imagePath: docker-repo.amana.vpn/movedigital/mwm-admin-frontend:${{ github.event.inputs.imageTag }}
-
 jobs:
   deploy:
     runs-on: ubuntu-18.04
@@ -28,4 +25,5 @@ jobs:
 
       - uses: ./.github/actions/deploy-to-server
         with:
-          namespace: 1test1
+          imageTag: ${{ github.event.inputs.imageTag }}
+          namespace: test
