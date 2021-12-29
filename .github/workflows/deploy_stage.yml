@@ -3,7 +3,12 @@ name: Deploy to Statge
 on:
   push:
     branches:
-      - release-v*
+      - master
+      - main
+
+concurrency:
+  group: deploy-stage-${{ github.head_ref }}
+  cancel-in-progress: true
 
 jobs:
   versioning:
