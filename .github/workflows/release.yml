@@ -45,7 +45,7 @@ jobs:
         if: ${{ steps.release.outputs.pr && !steps.release.outputs.sha }}
         uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
         with:
-          webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
+          webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
           theme-color: Info
           summary: Pending release PR created
           title: Pending release PR created
@@ -58,7 +58,7 @@ jobs:
         if: ${{ steps.release.outputs.pr && steps.release.outputs.sha }}
         uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
         with:
-          webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
+          webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
           theme-color: Success
           summary: Release ${{ steps.release.outputs.tag_name }} success
           title: Release ${{ steps.release.outputs.tag_name }} success
