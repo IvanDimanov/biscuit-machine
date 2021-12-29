@@ -23,6 +23,10 @@ runs:
         echo "  prod"
         exit 1
 
+    - name: Deploy2
+      shell: bash
+      run: echo "Deploy to namespace2: ${{ inputs.namespace }}"
+
     - name: Deploy
       shell: bash
-      run: echo "Deploy to namespace ${{ inputs.namespace }}"
+      run: echo "Deploy to namespace: ${{ inputs.namespace }}"
