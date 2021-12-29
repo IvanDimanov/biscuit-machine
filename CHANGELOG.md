@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.4.1](https://www.github.com/IvanDimanov/biscuit-machine/compare/v2.4.0...v2.4.1) (2021-12-29)
+
+
+### Bug Fixes
+
+* GitHub runners ([9ac6161](https://www.github.com/IvanDimanov/biscuit-machine/commit/9ac61617107f816515eeb90c752ac9a1fe0d1dc3))
+
 ## [2.4.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v2.3.0...v2.4.0) (2021-12-29)
 
 
