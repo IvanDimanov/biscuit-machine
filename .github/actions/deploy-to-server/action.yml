@@ -31,7 +31,9 @@ runs:
     - name: Deploy
       env:
         imagePath: docker-repo.amana.vpn/movedigital/mwm-admin-frontend:${{ inputs.imageTag }}
+        serverUrl: http://mwm-admin-fe-${{ inputs.namespace }}.int.kube.digital
       shell: bash
       run: |
         echo "Deploy to namespace: ${{ inputs.namespace }}"
         echo "Image: ${{ env.imagePath }}"
+        echo "Server URL: ${{ env.serverUrl }}"
