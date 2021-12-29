@@ -20,8 +20,8 @@ jobs:
         with:
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
           theme-color: Success
-          summary: Sucessfull deploy of v?.?.?
-          title: Sucessfull deploy of v?.?.?
+          summary: Sucessfull deploy of v...
+          title: Sucessfull deploy of v...
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "PR is pending merge for MoveUI release using [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
