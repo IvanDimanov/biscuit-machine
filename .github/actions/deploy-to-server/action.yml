@@ -3,10 +3,19 @@ description: Uses a FE build to make a deploy to a specific server
 
 
 inputs:
+  imageTag:
+    description: "Which Docker image tag you'd like to deploy ? (List of all available tags: https://docker-repo.amana.vpn/v2/movedigital/mwm-admin-frontend/tags/list)"
+    default: latest
+    required: true
+
   namespace:
     description: "Which server we want to deploy to? Valid options are: 'test', 'stage', 'prod'"
     required: true
     default: test
+
+
+env:
+  imagePath: docker-repo.amana.vpn/movedigital/mwm-admin-frontend:${{ github.event.inputs.imageTag }}
 
 
 runs:
@@ -25,4 +34,6 @@ runs:
 
     - name: Deploy
       shell: bash
-      run: "echo 'Deploy to namespace: ${{ inputs.namespace }}'"
+      run: |
+        echo "Deploy to namespace: ${{ inputs.namespace }}"
+        echo "Image: ${{ env.imagePath }}"
