@@ -24,7 +24,5 @@ jobs:
           echo "Deploy tag : ${{ github.event.inputs.imageTag }}"
           echo "Image : ${{ env.imagePath }}"
 
-      - uses: ./.github/actions/get-repo
-
       - uses: ./.github/actions/deploy-to-server
         # with: ''
