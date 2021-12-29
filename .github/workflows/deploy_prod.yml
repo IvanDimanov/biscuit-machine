@@ -23,6 +23,8 @@ jobs:
         run: |
           echo "Deploy tag : ${{ github.event.inputs.imageTag }}"
           echo "Image : ${{ env.imagePath }}"
+          
+      - uses: actions/checkout@v2.4.0
 
       - uses: ./.github/actions/get-repo
 
