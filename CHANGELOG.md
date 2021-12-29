@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.9.1](https://www.github.com/IvanDimanov/biscuit-machine/compare/v2.9.0...v2.9.1) (2021-12-29)
+
+
+### Bug Fixes
+
+* typo ([4154096](https://www.github.com/IvanDimanov/biscuit-machine/commit/41540965e59cafca4a9d7afe39977ba8bde4cdaf))
+
 ## [2.9.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v2.8.0...v2.9.0) (2021-12-29)
 
 
