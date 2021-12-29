@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  versioning:
+  deploy:
     runs-on: ubuntu-18.04
 
     steps:
@@ -20,9 +20,9 @@ jobs:
         with:
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
           theme-color: Success
-          summary: Sucessfull deploy of unknown version
-          title: Sucessfull deploy of unknown version
+          summary: Pending release PR created
+          title: Pending release PR created
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "PR is pending merge for MoveUI release using [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
-              activitySubtitle: "Pending PR can be found here: ${{ fromJson(github) }}"
+              activitySubtitle: "Pending PR can be found here"
