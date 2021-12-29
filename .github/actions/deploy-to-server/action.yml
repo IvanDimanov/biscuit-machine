@@ -10,7 +10,7 @@ inputs:
 
   shellClient:
     description: Which shell client to use ?
-    required: false
+    required: true
     default: 12
 
 
