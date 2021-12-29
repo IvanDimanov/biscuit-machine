@@ -1,0 +1,33 @@
+name: Deploy to Server
+description: Uses a FE build to make a deploy to a specific server
+
+
+inputs:
+  namespace:
+    description: "Which server we want to deploy to? Valid options are: 'test', 'stage', 'prod'"
+    required: true
+    default: test
+
+  shell:
+    description: Which shell client to use ?
+    required: false
+    default: bash
+
+
+runs:
+  using: composite
+  steps:
+    - name: Validate input
+      if: inputs.namespace != 'test' && inputs.namespace != 'stage' && inputs.namespace != 'prod'
+      shell: ${{ inputs.shell}}
+      run: |
+        echo "Invalid 'namespace' = '${{ inputs.namespace }}'"
+        echo "Valid namespace options are:"
+        echo "  test"
+        echo "  stage"
+        echo "  prod"
+        throw 1
+
+    - name: Deploy
+      shell: ${{ inputs.shell}}
+      run: echo "Deploy to namespace ${{ inputs.namespace }}"
