@@ -1,0 +1,28 @@
+name: Deploy to Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      imageTag:
+        description: "Which Docker image tag you'd like to deploy ? (List of all available tags: https://docker-repo.amana.vpn/v2/movedigital/mwm-admin-frontend/tags/list)"
+        default: v1.0.0
+        required: true
+
+concurrency:
+  group: deploy-prod-${{ github.head_ref }}
+  cancel-in-progress: true
+
+env:
+  imagePath: docker-repo.amana.vpn/movedigital/mwm-admin-frontend:${{ github.event.inputs.imageTag }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Debug env
+        run: |
+          echo "Deploy tag : ${{ github.event.inputs.imageTag }}"
+          echo "Image : ${{ env.imagePath }}"
+
+      - uses: ./.github/actions/deploy-to-server
+        # with: ''
