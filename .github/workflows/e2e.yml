@@ -1,4 +1,4 @@
-name: Regressions
+name: E2E tests
 
 on:
   workflow_dispatch:
