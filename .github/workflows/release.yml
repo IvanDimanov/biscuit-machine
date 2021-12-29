@@ -17,7 +17,7 @@ on:
         default: minor
 
 jobs:
-  versioning:
+  create-release-pr:
     runs-on: ubuntu-18.04
 
     steps:
@@ -48,18 +48,9 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ steps.release.outputs.pr }}
 
-      - name: Send pending message
+      - name: Deploy
         if: ${{ steps.release.outputs.pr && !steps.release.outputs.sha }}
-        uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
-        with:
-          webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-          theme-color: Info
-          summary: Pending release PR created
-          title: Pending release PR created
-          sections: |
-            - activityImage: "{gh:avatar-url}"
-              activityTitle: "PR is pending merge for MoveUI release using [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
-              activitySubtitle: "Pending PR can be found here: [#${{ steps.release.outputs.pr }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.release.outputs.pr }})"
+        run: echo "Deploy ${{ steps.release.outputs.tag_name }}"
 
       - name: Send success message
         if: ${{ steps.release.outputs.pr && steps.release.outputs.sha }}
@@ -72,7 +63,9 @@ jobs:
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "MoveUI was successfully released under [${{ steps.release.outputs.tag_name }}](${{ steps.release.outputs.html_url }}) by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
-              activitySubtitle: "Merged release PR can be found here: [#${{ steps.release.outputs.pr }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.release.outputs.pr }})"
+              activitySubtitle: |
+                Merged release PR can be found here: [#${{ steps.release.outputs.pr }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.release.outputs.pr }})
+                Release can be tested here: [http://stage-server.com](http://stage-server.com)
 
       - name: Send error message
         if: ${{ !steps.release.outputs.pr }}
