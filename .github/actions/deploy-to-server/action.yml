@@ -44,6 +44,12 @@ runs:
         echo "Deploy to namespace: ${{ inputs.namespace }}"
         echo "Image: ${{ env.imagePath }}"
         echo "Server URL: ${{ env.serverUrl }}"
+        
+
+    - name: Debug
+      run: |
+        echo "${{toJSON(github)}}"
+
 
     - name: Send success message
       if: inputs.MSTEAMS_WEBHOOK
