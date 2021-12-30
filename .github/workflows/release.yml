@@ -56,7 +56,7 @@ jobs:
           cd ./.github/js-scripts
           npm i
           node merge-pr.js ${{ secrets.GITHUB_TOKEN }} ${{ steps.release.outputs.pr }}
-          node dispatch-workflow.js ${{ secrets.GITHUB_TOKEN }} release.yml
+          node dispatch-workflow.js ${{ secrets.GITHUB_TOKEN }} release
 
       - name: Send pending message
         if: ${{ steps.release.outputs.pr && !steps.release.outputs.sha }}
