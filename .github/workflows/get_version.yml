@@ -13,8 +13,7 @@ jobs:
       - name: Get release version
         id: releaseVersion
         run: |
-          export COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
-          export TAG_NAME=echo ${COMMIT_MESSAGE} | grep -oP "release \K\d+\.\d+\.\d+"
+          export TAG_NAME=$(echo "${{ github.event.head_commit.message }}" | grep -oP "release \K\d+\.\d+\.\d+")
           echo ::set-output name=tagName::${TAG_NAME}
 
       - run: "echo '${{ steps.releaseVersion.outputs.tagName }}'"
