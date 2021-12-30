@@ -25,4 +25,4 @@ jobs:
     steps:
       - name: Deploy to Stage server
         run: |
-          echo '${{ jobs.version.outputs.versionNumber }}'
+          echo '${{ needs.version.outputs.versionNumber }}'
