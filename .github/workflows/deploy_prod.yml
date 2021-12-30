@@ -23,12 +23,6 @@ jobs:
           
       - uses: actions/checkout@v2.4.0
 
-      - name: Use Dockerfile
-        uses: actions/download-artifact@v2
-        with:
-          name: Dockerfile
-          path: Dockerfile
-
       - uses: ./.github/actions/deploy-to-server
         with:
           imageTag: ${{ github.event.inputs.imageTag }}
