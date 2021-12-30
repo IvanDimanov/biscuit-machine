@@ -19,9 +19,13 @@ const {
    *
    * That's why we need to manually trigger a workflow of interest.
    **/
-  const { data: mergeData } = await octokit.request('POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches', {
+  const { data } = await octokit.request('POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches', {
     owner,
     repo,
     workflow_id: WORKFLOW_ID,
   })
+
+  console.log(' Trigger workflow response ')
+  console.log(data)
+  console.log(' ')
 })()
