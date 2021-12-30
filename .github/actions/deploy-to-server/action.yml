@@ -44,13 +44,12 @@ runs:
         echo "Deploy to namespace: ${{ inputs.namespace }}"
         echo "Image: ${{ env.imagePath }}"
         echo "Server URL: ${{ env.serverUrl }}"
-        echo "Commit message: $(git log --format=%B -n 1 ${{ github.sha }} | head -n 1)"
         
     - name: Get commit message from SHA
       id: commitMessage
       shell: bash
       run: |
-        export MESSAGE=$(git log --format=%B -n 1 ${{ github.sha }} | head -n 1)
+        export MESSAGE=$(git log --format=%s ${{ github.sha }})
         echo "::set-output name=message::${MESSAGE}"
 
     - name: Send success message
