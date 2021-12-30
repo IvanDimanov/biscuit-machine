@@ -20,6 +20,7 @@ jobs:
 
   deploy-to-stage:
     needs: version
+    if: needs.version.outputs.versionNumber
     runs-on: ubuntu-18.04
 
     steps:
