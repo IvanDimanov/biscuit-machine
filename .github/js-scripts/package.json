@@ -1,0 +1,14 @@
+{
+  "name": "js-scripts",
+  "version": "1.0.0",
+  "description": "JS scripts used for GitHub workflow action",
+  "engines": {
+    "npm": ">=7",
+    "node": ">=14.17.5"
+  },
+  "private": true,
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@octokit/core": "3.5.1"
+  }
+}
