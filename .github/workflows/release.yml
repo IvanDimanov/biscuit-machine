@@ -47,7 +47,10 @@ jobs:
 
       - name: Send pending message
         if: ${{ steps.release.outputs.pr && !steps.release.outputs.sha }}
-        run: node ./.github/js-scripts/merge-pr.js ${{ secrets.GITHUB_TOKEN }} ${{ steps.release.outputs.pr }}
+        run: |
+          cd ./.github/js-scripts
+          npm i
+          node merge-pr.js ${{ secrets.GITHUB_TOKEN }} ${{ steps.release.outputs.pr }}
 
       - name: Send pending message
         if: ${{ steps.release.outputs.pr && !steps.release.outputs.sha }}
