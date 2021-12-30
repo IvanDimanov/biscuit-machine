@@ -26,4 +26,4 @@ jobs:
       - uses: ./.github/actions/deploy-to-server
         with:
           imageTag: ${{ github.event.inputs.imageTag }}
-          namespace: prod
+          namespace: tt-12
