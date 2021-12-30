@@ -18,6 +18,7 @@ const {
     pull_number: PR_NUMBER,
   })
 
-console.log( data )
-
+  console.log(' Merge Request response ')
+  console.log(data)
+  console.log(' ')
 })()
