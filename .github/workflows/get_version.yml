@@ -1,7 +1,10 @@
 name: Get release version
 
 on:
-  release:
+  pull_request:
+    types: [closed]
+    branches:
+      - release-v*
 
 jobs:
   deploy:
@@ -11,5 +14,7 @@ jobs:
       - name: Get release version
         id: releaseVersion
         run: echo ::set-output name=tagName::${GITHUB_REF#refs/tags/}
+
+      - run: "echo '${{ github.event.pull_request.merged }}'"
 
       - run: "echo '${{ steps.releaseVersion.outputs.tagName }}'"
