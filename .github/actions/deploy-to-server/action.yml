@@ -45,6 +45,11 @@ runs:
         echo "Image: ${{ env.imagePath }}"
         echo "Server URL: ${{ env.serverUrl }}"
         echo "Commit message: $(git log --format=%B -n 1 ${{ github.sha }} | head -n 1)"
+        
+    - name: Get commit message from SHA
+      id: commitMessage
+      shell: bash
+      run: "echo '::set-output name=message::$(git log --format=%B -n 1 ${{ github.sha }} | head -n 1)'"
 
     - name: Send success message
       if: inputs.MSTEAMS_WEBHOOK
@@ -59,4 +64,4 @@ runs:
         sections: |
           - activityImage: "{gh:avatar-url}"
             activityTitle: "Successful deploy of version ${{ github.event.inputs.imageTag }}"
-            activitySubtitle: "You can access the server here: [${{ env.serverUrl }}](${{ env.serverUrl }})<br/>Deployed commit: [$(git log --format=%B -n 1 ${{ github.sha }} | head -n 1)](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
+            activitySubtitle: "You can access the server here: [${{ env.serverUrl }}](${{ env.serverUrl }})<br/>Deployed commit: [${{ steps.commitMessage.outputs.message }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
