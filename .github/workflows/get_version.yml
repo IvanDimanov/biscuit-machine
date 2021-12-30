@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Get release version
         id: releaseVersion
-        run: echo ::set-output name=tagName::${${{ github.head_ref }}#release-/}
+        run: echo ::set-output name=tagName::${${{ github.head_ref }}}
 
       - run: "echo '${{ steps.releaseVersion.outputs.tagName }}'"
 
