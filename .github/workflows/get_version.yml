@@ -2,7 +2,8 @@ name: Get release version
 
 on:
   push:
-    main
+    branches:
+      - main
 
 jobs:
   deploy:
