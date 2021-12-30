@@ -9,7 +9,7 @@ inputs:
     required: true
 
   namespace:
-    description: "Which server we want to deploy to? Valid options are: 'test', 'stage', 'prod'"
+    description: "Which server we want to mane a deploy? Valid values are: 'test', 'stage', 'prod'"
     required: true
     default: test
 
@@ -18,15 +18,18 @@ runs:
   using: composite
   steps:
     - name: Validate input
-      if: inputs.namespace != 'test' && inputs.namespace != 'stage' && inputs.namespace != 'prod'
       shell: bash
       run: |
-        echo "Invalid 'namespace' = '${{ inputs.namespace }}'"
-        echo "Valid 'namespace' options are:"
-        echo "  'test'"
-        echo "  'stage'"
-        echo "  'prod'"
-        exit 1
+        if [ inputs.namespace == 'test' || inputs.namespace == 'stage' || inputs.namespace == 'prod' ]; then
+          echo "Input property 'namespace' has a valid value of '${{ inputs.namespace }}'"
+        else 
+          echo "Input property 'namespace' has invalid value of '${{ inputs.namespace }}'"
+          echo "Valid 'namespace' values are:"
+          echo "  'test'"
+          echo "  'stage'"
+          echo "  'prod'"
+          exit 1
+        fi
 
     - name: Deploy
       env:
