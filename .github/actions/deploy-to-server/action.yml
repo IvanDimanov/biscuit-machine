@@ -13,6 +13,10 @@ inputs:
     required: true
     default: test
 
+  GITHUB_TOKEN:
+    description: "This token is used to access commit history"
+    required: true
+
   MSTEAMS_WEBHOOK:
     description: "If we want to send a deploy message in MS Teams then we need to provide the Webhook ENV VAR secret"
     required: false
@@ -48,7 +52,7 @@ runs:
 
     - name: Debug
       shell: bash
-      run: node ./.github/js-scripts/get-commit-message.js ${{ secrets.GITHUB_TOKEN }}
+      run: node ./.github/js-scripts/get-commit-message.js ${{ inputs.GITHUB_TOKEN }}
 
 
     - name: Send success message
