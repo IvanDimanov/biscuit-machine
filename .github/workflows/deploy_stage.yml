@@ -1,4 +1,4 @@
-name: Get release version
+name: Deploy to Stage
 
 on:
   push:
