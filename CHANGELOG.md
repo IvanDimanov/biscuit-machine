@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.32.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v2.31.0...v2.32.0) (2021-12-30)
+
+
+### Features
+
+* **TEST-16:** Update timeout ([2a7b042](https://www.github.com/IvanDimanov/biscuit-machine/commit/2a7b042881b13222b67e97f327a9bae65f949bcb))
+
 ## [2.31.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v2.30.0...v2.31.0) (2021-12-30)
 
 
