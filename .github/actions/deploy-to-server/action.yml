@@ -13,10 +13,6 @@ inputs:
     required: true
     default: test
 
-  GITHUB_TOKEN:
-    description: "This token is used to access commit history"
-    required: true
-
   MSTEAMS_WEBHOOK:
     description: "If we want to send a deploy message in MS Teams then we need to provide the Webhook ENV VAR secret"
     required: false
@@ -48,12 +44,6 @@ runs:
         echo "Deploy to namespace: ${{ inputs.namespace }}"
         echo "Image: ${{ env.imagePath }}"
         echo "Server URL: ${{ env.serverUrl }}"
-        
-
-    - name: Debug
-      shell: bash
-      run: node ./.github/js-scripts/get-commit-message.js ${{ inputs.GITHUB_TOKEN }}
-
 
     - name: Send success message
       if: inputs.MSTEAMS_WEBHOOK
@@ -68,10 +58,10 @@ runs:
         sections: |
           - activityImage: "{gh:avatar-url}"
             activityTitle: "Successful deploy of version ${{ github.event.inputs.imageTag }}"
-            activitySubtitle: "You can access the server here: [${{ env.serverUrl }}](${{ env.serverUrl }})<br/>Commit: [${{ inputs.commitMessage || github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
+            activitySubtitle: "You can access the server here: [${{ env.serverUrl }}](${{ env.serverUrl }})<br/>Commit: [${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
             facts:
               - name: "Commit message"
                 value: "messageX${{ inputs.commitMessage }}"
 
               - name: "Commit link"
-                value: "[${{ inputs.commitMessage || github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
+                value: "[${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
