@@ -41,13 +41,6 @@ jobs:
           release-type: node
           changelog-types: '[{"type":"style","section":"Styling","hidden":false},{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
 
-      - name: Merge Pending release PR
-        if: ${{ steps.release.outputs.pr && !steps.release.outputs.sha }}
-        uses: juliangruber/merge-pull-request-action@v1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ steps.release.outputs.pr }}
-
       - name: Send pending message
         if: ${{ steps.release.outputs.pr && !steps.release.outputs.sha }}
         uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
