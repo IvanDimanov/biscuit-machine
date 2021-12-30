@@ -61,7 +61,7 @@ runs:
             activitySubtitle: "You can access the server here: [${{ env.serverUrl }}](${{ env.serverUrl }})"
             facts:
               - name: Commit message
-                value: ${{ github.event.head_commit.message }}
+                value: message-${{ github.event.head_commit.message }}
 
               - name: Commit link
                 value: [${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})
