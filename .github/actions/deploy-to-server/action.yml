@@ -40,3 +40,23 @@ runs:
         echo "Deploy to namespace: ${{ inputs.namespace }}"
         echo "Image: ${{ env.imagePath }}"
         echo "Server URL: ${{ env.serverUrl }}"
+
+    - name: Send success message
+      uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
+      env:
+        serverUrl: http://mwm-admin-fe-${{ inputs.namespace }}.int.kube.digital
+      with:
+        webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+        theme-color: Success
+        summary: Deploy ${{ github.event.inputs.imageTag }} success
+        title: Deploy ${{ github.event.inputs.imageTag }} success
+        sections: |
+          - activityImage: "{gh:avatar-url}"
+            activityTitle: "Successful deploy of version ${{ github.event.inputs.imageTag }}"
+            activitySubtitle: "You can access the server here: [${{ env.serverUrl }}](${{ env.serverUrl }})"
+            facts:
+              - name: Commit message
+                value: ${{ github.event.head_commit.message }}
+
+              - name: Commit link
+                value: [${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})
