@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.20.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v2.19.0...v2.20.0) (2021-12-30)
+
+
+### Features
+
+* use head ref ([cd79f59](https://www.github.com/IvanDimanov/biscuit-machine/commit/cd79f59853421e349db0e94b135b6b47bda68084))
+
 ## [2.19.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v2.18.0...v2.19.0) (2021-12-30)
 
 
