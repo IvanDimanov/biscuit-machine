@@ -1,4 +1,4 @@
-name: Deploy to Production
+name: Get release version
 
 on:
   workflow_dispatch:
