@@ -13,6 +13,10 @@ inputs:
     required: true
     default: test
 
+  MSTEAMS_WEBHOOK:
+    description: "If we want to send a deploy message in MS Teams then we need to provide the Webhook ENV VAR secret"
+    required: false
+
 
 runs:
   using: composite
@@ -42,11 +46,12 @@ runs:
         echo "Server URL: ${{ env.serverUrl }}"
 
     - name: Send success message
+      if: inputs.MSTEAMS_WEBHOOK
       uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
       env:
         serverUrl: http://mwm-admin-fe-${{ inputs.namespace }}.int.kube.digital
       with:
-        webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+        webhook_url: ${{ inputs.MSTEAMS_WEBHOOK }}
         theme-color: Success
         summary: Deploy ${{ github.event.inputs.imageTag }} success
         title: Deploy ${{ github.event.inputs.imageTag }} success
