@@ -21,6 +21,11 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
+      - name: Debug
+        run: |
+          echo '${{ toJSON(github) }}'
+    
+
       - name: Checkout repo
         if: ${{ github.event.inputs.semverType }}
         uses: actions/checkout@master
