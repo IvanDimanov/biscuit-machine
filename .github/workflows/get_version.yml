@@ -3,7 +3,7 @@ name: Get release version
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - v*
 
 jobs:
   deploy:
