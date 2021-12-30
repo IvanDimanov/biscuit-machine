@@ -27,3 +27,4 @@ jobs:
         with:
           imageTag: ${{ github.event.inputs.imageTag }}
           namespace: prod
+          MSTEAMS_WEBHOOK: MS_TEAMS_WEBHOOK_URI
