@@ -45,7 +45,7 @@ jobs:
         if: ${{ steps.release.outputs.pr && !steps.release.outputs.sha }}
         uses: actions/checkout@master
 
-      - name: Send pending message
+      - name: Merge pending PR
         if: ${{ steps.release.outputs.pr && !steps.release.outputs.sha }}
         run: |
           cd ./.github/js-scripts
