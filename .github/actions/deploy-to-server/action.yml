@@ -50,6 +50,7 @@ runs:
       shell: bash
       run: |
         echo "${{toJSON(github)}}"
+        echo "${{toJSON(github.head_commit)}}"
 
 
     - name: Send success message
