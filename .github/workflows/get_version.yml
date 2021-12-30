@@ -22,8 +22,10 @@ jobs:
     needs: version
     if: needs.version.outputs.versionNumber
     runs-on: ubuntu-18.04
+    env:
+      imageTag: v${{ needs.version.outputs.versionNumber }}
 
     steps:
       - name: Deploy to Stage server
         run: |
-          echo '${{ needs.version.outputs.versionNumber }}'
+          echo 'Deploy Stage to ${{ env.imageTag }}'
