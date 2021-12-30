@@ -1,0 +1,15 @@
+name: Deploy to Production
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Get release version
+        id: releaseVersion
+        run: echo ::set-output name=tagName::${GITHUB_REF#refs/tags/}
+
+      - run: "echo '${{ steps.releaseVersion.outputs.tagName }}'"
