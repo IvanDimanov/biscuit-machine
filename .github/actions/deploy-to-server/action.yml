@@ -20,7 +20,7 @@ runs:
     - name: Validate input
       shell: bash
       run: |
-        if [ inputs.namespace == 'test' || inputs.namespace == 'stage' || inputs.namespace == 'prod' ]; then
+        if [[ inputs.namespace == 'test' || inputs.namespace == 'stage' || inputs.namespace == 'prod' ]]; then
           echo "Input property 'namespace' has a valid value of '${{ inputs.namespace }}'"
         else 
           echo "Input property 'namespace' has invalid value of '${{ inputs.namespace }}'"
