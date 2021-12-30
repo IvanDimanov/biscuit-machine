@@ -60,8 +60,8 @@ runs:
             activityTitle: "Successful deploy of version ${{ github.event.inputs.imageTag }}"
             activitySubtitle: "You can access the server here: [${{ env.serverUrl }}](${{ env.serverUrl }})"
             facts:
-              - name: Commit message
-                value: messageX${{ github.event.head_commit.message }}
+              - name: "Commit message"
+                value: "messageX${{ github.event.head_commit.message }}"
 
-              - name: Commit link
-                value: [${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})
+              - name: "Commit link"
+                value: "[${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
