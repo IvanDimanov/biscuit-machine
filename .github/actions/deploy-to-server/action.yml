@@ -70,10 +70,10 @@ runs:
         sections: |
           - activityImage: "{gh:avatar-url}"
             activityTitle: "Successful deploy of version ${{ github.event.inputs.imageTag }}"
-            activitySubtitle: "You can access the server here: [${{ env.serverUrl }}](${{ env.serverUrl }})\nCommit: [${{ inputs.commitMessage || github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
+            activitySubtitle: "You can access the server here: [${{ env.serverUrl }}](${{ env.serverUrl }})<br/>Commit: [${{ inputs.commitMessage || github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
             facts:
               - name: "Commit message"
-                value: "messageX${{ github.event.head_commit.message }}"
+                value: "messageX${{ inputs.commitMessage }}"
 
               - name: "Commit link"
                 value: "[${{ inputs.commitMessage || github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
