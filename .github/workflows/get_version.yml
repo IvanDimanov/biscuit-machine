@@ -1,8 +1,8 @@
 name: Get release version
 
 on:
-  pull_request:
-    types: [closed]
+  push:
+    main
 
 jobs:
   deploy:
@@ -16,3 +16,5 @@ jobs:
           echo ::set-output name=tagName::${HEAD_REF#release-}
 
       - run: "echo '${{ steps.releaseVersion.outputs.tagName }}'"
+
+      - run: "echo '${{ toJSON(github) }}'"
