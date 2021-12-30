@@ -1,9 +1,7 @@
 name: Get release version
 
 on:
-  push:
-    tags:
-      - v*
+  release:
 
 jobs:
   deploy:
