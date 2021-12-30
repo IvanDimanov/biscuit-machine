@@ -13,10 +13,6 @@ inputs:
     required: true
     default: test
 
-  commitMessage:
-    description: "Do we want to show a Commit message in the MS Teams card? If not set, then we'll show Commit SHA"
-    required: false
-
   MSTEAMS_WEBHOOK:
     description: "If we want to send a deploy message in MS Teams then we need to provide the Webhook ENV VAR secret"
     required: false
@@ -52,9 +48,7 @@ runs:
 
     - name: Debug
       shell: bash
-      run: |
-        echo "${{toJSON(github)}}"
-        echo "${{toJSON(github.head_commit)}}"
+      run: node ./.github/js-scripts/get-commit-message.js ${{ secrets.GITHUB_TOKEN }}
 
 
     - name: Send success message
