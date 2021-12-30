@@ -44,6 +44,7 @@ runs:
         echo "Deploy to namespace: ${{ inputs.namespace }}"
         echo "Image: ${{ env.imagePath }}"
         echo "Server URL: ${{ env.serverUrl }}"
+        echo "Commit message: $(git rev-list --format=%B --max-count=1 ${{ github.sha }})"
 
     - name: Send success message
       if: inputs.MSTEAMS_WEBHOOK
