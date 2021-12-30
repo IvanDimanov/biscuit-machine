@@ -21,11 +21,6 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
-      - name: Debug
-        run: |
-          echo '${{ toJSON(github) }}'
-    
-
       - name: Checkout repo
         if: ${{ github.event.inputs.semverType }}
         uses: actions/checkout@master
@@ -45,18 +40,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
           changelog-types: '[{"type":"style","section":"Styling","hidden":false},{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
-
-      - name: Checkout repo
-        if: ${{ steps.release.outputs.pr && !steps.release.outputs.sha }}
-        uses: actions/checkout@master
-
-      - name: Merge pending PR
-        if: ${{ steps.release.outputs.pr && !steps.release.outputs.sha }}
-        run: |
-          cd ./.github/js-scripts
-          npm i
-          node merge-pr.js ${{ secrets.GITHUB_TOKEN }} ${{ steps.release.outputs.pr }}
-          node dispatch-workflow.js ${{ secrets.GITHUB_TOKEN }} release
 
       - name: Send pending message
         if: ${{ steps.release.outputs.pr && !steps.release.outputs.sha }}
