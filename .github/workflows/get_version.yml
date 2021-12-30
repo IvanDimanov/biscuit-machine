@@ -19,6 +19,7 @@ jobs:
           echo ::set-output name=versionNumber::${VERSION_NUMBER}
 
   deploy-to-stage:
+    needs: version
     runs-on: ubuntu-18.04
 
     steps:
