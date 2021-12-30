@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.17.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v2.16.0...v2.17.0) (2021-12-30)
+
+
+### Features
+
+* on PR close ([9f6e279](https://www.github.com/IvanDimanov/biscuit-machine/commit/9f6e2792b539b2f50fea51bcc62ce3ff17311ae2))
+
 ## [2.16.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v2.15.0...v2.16.0) (2021-12-30)
 
 
