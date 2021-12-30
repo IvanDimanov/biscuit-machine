@@ -13,9 +13,7 @@ jobs:
       - name: Get release version
         id: releaseVersion
         run: |
-          export HEAD_REF=${{ github.head_ref }}
-          echo ::set-output name=tagName::${HEAD_REF#release-}
+          export COMMIT_MESSAGE=${{ github.event.head_commit.message }}
+          echo ::set-output name=tagName::${COMMIT_MESSAGE | grep -oP "release \K\d+\.\d+\.\d+"}
 
       - run: "echo '${{ steps.releaseVersion.outputs.tagName }}'"
-
-      - run: "echo '${{ toJSON(github) }}'"
