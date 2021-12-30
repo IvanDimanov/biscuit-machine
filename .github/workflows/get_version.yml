@@ -8,13 +8,15 @@ on:
 jobs:
   version:
     runs-on: ubuntu-18.04
+    outputs:
+      versionNumber: ${{ steps.releaseVersion.outputs.versionNumber }}
 
     steps:
       - name: Get release version
         id: releaseVersion
         run: |
           export VERSION_NUMBER=$(echo "${{ github.event.head_commit.message }}" | grep -oP "release \K\d+\.\d+\.\d+")
-          echo ::set-output name=version::${VERSION_NUMBER}
+          echo ::set-output name=versionNumber::${VERSION_NUMBER}
 
   deploy-to-stage:
     runs-on: ubuntu-18.04
@@ -22,4 +24,4 @@ jobs:
     steps:
       - name: Deploy to Stage server
         run: |
-          echo '${{ jobs.version.steps.releaseVersion.outputs.version }}'
+          echo '${{ jobs.version.outputs.versionNumber }}'
