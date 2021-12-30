@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.21.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v2.20.0...v2.21.0) (2021-12-30)
+
+
+### Features
+
+* use RegExp ([2a44ff4](https://www.github.com/IvanDimanov/biscuit-machine/commit/2a44ff4e9a5945a909a640bb4d4ec8a5e4d63c52))
+
 ## [2.20.0](https://www.github.com/IvanDimanov/biscuit-machine/compare/v2.19.0...v2.20.0) (2021-12-30)
 
 
