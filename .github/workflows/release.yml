@@ -42,9 +42,8 @@ jobs:
           changelog-types: '[{"type":"style","section":"Styling","hidden":false},{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
           
       - run: |
-          echo "${{ steps.release.outputs.pr.number }}"
-          echo "${{ steps.release.outputs.pr }}"
-          echo "${{ fromJson(steps.release.outputs.pr) }}"
+          echo '${{ steps.release.outputs.pr }}' | jq -r '.number'
+          echo '${{ steps.release.outputs.pr }}'
           echo "${{ toJson(steps.release.outputs.pr) }}"
 
       - name: Send pending message
