@@ -68,9 +68,10 @@ jobs:
           prClosedAt: ${{ steps.PR.outputs.pr_closed_at }}
 
       - name: Get release PR number
+        if: ${{ steps.release.outputs.pr }}
         id: releasePrNumber
         run: |
-          export PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          export PR_NUMBER=$(echo '${{ steps.release.outputs.pr }}' | jq -r '.number')
           echo ::set-output name=prNumber::${PR_NUMBER}
 
       - name: Send pending message
