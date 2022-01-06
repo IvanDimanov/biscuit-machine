@@ -40,9 +40,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
           changelog-types: '[{"type":"style","section":"Styling","hidden":false},{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
-          
-      - name: Get release version
-        id: releaseVersion
+
+      - run: |
+          echo '${{ toJson(steps.release.outputs) }}'
+
+      - name: Get release PR number
+        id: releasePrNumber
         if: ${{ steps.release.outputs.pr }}
         run: |
           export PR_NUMBER=$(echo '${{ steps.release.outputs.pr }}' | jq -r '.number')
@@ -59,7 +62,7 @@ jobs:
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "PR is pending merge for MoveUI release using [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
-              activitySubtitle: "Pending PR can be found here: [#${{ steps.releaseVersion.outputs.prNumber }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.releaseVersion.outputs.prNumber }})"
+              activitySubtitle: "Pending PR can be found here: [#${{ steps.releasePrNumber.outputs.prNumber }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.releasePrNumber.outputs.prNumber }})"
 
       - name: Deploy to Stage
         if: ${{ steps.release.outputs.pr && steps.release.outputs.sha }}
@@ -76,7 +79,13 @@ jobs:
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "MoveUI was successfully released under [${{ steps.release.outputs.tag_name }}](${{ steps.release.outputs.html_url }}) by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
-              activitySubtitle: "Merged release PR can be found here: [#${{ steps.releaseVersion.outputs.prNumber }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.releaseVersion.outputs.prNumber }})"
+              activitySubtitle: "Merged release PR can be found here: [#${{ steps.releasePrNumber.outputs.prNumber }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.releasePrNumber.outputs.prNumber }})"
+
+      - name: Get head commit message
+        id: headCommitMessage
+        run: |
+          export MESSAGE=$(git log -1 --pretty=format:"%s")
+          echo ::set-output name=message::${MESSAGE}
 
       - name: Send error message
         if: ${{ !steps.release.outputs.pr }}
@@ -89,4 +98,4 @@ jobs:
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "There is an error with MoveUI release caused by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
-              activitySubtitle: "One thing that may cause problem is the commit message: `${{ github.event.head_commit.message }}`"
+              activitySubtitle: "One thing that may cause problem is the commit message: `${{ steps.headCommitMessage.outputs.message }}`"
