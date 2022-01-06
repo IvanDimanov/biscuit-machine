@@ -88,17 +88,17 @@ jobs:
               activitySubtitle: "Merged release PR can be found here: [#${{ steps.PR.outputs.number }}](${{ steps.PR.outputs.pr_url }})"
 
       - uses: actions/checkout@v1
-        if: ${{ !steps.release.outputs.pr }}
+        if: ${{ !steps.release.outputs.pr && steps.release.outputs.sha }}
 
       - name: Get head commit message
-        if: ${{ !steps.release.outputs.pr }}
+        if: ${{ !steps.release.outputs.pr && steps.release.outputs.sha }}
         id: headCommitMessage
         run: |
           export MESSAGE=$(git log -1 --pretty=format:"%s" | head -n 1)
           echo ::set-output name=message::${MESSAGE}
 
       - name: Send error message
-        if: ${{ !steps.release.outputs.pr }}
+        if: ${{ !steps.release.outputs.pr && steps.release.outputs.sha }}
         uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
         with:
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
