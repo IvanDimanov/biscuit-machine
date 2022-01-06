@@ -81,7 +81,7 @@ jobs:
           title: Release ${{ steps.release.outputs.tag_name }} success
           sections: |
             - activityImage: "{gh:avatar-url}"
-              activityTitle: "MoveUI was successfully released under [${{ steps.release.outputs.tag_name }}](${{ steps.release.outputs.url }}) by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
+              activityTitle: "MoveUI was successfully released under 1 [${{ steps.release.outputs.tag_name }}](${{ steps.release.outputs.url }}) by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
               activitySubtitle: "Merged release PR can be found here: [#${{ steps.PR.outputs.number }}](${{ steps.PR.outputs.pr_url }})"
 
       - uses: actions/checkout@v1
