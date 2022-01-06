@@ -41,12 +41,6 @@ jobs:
           release-type: node
           changelog-types: '[{"type":"style","section":"Styling","hidden":false},{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
 
-
-      - uses: actions/checkout@v1
-
-      - run: |
-          echo '${{ toJson(steps.release.outputs) }}'
-
       - name: Get release PR number
         if: ${{ steps.release.outputs.pr }}
         id: releasePrNumber
