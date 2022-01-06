@@ -35,7 +35,7 @@ jobs:
 
       - name: Release Please Bot
         id: release
-        uses: GoogleCloudPlatform/release-please-action@v2.35.0
+        uses: GoogleCloudPlatform/release-please-action@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
@@ -52,7 +52,7 @@ jobs:
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "PR is pending merge for MoveUI release using [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
-              activitySubtitle: "Pending PR can be found here: [#${{ steps.release.outputs.pr }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.release.outputs.pr }})"
+              activitySubtitle: "Pending PR can be found here: [#${{ steps.release.outputs.pr.number }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.release.outputs.pr.number }})"
 
       - name: Deploy to Stage
         if: ${{ steps.release.outputs.pr && steps.release.outputs.sha }}
@@ -69,7 +69,7 @@ jobs:
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "MoveUI was successfully released under [${{ steps.release.outputs.tag_name }}](${{ steps.release.outputs.html_url }}) by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
-              activitySubtitle: "Merged release PR can be found here: [#${{ steps.release.outputs.pr }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.release.outputs.pr }})"
+              activitySubtitle: "Merged release PR can be found here: [#${{ steps.release.outputs.pr.number }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.release.outputs.pr.number }})"
 
       - name: Send error message
         if: ${{ !steps.release.outputs.pr }}
