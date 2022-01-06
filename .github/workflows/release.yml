@@ -43,6 +43,8 @@ jobs:
 
       - run: |
           echo '${{ toJson(steps.release.outputs) }}'
+          echo $GITHUB_REF
+          echo $GITHUB_EVENT_PATH
 
       - name: Get release PR number
         id: releasePrNumber
