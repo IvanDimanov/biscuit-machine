@@ -46,26 +46,6 @@ jobs:
 
       - run: |
           echo '${{ toJson(steps.release.outputs) }}'
-          echo '${{ github.event.number }}'
-          echo '${{ github.event.pull_request.number }}'
-
-      - uses: 8BitJonny/gh-get-current-pr@1.3.0
-        id: PR
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          sha: ${{ github.sha }}
-
-      - run: echo "Your PR is ${prNumber} and its JSON is ${prJSON}"
-        if: success() && steps.PR.outputs.number
-        env:
-          prNumber: ${{ steps.PR.outputs.number }}
-          prJSON: ${{ steps.PR.outputs.pr }}
-          prUrl: ${{ steps.PR.outputs.pr_url }}
-          prTitle: ${{ steps.PR.outputs.pr_title }}
-          prBody: ${{ steps.PR.outputs.pr_body }}
-          prCreatedAt: ${{ steps.PR.outputs.pr_created_at }}
-          prMergedAt: ${{ steps.PR.outputs.pr_merged_at }}
-          prClosedAt: ${{ steps.PR.outputs.pr_closed_at }}
 
       - name: Get release PR number
         if: ${{ steps.release.outputs.pr }}
@@ -91,6 +71,12 @@ jobs:
         if: ${{ steps.release.outputs.sha }}
         run: echo "Deploy ${{ steps.release.outputs.tag_name }} to Stage server"
 
+      - uses: 8BitJonny/gh-get-current-pr@1.3.0
+        id: PR
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          sha: ${{ github.sha }}
+
       - name: Send success message
         if: ${{ steps.release.outputs.sha }}
         uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
@@ -107,7 +93,7 @@ jobs:
       - name: Get head commit message
         id: headCommitMessage
         run: |
-          export MESSAGE=$('${{ github.event.head_commit.message }}' | head -n 1)
+          export MESSAGE=$(git log -1 --pretty=format:"%s" | head -n 1)
           echo ::set-output name=message::${MESSAGE}
 
       - name: Send error message
