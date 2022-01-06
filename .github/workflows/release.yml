@@ -84,9 +84,7 @@ jobs:
       - name: Get head commit message
         id: headCommitMessage
         run: |
-          export MESSAGE=$(git log -1 --pretty=format:"%s")
-          echo $MESSAGE
-          git log -1 --pretty=format:"%s"
+          export MESSAGE=$(${{ github.event.head_commit.message }} | head -n 1)
           echo ::set-output name=message::${MESSAGE}
 
       - name: Send error message
