@@ -35,7 +35,7 @@ jobs:
 
       - name: Release Please Bot
         id: release
-        uses: GoogleCloudPlatform/release-please-action@v3
+        uses: GoogleCloudPlatform/release-please-action@v2.35.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
