@@ -41,10 +41,23 @@ jobs:
           release-type: node
           changelog-types: '[{"type":"style","section":"Styling","hidden":false},{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
 
+
+      - uses: actions/checkout@v1
+
       - run: |
           echo '${{ toJson(steps.release.outputs) }}'
-          echo $GITHUB_REF
-          echo $GITHUB_EVENT_PATH
+          echo '${{ github.event.number }}'
+          echo '${{ github.event.pull_request.number }}'
+
+      - uses: jwalton/gh-find-current-pr@v1
+        id: findPr
+        with:
+          state: all
+
+      - run: echo "Your PR is ${PR}"
+        if: success() && steps.findPr.outputs.number
+        env:
+          PR: ${{ steps.findPr.outputs.pr }}
 
       - name: Get release PR number
         id: releasePrNumber
