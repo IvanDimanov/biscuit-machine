@@ -44,6 +44,7 @@ jobs:
       - run: |
           echo '${{ toJson(steps.release.outputs) }}'
 
+
       - name: Get release PR number
         if: ${{ steps.release.outputs.pr }}
         id: releasePrNumber
