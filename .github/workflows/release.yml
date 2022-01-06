@@ -53,7 +53,7 @@ jobs:
         id: PR
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          sha: ${{ github.event.pull_request.head.sha }}
+          sha: ${{ github.sha }}
 
       - run: echo "Your PR is ${prNumber} and its JSON is ${prJSON}"
         if: success() && steps.PR.outputs.number
@@ -101,7 +101,7 @@ jobs:
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "MoveUI was successfully released under [${{ steps.release.outputs.tag_name }}](${{ steps.release.outputs.url }}) by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
-              activitySubtitle: "Merged release PR can be found here: [#${{ steps.releasePrNumber.outputs.prNumber }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.releasePrNumber.outputs.prNumber }})"
+              activitySubtitle: "Merged release PR can be found here: [#${{ steps.PR.outputs.number }}](${{ steps.PR.outputs.pr_url }})"
 
       - name: Get head commit message
         id: headCommitMessage
