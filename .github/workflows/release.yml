@@ -46,9 +46,8 @@ jobs:
 
       - name: Get release PR number
         id: releasePrNumber
-        if: ${{ steps.release.outputs.pr }}
         run: |
-          export PR_NUMBER=$(echo '${{ steps.release.outputs.pr }}' | jq -r '.number')
+          export PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           echo ::set-output name=prNumber::${PR_NUMBER}
 
       - name: Send pending message
@@ -78,7 +77,7 @@ jobs:
           title: Release ${{ steps.release.outputs.tag_name }} success
           sections: |
             - activityImage: "{gh:avatar-url}"
-              activityTitle: "MoveUI was successfully released under [${{ steps.release.outputs.tag_name }}](${{ steps.release.outputs.html_url }}) by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
+              activityTitle: "MoveUI was successfully released under [${{ steps.release.outputs.tag_name }}](${{ steps.release.outputs.url }}) by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
               activitySubtitle: "Merged release PR can be found here: [#${{ steps.releasePrNumber.outputs.prNumber }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.releasePrNumber.outputs.prNumber }})"
 
       - name: Get head commit message
