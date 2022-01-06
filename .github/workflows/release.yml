@@ -34,7 +34,6 @@ jobs:
           empty: true
 
       - name: Release Please Bot
-        if: ${{ steps.release.outputs.pr && !steps.release.outputs.sha }}
         id: release
         uses: GoogleCloudPlatform/release-please-action@v3
         with:
