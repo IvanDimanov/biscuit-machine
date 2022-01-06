@@ -65,11 +65,11 @@ jobs:
               activitySubtitle: "Pending PR can be found here: [#${{ steps.releasePrNumber.outputs.prNumber }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.releasePrNumber.outputs.prNumber }})"
 
       - name: Deploy to Stage
-        if: ${{ steps.release.outputs.pr && steps.release.outputs.sha }}
+        if: ${{ steps.release.outputs.sha }}
         run: echo "Deploy ${{ steps.release.outputs.tag_name }} to Stage server"
 
       - name: Send success message
-        if: ${{ steps.release.outputs.pr && steps.release.outputs.sha }}
+        if: ${{ steps.release.outputs.sha }}
         uses: luisghz/simple-ms-teams-webhook-notifier@v1-latest
         with:
           webhook_url: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
@@ -85,6 +85,8 @@ jobs:
         id: headCommitMessage
         run: |
           export MESSAGE=$(git log -1 --pretty=format:"%s")
+          echo $MESSAGE
+          git log -1 --pretty=format:"%s"
           echo ::set-output name=message::${MESSAGE}
 
       - name: Send error message
