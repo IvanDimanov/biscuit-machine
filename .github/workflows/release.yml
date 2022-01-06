@@ -41,10 +41,12 @@ jobs:
           release-type: node
           changelog-types: '[{"type":"style","section":"Styling","hidden":false},{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
           
-      - run: |
-          echo '${{ steps.release.outputs.pr }}' | jq -r '.number'
-          echo '${{ steps.release.outputs.pr }}'
-          echo "${{ toJson(steps.release.outputs.pr) }}"
+      - name: Get release version
+        id: releaseVersion
+        if: ${{ steps.release.outputs.pr }}
+        run: |
+          export PR_NUMBER=$(echo '${{ steps.release.outputs.pr }}' | jq -r '.number')
+          echo ::set-output name=prNumber::${PR_NUMBER}
 
       - name: Send pending message
         if: ${{ steps.release.outputs.pr && !steps.release.outputs.sha }}
@@ -57,7 +59,7 @@ jobs:
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "PR is pending merge for MoveUI release using [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
-              activitySubtitle: "Pending PR can be found here: [#${{ steps.release.outputs.pr.number }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.release.outputs.pr.number }})"
+              activitySubtitle: "Pending PR can be found here: [#${{ steps.releaseVersion.outputs.prNumber }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.releaseVersion.outputs.prNumber }})"
 
       - name: Deploy to Stage
         if: ${{ steps.release.outputs.pr && steps.release.outputs.sha }}
@@ -74,7 +76,7 @@ jobs:
           sections: |
             - activityImage: "{gh:avatar-url}"
               activityTitle: "MoveUI was successfully released under [${{ steps.release.outputs.tag_name }}](${{ steps.release.outputs.html_url }}) by [this commit](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})"
-              activitySubtitle: "Merged release PR can be found here: [#${{ steps.release.outputs.pr.number }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.release.outputs.pr.number }})"
+              activitySubtitle: "Merged release PR can be found here: [#${{ steps.releaseVersion.outputs.prNumber }}](${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.releaseVersion.outputs.prNumber }})"
 
       - name: Send error message
         if: ${{ !steps.release.outputs.pr }}
