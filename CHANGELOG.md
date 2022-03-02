@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.50.1](https://github.com/IvanDimanov/biscuit-machine/compare/v2.50.0...v2.50.1) (2022-03-02)
+
+
+### Styling
+
+* Test style prefix ([f9c7217](https://github.com/IvanDimanov/biscuit-machine/commit/f9c721752a79f6f01971f472fccb40227fbc0df1))
+
 ## [2.50.0](https://github.com/IvanDimanov/biscuit-machine/compare/v2.49.0...v2.50.0) (2022-03-02)
 
 
