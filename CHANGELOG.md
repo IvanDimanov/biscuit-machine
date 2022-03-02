@@ -1,5 +1,29 @@
 # Changelog
 
+## [2.50.0](https://github.com/IvanDimanov/biscuit-machine/compare/v2.49.0...v2.50.0) (2022-03-02)
+
+
+### Features
+
+* Check which names "Release please bot" will respect ([d6e4b48](https://github.com/IvanDimanov/biscuit-machine/commit/d6e4b48ea19052ed69874b09af94a1fc3fde1940))
+* Test feat prefix ([d8a5e68](https://github.com/IvanDimanov/biscuit-machine/commit/d8a5e68c0ec6a9a5339d059fac820cdcc20846d1))
+
+
+### Bug Fixes
+
+* Test fix prefix ([49fc04b](https://github.com/IvanDimanov/biscuit-machine/commit/49fc04b75b65e3c6f739d634f3a0d462b9423e9e))
+
+
+### Miscellaneous
+
+* Test chore prefix ([3737ad6](https://github.com/IvanDimanov/biscuit-machine/commit/3737ad65032968fa5dbfa3e67b0482aff2015680))
+* Test chore prefix ([99e6b86](https://github.com/IvanDimanov/biscuit-machine/commit/99e6b869d07fa6b6292883bc57728ed328ccf232))
+
+
+### Styling
+
+* Test style prefix ([cc488ff](https://github.com/IvanDimanov/biscuit-machine/commit/cc488ff2ac5b130a4653edd790f951fbafe267ba))
+
 ## [2.49.0](https://github.com/IvanDimanov/biscuit-machine/compare/v2.48.0...v2.49.0) (2022-01-06)
 
 
