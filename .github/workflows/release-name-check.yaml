@@ -20,4 +20,3 @@ jobs:
 
       - run: echo '${{ toJson(steps.release.outputs) }}'
 
-
