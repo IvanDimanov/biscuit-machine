@@ -1,4 +1,4 @@
-name: Release
+name: ENV VAR test
 
 on:
   push:
@@ -8,14 +8,11 @@ on:
 jobs:
   release:
     runs-on: ubuntu-18.04
-    env:
-      TEST_1: 'test 1'
 
     steps:
-      - run: echo "${{ env.TEST_1 }}"
-
       - run: echo "${{ env.TEST_1 }}"
         env:
           TEST_1: 'test 1 - internal'
 
+      - run: echo ( cat ./package.json | jq -r '.version' )
 
