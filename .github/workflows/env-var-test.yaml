@@ -17,3 +17,6 @@ jobs:
         run: echo "My REACT_APP_TAG_NAME = ${{ env.REACT_APP_TAG_NAME }}"
         env:
           REACT_APP_TAG_NAME: $(cat package.json | jq -r '.version')-local
+
+      - name: Test 2
+        run: echo "My REACT_APP_TAG_NAME = $(cat package.json | jq -r '.version')-local"
