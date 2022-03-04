@@ -14,6 +14,6 @@ jobs:
         uses: actions/checkout@master
 
       - name: Test
+        run: echo "My REACT_APP_TAG_NAME = ${{ env.REACT_APP_TAG_NAME }}"
         env:
           REACT_APP_TAG_NAME: $(cat package.json | jq -r '.version')-local
-        run: echo "My REACT_APP_TAG_NAME = ${{ env.TEST_1 }}"
