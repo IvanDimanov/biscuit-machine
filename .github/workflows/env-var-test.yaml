@@ -14,5 +14,9 @@ jobs:
         env:
           TEST_1: 'test 1 - internal'
 
-      - run: echo $( cat ../../package.json | jq -r '.version' )
+      - run: ls -la
+      - run: ls -la ..
+      - run: ls -la ../..
+
+      - run: echo $( cat ../../../package.json | jq -r '.version' )
 
