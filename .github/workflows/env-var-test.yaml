@@ -17,9 +17,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@master
 
-      - run: ls -la
-      - run: ls -la ..
-      - run: ls -la ../..
-
       - run: echo $( cat package.json | jq -r '.version' )
+
+      - run: echo "${{ env.TEST_1 }}"
+        env:
+          TEST_1: cat package.json | jq -r '.version'
 
