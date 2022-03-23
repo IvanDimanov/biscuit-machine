@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+  workflow_dispatch:
+
+
 jobs:
   test:
     runs-on: ubuntu-18.04
