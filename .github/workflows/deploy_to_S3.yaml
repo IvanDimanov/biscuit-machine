@@ -17,4 +17,5 @@ jobs:
           aws s3 sync \
             ./test-image-src \
             s3://test-112-period/test-image-src \
+            --region=eu-central-1 \
             --acl=private
