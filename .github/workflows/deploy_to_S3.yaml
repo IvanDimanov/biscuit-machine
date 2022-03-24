@@ -18,4 +18,7 @@ jobs:
           aws-region: eu-central-1
 
       - name: Deploy
-        run: aws s3 sync ./test-image-src s3://moveui-cdn-test
+        run: |
+          aws s3 sync ./test-image-src s3://moveui-cdn-test \
+          --acl=private \
+          --dryrun
