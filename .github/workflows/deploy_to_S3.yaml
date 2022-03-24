@@ -16,5 +16,5 @@ jobs:
           AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
           aws s3 sync \
             ./test-image-src \
-            s3://moveui-cdn-test/test-image-src \
+            s3://test-112-period/test-image-src \
             --acl=private
