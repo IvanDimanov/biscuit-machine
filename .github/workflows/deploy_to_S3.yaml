@@ -17,10 +17,5 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-central-1
 
-#       - name: Deploy
-#         run: aws s3 sync ./src s3://YOUR-BUCKET-NAME
-
-      - name: Debug
-        run: |
-          ls -la
-          ls -la ./test-image-src
+      - name: Deploy
+        run: aws s3 sync ./test-image-src s3://moveui-cdn-test
