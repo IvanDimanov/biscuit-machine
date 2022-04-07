@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.55.2](https://github.com/IvanDimanov/biscuit-machine/compare/v2.55.1...v2.55.2) (2022-04-07)
+
+
+### Fix
+
+* Typo ([8bd937f](https://github.com/IvanDimanov/biscuit-machine/commit/8bd937fb961833a7b1e62a86a92e287fbdfbec0f))
+
 ### [2.55.1](https://github.com/IvanDimanov/biscuit-machine/compare/v2.55.0...v2.55.1) (2022-04-07)
 
 
