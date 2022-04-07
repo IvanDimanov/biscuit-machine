@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.56.0](https://github.com/IvanDimanov/biscuit-machine/compare/v2.55.2...v2.56.0) (2022-04-07)
+
+
+### Feature
+
+* Start tracking releases for both `doc:` and `docs:` prefixes ([03fc92c](https://github.com/IvanDimanov/biscuit-machine/commit/03fc92c8daa8980c41812817cbad9fa959c269bc))
+
+
+### Documentation
+
+* Describe release process when workflow triggers another workflow ([4e401b4](https://github.com/IvanDimanov/biscuit-machine/commit/4e401b4bf4ef088338f89a7b4a8a9f0efe649e97))
+* Test [#1](https://github.com/IvanDimanov/biscuit-machine/issues/1) ([86659d9](https://github.com/IvanDimanov/biscuit-machine/commit/86659d9bde1ba1d0586be689233604ac3071e9ef))
+* Test doc [#1](https://github.com/IvanDimanov/biscuit-machine/issues/1) ([933f437](https://github.com/IvanDimanov/biscuit-machine/commit/933f4377f5721f1bf5cc969a942b720230de41eb))
+
 ### [2.55.2](https://github.com/IvanDimanov/biscuit-machine/compare/v2.55.1...v2.55.2) (2022-04-07)
 
 
