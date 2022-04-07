@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.51.0](https://github.com/IvanDimanov/biscuit-machine/compare/v2.50.1...v2.51.0) (2022-04-07)
+
+
+### Features
+
+* Add manual trigger ([a2a4834](https://github.com/IvanDimanov/biscuit-machine/commit/a2a4834df7ac41ec0a5668d238b9a9b9b3c070d9))
+
+
+### Miscellaneous
+
+* Test update ([0ca3759](https://github.com/IvanDimanov/biscuit-machine/commit/0ca375954cd48b981bba89e3904e44238f641ccd))
+
 ### [2.50.1](https://github.com/IvanDimanov/biscuit-machine/compare/v2.50.0...v2.50.1) (2022-03-02)
 
 
