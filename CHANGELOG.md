@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.52.0](https://github.com/IvanDimanov/biscuit-machine/compare/v2.51.0...v2.52.0) (2022-04-07)
+
+
+### Features
+
+* Workflow for after release ([7fb59b0](https://github.com/IvanDimanov/biscuit-machine/commit/7fb59b026d4d770d342811c741e40fd0103b864b))
+
 ## [2.51.0](https://github.com/IvanDimanov/biscuit-machine/compare/v2.50.1...v2.51.0) (2022-04-07)
 
 
