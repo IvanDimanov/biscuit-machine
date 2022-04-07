@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.54.1](https://github.com/IvanDimanov/biscuit-machine/compare/v2.54.0...v2.54.1) (2022-04-07)
+
+
+### Refactor
+
+* Set correct PAT ([ea68671](https://github.com/IvanDimanov/biscuit-machine/commit/ea68671f82b5ac53e70c3f085abd2d2df9d477d6))
+
 ## [2.54.0](https://github.com/IvanDimanov/biscuit-machine/compare/v2.53.0...v2.54.0) (2022-04-07)
 
 
