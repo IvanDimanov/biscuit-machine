@@ -39,7 +39,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
-          changelog-types: '[{"type":"test","section":"Testing","hidden":false},{"type":"docs","section":"Documentation","hidden":false},{"type":"debug","section":"Debug","hidden":false},{"type":"refactor","section":"Refactor","hidden":false},{"type":"ref","section":"Refactor","hidden":false},{"type":"style","section":"Style","hidden":false},{"type":"feat","section":"Feature","hidden":false},{"type":"fix","section":"Fix","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
+          changelog-types: '[{"type":"feat","section":"Feature","hidden":false},{"type":"refactor","section":"Refactor","hidden":false},{"type":"ref","section":"Refactor","hidden":false},{"type":"fix","section":"Fix","hidden":false},{"type":"style","section":"Style","hidden":false},{"type":"test","section":"Testing","hidden":false},{"type":"docs","section":"Documentation","hidden":false},{"type":"debug","section":"Debug","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
 
       - run: |
           echo '${{ toJson(steps.release.outputs) }}'
