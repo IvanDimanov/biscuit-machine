@@ -37,6 +37,16 @@ jobs:
         id: release
         uses: GoogleCloudPlatform/release-please-action@v3.1.2
         with:
+          # When Release Please Bot creates a new release the Bot also creates a new tag, e.g. `v3.0.5`.
+          #
+          # If we want to have another Workflow that uses the event of new release (or on new tag)
+          # then Release Please Bot needs to perform its action using a Personal Access Token (not the common bot token from `secrets.GITHUB_TOKEN`)
+          # More can be read here:
+          #   https://docs.github.com/en/actions/using-workflows/triggering-a-workflow#triggering-a-workflow-from-a-workflow
+          #
+          # The `RELEASE_PLEASE_BOT_TOKEN` secret bellow
+          # can be found here: https://github.com/settings/tokens
+          # for GitHub account: https://github.com/IvanDimanov-MoveDigital
           token: ${{ secrets.RELEASE_PLEASE_BOT_TOKEN }}
           release-type: node
           changelog-types: '[{"type":"feat","section":"Feature","hidden":false},{"type":"refactor","section":"Refactor","hidden":false},{"type":"ref","section":"Refactor","hidden":false},{"type":"fix","section":"Fix","hidden":false},{"type":"style","section":"Style","hidden":false},{"type":"test","section":"Testing","hidden":false},{"type":"docs","section":"Documentation","hidden":false},{"type":"debug","section":"Debug","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
