@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.54.0](https://github.com/IvanDimanov/biscuit-machine/compare/v2.53.0...v2.54.0) (2022-04-07)
+
+
+### Feature
+
+* Use PAT ([0f9e1a7](https://github.com/IvanDimanov/biscuit-machine/commit/0f9e1a7bbe17d3f2cdb2f34f649bee2ab4704ddd))
+
 ## [2.53.0](https://github.com/IvanDimanov/biscuit-machine/compare/v2.52.0...v2.53.0) (2022-04-07)
 
 
