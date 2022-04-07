@@ -23,7 +23,7 @@ jobs:
       - name: Generate release version
         id: releaseVersion
         run: |
-          export VERSION=$(git for-each-ref --sort=-taggerdate --format '%(refname:lstrip=2)' --count=1 refs/tags | sed 's/v//)
+          export VERSION=$(git for-each-ref --sort=-taggerdate --format '%(refname:lstrip=2)' --count=1 refs/tags | sed 's/v//')
           echo "::set-output name=version::${VERSION}"
 
       - name: Debug
