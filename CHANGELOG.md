@@ -1,5 +1,54 @@
 # Changelog
 
+## [2.53.0](https://github.com/IvanDimanov/biscuit-machine/compare/v2.52.0...v2.53.0) (2022-04-07)
+
+
+### Documentation
+
+* Docs update ([32c4ed9](https://github.com/IvanDimanov/biscuit-machine/commit/32c4ed9bd0f8248cbd7c60f93ca5319385da905b))
+
+
+### Debug
+
+* Debug update ([35a11b0](https://github.com/IvanDimanov/biscuit-machine/commit/35a11b0d091892d4573fca293d5407be37d7e9a7))
+
+
+### Feature
+
+* Feat update ([8e72c12](https://github.com/IvanDimanov/biscuit-machine/commit/8e72c12077adc794ec65a2a169e639a157e7eea6))
+* More release types ([58e246c](https://github.com/IvanDimanov/biscuit-machine/commit/58e246cf0f98f957a5fbad6adc6f3d8e69e57426))
+
+
+### Fix
+
+* Fix update ([2c7f250](https://github.com/IvanDimanov/biscuit-machine/commit/2c7f250ecd198a0a01ccc0d2e1ac59e1ad2a6279))
+
+
+### Miscellaneous
+
+* Chore update ([8998e5c](https://github.com/IvanDimanov/biscuit-machine/commit/8998e5c02759426bf4f436aa29898cccdd549c81))
+
+
+### Testing
+
+* Test [#2](https://github.com/IvanDimanov/biscuit-machine/issues/2) ([7e3f952](https://github.com/IvanDimanov/biscuit-machine/commit/7e3f952c13c60e08a73792864eba56e0b97d01a9))
+* Test update ([d15479a](https://github.com/IvanDimanov/biscuit-machine/commit/d15479a64d7059e51c5c585dd29cda071af6de12))
+
+
+### Style
+
+* Style [#2](https://github.com/IvanDimanov/biscuit-machine/issues/2) ([798f67e](https://github.com/IvanDimanov/biscuit-machine/commit/798f67e4f68a4e28fd0d1bc19d40401303fa8611))
+* Style update ([20ef765](https://github.com/IvanDimanov/biscuit-machine/commit/20ef765a1c70dca690f49cb027c1a556d1c3b456))
+
+
+### Refactor
+
+* Rearrange release types ([73cea40](https://github.com/IvanDimanov/biscuit-machine/commit/73cea40f7c296127f8a8f2fe76ef8e48c1e171e0))
+* Ref update ([246ce70](https://github.com/IvanDimanov/biscuit-machine/commit/246ce70af0993e5341dcb3d282716175e1a4a914))
+* Refactor update ([b2b1c9d](https://github.com/IvanDimanov/biscuit-machine/commit/b2b1c9d88d97b1c2ced348f7d56e48c9f2873ab9))
+* Set precise release bot version ([05f7f10](https://github.com/IvanDimanov/biscuit-machine/commit/05f7f10f2bbbc80d0a2914eab1bd06abf6f1e2d5))
+* Update release types ([6ffbf8c](https://github.com/IvanDimanov/biscuit-machine/commit/6ffbf8c2ed2c78fe9dcea21de27fc99bd7fae709))
+
 ## [2.52.0](https://github.com/IvanDimanov/biscuit-machine/compare/v2.51.0...v2.52.0) (2022-04-07)
 
 
