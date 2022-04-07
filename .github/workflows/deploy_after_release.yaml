@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@master    
+
       - name: Debug
         run: |
           echo github.event_name = ${{ github.event_name }}
@@ -20,10 +23,6 @@ jobs:
       - name: Generate release version
         id: releaseVersion
         run: |
-          echo github.event_name = ${{ github.event_name }}
-          echo github.event.action = ${{ github.event.action }}
-          echo $(git for-each-ref --sort=-taggerdate --format '%(refname:lstrip=2)' --count=1 refs/tags)
-          
           export VERSION=$(git for-each-ref --sort=-taggerdate --format '%(refname:lstrip=2)' --count=1 refs/tags | sed 's/v//)
           echo "::set-output name=version::${VERSION}"
 
