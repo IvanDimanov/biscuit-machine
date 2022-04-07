@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.55.0](https://github.com/IvanDimanov/biscuit-machine/compare/v2.54.2...v2.55.0) (2022-04-07)
+
+
+### Feature
+
+* Get release version ([35f1bda](https://github.com/IvanDimanov/biscuit-machine/commit/35f1bdad473469ce0934b77e5e22940467b5a5b9))
+
 ### [2.54.2](https://github.com/IvanDimanov/biscuit-machine/compare/v2.54.1...v2.54.2) (2022-04-07)
 
 
