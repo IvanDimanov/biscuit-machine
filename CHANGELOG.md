@@ -1,5 +1,12 @@
 # Changelog
 
+### [2.55.1](https://github.com/IvanDimanov/biscuit-machine/compare/v2.55.0...v2.55.1) (2022-04-07)
+
+
+### Refactor
+
+* Simplify ([e9e6342](https://github.com/IvanDimanov/biscuit-machine/commit/e9e6342932f0f4ac110f396498516d421865cb64))
+
 ## [2.55.0](https://github.com/IvanDimanov/biscuit-machine/compare/v2.54.2...v2.55.0) (2022-04-07)
 
 
