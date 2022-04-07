@@ -35,6 +35,8 @@ jobs:
 
       - name: Release Please Bot
         id: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_PLEASE_BOT_TOKEN }}
         uses: GoogleCloudPlatform/release-please-action@v3.1.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
