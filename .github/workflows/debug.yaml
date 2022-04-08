@@ -59,9 +59,11 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: k8s-overlay
+#           path: ./level-1/level-2/level-3/test-1.txt
 
       - name: Test content
         run: |
+          ls -laR
           cat ./level-1/level-2/level-3/test-1.txt
           cat ./level-1/level-2/level-3/test-2.txt
 
