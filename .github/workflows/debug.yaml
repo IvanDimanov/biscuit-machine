@@ -35,6 +35,8 @@ jobs:
 
   test-download:
     runs-on: ubuntu-18.04
+    
+    needs: upload
 
     steps:
       - name: Make nested files
