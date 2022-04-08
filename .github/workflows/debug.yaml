@@ -20,8 +20,7 @@ jobs:
           echo test-1001 >> ./level-1/level-2/level-3/test-1.txt
           echo test-1002 >> ./level-1/level-2/level-3/test-2.txt
 
-          ls -la
-          ls -la ./level-1/level-2/level-3
+          ls -laR
 
           cat ./level-1/level-2/level-3/test-1.txt
           cat ./level-1/level-2/level-3/test-2.txt
@@ -49,11 +48,13 @@ jobs:
           echo test-2001 >> ./level-1/level-2/level-3/test-1.txt
           echo test-2002 >> ./level-1/level-2/level-3/test-2.txt
 
-          ls -la
-          ls -la ./level-1/level-2/level-3
+          ls -laR
 
           cat ./level-1/level-2/level-3/test-1.txt
           cat ./level-1/level-2/level-3/test-2.txt
+
+      - name: Delete original k8s overlay to prevent download collision
+        run: rm ./level-1/level-2/level-3/test-1.txt
 
       - name: Download k8s overlay
         uses: actions/download-artifact@v3
