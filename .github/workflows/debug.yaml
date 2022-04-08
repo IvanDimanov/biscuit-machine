@@ -6,7 +6,7 @@ on:
 
 
 jobs:
-  deploy:
+  debug:
     runs-on: ubuntu-18.04
 
     steps:
