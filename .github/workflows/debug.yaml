@@ -6,13 +6,54 @@ on:
 
 
 jobs:
-  debug:
+  upload:
     runs-on: ubuntu-18.04
 
     steps:
-      - name: Debug
+      - name: Make nested files
         run: |
-          echo github.event_name = ${{ github.event_name }}
-          echo github.event.action = ${{ github.event.action }}
-          echo $(git for-each-ref --sort=-taggerdate --format '%(refname:lstrip=2)' --count=1 refs/tags)
-          echo github.workflow = ${{ github.workflow }}
+          mkdir -P ./level-1/level-2/level-3
+
+          touch ./level-1/level-2/level-3/test-1.txt
+          touch ./level-1/level-2/level-3/test-2.txt
+
+          echo test-1001 >> ./level-1/level-2/level-3/test-1.txt
+          echo test-1002 >> ./level-1/level-2/level-3/test-2.txt
+
+          ls -la
+          ls -la ./level-1/level-2/level-3
+
+          cat ./level-1/level-2/level-3/test-1.txt
+          cat ./level-1/level-2/level-3/test-2.txt
+
+      - name: Upload k8s overlay
+        uses: actions/upload-artifact@v2
+        with:
+          name: k8s-overlay
+          path: ./level-1/level-2/level-3/test-1.txt
+
+
+  test-download:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Make nested files
+        run: |
+          mkdir -P ./level-1/level-2/level-3
+
+          touch ./level-1/level-2/level-3/test-1.txt
+          touch ./level-1/level-2/level-3/test-2.txt
+
+          echo test-2001 >> ./level-1/level-2/level-3/test-1.txt
+          echo test-2002 >> ./level-1/level-2/level-3/test-2.txt
+
+          ls -la
+          ls -la ./level-1/level-2/level-3
+
+          cat ./level-1/level-2/level-3/test-1.txt
+          cat ./level-1/level-2/level-3/test-2.txt
+
+      - name: Download k8s overlay
+        uses: actions/download-artifact@v3
+        with:
+          name: k8s-overlay
