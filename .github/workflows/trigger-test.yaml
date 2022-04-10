@@ -1,0 +1,21 @@
+name: Trigger Test
+
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master-unknown
+    paths:
+      - 'scripts/**'
+
+
+jobs:
+  debug:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Deploy
+        run: |
+          ls -laR
